@@ -18,7 +18,7 @@ class AddTicketPage extends StatelessWidget {
           Align(
             alignment: Alignment(0, -0.85),
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
+              width: MediaQuery.of(context).size.width * 0.95,
               height: MediaQuery.of(context).size.height * 0.42,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

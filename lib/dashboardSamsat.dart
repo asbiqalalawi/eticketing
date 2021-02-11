@@ -1,3 +1,4 @@
+import 'package:eticketing/addticket_page.dart';
 import 'package:flutter/material.dart';
 
 class DashboardSamsat extends StatefulWidget {
@@ -27,7 +28,11 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
             IconButton(
                 color: Colors.black,
                 icon: Icon(Icons.add_circle_rounded),
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddTicketPage();
+                  }));
+                }),
           ],
           backgroundColor: Color.fromRGBO(255, 206, 0, 1),
         ),
@@ -68,7 +73,33 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                   color: Color.fromRGBO(255, 249, 224, 1),
                   width: MediaQuery.of(context).size.width * 0.5,
                   height: MediaQuery.of(context).size.height * 0.12,
-                  margin: EdgeInsets.fromLTRB(11, 0, 3, 5),
+                  margin: EdgeInsets.fromLTRB(3, 0, 10, 15),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "My Ticket",
+                          style: TextStyle(
+                              fontFamily: "RedHatDisplay",
+                              color: Color.fromRGBO(157, 153, 135, 1),
+                              fontSize: 23),
+                        ),
+                        Text(
+                          "3",
+                          style: TextStyle(
+                              fontFamily: "RedHatDisplay",
+                              color: Colors.black,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ]),
+                )),
+                Flexible(
+                    child: Container(
+                  color: Color.fromRGBO(255, 249, 224, 1),
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.12,
+                  margin: EdgeInsets.fromLTRB(0, 0, 10, 15),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -94,7 +125,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                   color: Color.fromRGBO(255, 249, 224, 1),
                   width: MediaQuery.of(context).size.width * 0.5,
                   height: MediaQuery.of(context).size.height * 0.12,
-                  margin: EdgeInsets.fromLTRB(3, 0, 11, 5),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -117,35 +148,16 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                 )),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(left: 15),
-                  child: Text(
-                    "Ticket",
-                    style: TextStyle(
-                        fontFamily: "RedHatDisplay",
-                        fontSize: 22,
-                        fontWeight: FontWeight.w900),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 15),
-                  child: RaisedButton(
-                    color: Color.fromRGBO(255, 249, 224, 1),
-                    onPressed: () {},
-                    child: Text(
-                      "Show All",
-                      style: TextStyle(
-                          fontFamily: "PublicSans",
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                  ),
-                )
-              ],
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(left: 15, bottom: 18, top: 23),
+              child: Text(
+                "Ticket",
+                style: TextStyle(
+                    fontFamily: "RedHatDisplay",
+                    fontSize: 22,
+                    fontWeight: FontWeight.w900),
+              ),
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.4,
