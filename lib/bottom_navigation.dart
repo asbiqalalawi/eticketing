@@ -1,6 +1,7 @@
 import 'package:eticketing/chat_samsat.dart';
 import 'package:eticketing/personal_chat.dart';
 import 'package:eticketing/profil_samsat.dart';
+import 'package:eticketing/dashboardSamsat.dart';
 import 'package:flutter/material.dart';
 
 class Bottom_Navigation extends StatefulWidget {
@@ -20,7 +21,7 @@ class _Bottom_NavigationState extends State<Bottom_Navigation> {
   @override
   Widget build(BuildContext context) {
     final _listPage = [
-      Text("Dashboard"),
+      DashboardSamsat(),
       // ChatSamsat(),
       ChatSamsat(),
       ProfilSamsat(),
