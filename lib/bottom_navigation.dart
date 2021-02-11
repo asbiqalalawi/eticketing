@@ -21,18 +21,14 @@ class _Bottom_NavigationState extends State<Bottom_Navigation> {
   Widget build(BuildContext context) {
     final _listPage = [
       Text("Dashboard"),
-      // ChatSamsat(),
       ChatSamsat(),
       ProfilSamsat(),
     ];
 
     return Scaffold(
-      body: Center(child: _listPage[_selectedNavbar]
-          /* Text(
-          "Tab Index yang aktif : $_selectedNavbar",
-          style: TextStyle(fontSize: 16),
-        ), */
-          ),
+      body: Center(
+        child: _listPage[_selectedNavbar],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
