@@ -1,59 +1,51 @@
-import 'package:eticketing/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+class AddTicketPage extends StatelessWidget {
+  const AddTicketPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 206, 0),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 255, 206, 0),
+        title: Text(
+          "Add ticket",
+          style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
+        ),
+      ),
       body: Stack(
         children: [
           Align(
-            alignment: Alignment(0, -0.40),
+            alignment: Alignment(0, -0.85),
             child: Container(
-              // margin: EdgeInsets.fromLTRB(20, 120, 20, 320),
-              width: MediaQuery.of(context).size.width * 0.92,
-              height: MediaQuery.of(context).size.height * 0.38,
-              color: Colors.white24,
-            ),
-          ),
-          Container(
-              alignment: Alignment(0, -0.5),
-              child: Text(
-                "Login",
-                style: TextStyle(fontSize: 27, fontFamily: "RedHatDisplay"),
-              )),
-          Align(
-            alignment: Alignment(0, -0.18),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.82,
-              height: MediaQuery.of(context).size.height * 0.18,
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.42,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextField(
                     decoration: InputDecoration(
-                        hintText: "Username",
+                        fillColor: Color.fromARGB(255, 255, 249, 224),
+                        filled: true,
+                        hintText: "Nopol",
                         hintStyle: TextStyle(
                             fontFamily: "PublicSans",
                             fontWeight: FontWeight.bold),
-                        fillColor: Colors.white,
-                        filled: true,
                         border: InputBorder.none),
                   ),
                   TextField(
-                    obscureText: true,
+                    maxLines: 14,
                     decoration: InputDecoration(
-                        hintText: "Password",
-                        hintStyle: TextStyle(
-                            fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                        fillColor: Colors.white,
+                        fillColor: Color.fromARGB(255, 255, 249, 224),
                         filled: true,
+                        hintText: "Description",
+                        hintStyle: TextStyle(
+                          fontFamily: "PublicSans",
+                          fontWeight: FontWeight.bold,
+                        ),
                         border: InputBorder.none),
-                  )
+                  ),
+                  //Upload File
                 ],
               ),
             ),
@@ -72,19 +64,14 @@ class LoginPage extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Bottom_Navigation();
-                      }));
-                    },
+                    onTap: () {},
                     child: Center(
                       child: Text(
-                        "Login",
+                        "Send",
                         style: TextStyle(
-                            color: Colors.white,
                             fontFamily: "PublicSans",
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                             fontSize: 18),
                       ),
                     ),
