@@ -13,8 +13,22 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
         appBar: AppBar(
           title: Text(
             "Dashboard",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
           ),
+          actions: <Widget>[
+            IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.notifications),
+                onPressed: () {}),
+            IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.calendar_today_sharp),
+                onPressed: () {}),
+            IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.add_circle_rounded),
+                onPressed: () {}),
+          ],
           backgroundColor: Color.fromRGBO(255, 206, 0, 1),
         ),
         body: Stack(children: <Widget>[
@@ -32,11 +46,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                         children: <Widget>[
                           Text("Total Ticket",
                               style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: "RedHatDisplay",
                                   color: Color.fromRGBO(157, 153, 135, 1),
                                   fontSize: 36)),
                           Text(
                             "21",
                             style: TextStyle(
+                                fontFamily: "RedHatDisplay",
                                 color: Colors.black,
                                 fontSize: 48,
                                 fontWeight: FontWeight.bold),
@@ -59,12 +76,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                           Text(
                             "On Process",
                             style: TextStyle(
+                                fontFamily: "RedHatDisplay",
                                 color: Color.fromRGBO(157, 153, 135, 1),
                                 fontSize: 23),
                           ),
                           Text(
                             "14",
                             style: TextStyle(
+                                fontFamily: "RedHatDisplay",
                                 color: Colors.black,
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold),
@@ -83,12 +102,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                           Text(
                             "Available",
                             style: TextStyle(
+                                fontFamily: "RedHatDisplay",
                                 color: Color.fromRGBO(157, 153, 135, 1),
                                 fontSize: 23),
                           ),
                           Text(
                             "7",
                             style: TextStyle(
+                                fontFamily: "RedHatDisplay",
                                 color: Colors.black,
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold),
@@ -103,8 +124,10 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                     margin: EdgeInsets.fromLTRB(11, 23, 230, 18),
                     child: Text(
                       "Ticket",
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontFamily: "RedHatDisplay",
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900),
                     ),
                   ),
                   RaisedButton(
@@ -112,7 +135,11 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                     onPressed: () {},
                     child: Text(
                       "Show All",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: TextStyle(
+                          fontFamily: "PublicSans",
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     ),
                   )
                 ],
@@ -122,7 +149,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: ListView(children: <Widget>[
                   Card(
-                    elevation: 10,
+                    elevation: 5,
                     color: Color.fromRGBO(255, 249, 224, 1),
                     child: Column(
                       children: <Widget>[
@@ -132,11 +159,12 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                               Container(
                                 margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
                                 child: Text(
-                                  "Nomor Polisi",
+                                  "BE 3557 AN",
                                   style: TextStyle(
+                                      fontFamily: "RedHatDisplay",
                                       color: Colors.black,
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w900),
                                 ),
                               ),
                               Container(
@@ -144,6 +172,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 child: Text(
                                   "Unprocessed",
                                   style: TextStyle(
+                                      fontFamily: "PublicSans",
                                       color: Colors.black,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
@@ -158,7 +187,9 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 child: Text(
                                   "Samsat Origin",
                                   style: TextStyle(
+                                    fontFamily: "PublicSans",
                                     color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -168,7 +199,9 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 child: Text(
                                   "12:53",
                                   style: TextStyle(
+                                    fontFamily: "PublicSans",
                                     color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -182,8 +215,10 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 child: Text(
                                   "Description of the ticket",
                                   style: TextStyle(
+                                    fontFamily: "PublicSans",
                                     color: Colors.grey,
                                     fontSize: 16,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
@@ -191,74 +226,86 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                       ],
                     ),
                   ),
-                  Card(
-                    elevation: 10,
-                    color: Color.fromRGBO(255, 249, 224, 1),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "Nomor Polisi",
-                                  style: TextStyle(
-                                      color: Colors.black,
+                  Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(19)),
+                    child: Card(
+                      elevation: 5,
+                      color: Color.fromRGBO(255, 249, 224, 1),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                  child: Text(
+                                    "Nomor Polisi",
+                                    style: TextStyle(
+                                        fontFamily: "RedHatDisplay",
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  child: Text(
+                                    "Unprocessed",
+                                    style: TextStyle(
+                                        fontFamily: "PublicSans",
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                  child: Text(
+                                    "Samsat Origin",
+                                    style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  child: Text(
+                                    "12:53",
+                                    style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.grey,
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "Unprocessed",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "Samsat Origin",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                  child: Text(
+                                    "Description of the ticket",
+                                    style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "12:53",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              )
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Description of the ticket",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ])
-                      ],
+                              ])
+                        ],
+                      ),
                     ),
                   ),
                 ]),
