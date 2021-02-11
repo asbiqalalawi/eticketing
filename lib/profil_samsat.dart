@@ -1,3 +1,4 @@
+import 'package:eticketing/changepassword_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilSamsat extends StatefulWidget {
@@ -56,14 +57,17 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                     Container(
                       margin: EdgeInsets.only(bottom: 7),
                       child: RaisedButton(
-                        elevation: 5,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ChangePassword();
+                          }));
+                        },
                         child: Text("Change Password"),
                         color: Color(0xFFFFF0B2),
                       ),
                     ),
                     RaisedButton(
-                      elevation: 5,
                       onPressed: () {},
                       child: Text("Logout"),
                       color: Color(0xFFFFCE00),
