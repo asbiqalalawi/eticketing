@@ -12,7 +12,7 @@ class _PicketScheduleState extends State<PicketSchedule> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            //back to dashboard
+            Navigator.pop(context);
           },
           child: Icon(
             Icons.arrow_back,

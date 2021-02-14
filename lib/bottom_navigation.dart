@@ -23,7 +23,7 @@ class _Bottom_NavigationState extends State<Bottom_Navigation> {
   Widget build(BuildContext context) {
     final _listPage = [
       // DashboardSamsat(),
-      PicketSchedule(),
+      DashboardSamsat(),
       ChatSamsat(),
       ProfilSamsat(),
     ];

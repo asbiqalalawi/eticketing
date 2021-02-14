@@ -1,4 +1,4 @@
-import 'package:eticketing/change_password.dart';
+import 'package:eticketing/changepassword_page.dart';
 import 'package:eticketing/login_page.dart';
 import 'package:flutter/material.dart';
 
