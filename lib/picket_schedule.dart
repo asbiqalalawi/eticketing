@@ -40,6 +40,7 @@ class _PicketScheduleState extends State<PicketSchedule> {
           buildContainer("2 Januari 2021"),
           buildContainer("3 Januari 2021"),
           buildContainer("4 Januari 2021"),
+          buildContainer("5 Januari 2021"),
         ],
       ),
     );
