@@ -9,50 +9,57 @@ class ChangePassword extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color(0xFFFFCE00),
           title: Text(
-            "Change Password",
+            "Ubah Kata Sandi",
             style: TextStyle(color: Colors.black, fontFamily: "RedHatDisplay"),
           ),
         ),
         body: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.24,
               margin: EdgeInsets.fromLTRB(10, 15, 10, 0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        fillColor: Color.fromARGB(255, 255, 249, 224),
-                        filled: true,
-                        hintText: "Old Password",
-                        hintStyle: TextStyle(
-                            fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                        border: InputBorder.none),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          fillColor: Color.fromARGB(255, 255, 249, 224),
+                          filled: true,
+                          hintText: "Kata Sandi Lama",
+                          hintStyle: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
+                          border: InputBorder.none),
+                    ),
                   ),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        fillColor: Color.fromARGB(255, 255, 249, 224),
-                        filled: true,
-                        hintText: "New Password",
-                        hintStyle: TextStyle(
-                            fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                        border: InputBorder.none),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          fillColor: Color.fromARGB(255, 255, 249, 224),
+                          filled: true,
+                          hintText: "Kata Sandi Baru",
+                          hintStyle: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
+                          border: InputBorder.none),
+                    ),
                   ),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        fillColor: Color.fromARGB(255, 255, 249, 224),
-                        filled: true,
-                        hintText: "Confirm Password",
-                        hintStyle: TextStyle(
-                            fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                        border: InputBorder.none),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          fillColor: Color.fromARGB(255, 255, 249, 224),
+                          filled: true,
+                          hintText: "Konfirmasi Kata Sandi",
+                          hintStyle: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
+                          border: InputBorder.none),
+                    ),
                   ),
                 ],
               ),
@@ -74,7 +81,7 @@ class ChangePassword extends StatelessWidget {
                       onTap: () {},
                       child: Center(
                         child: Text(
-                          "Save",
+                          "Simpan",
                           style: TextStyle(
                               fontFamily: "PublicSans",
                               fontWeight: FontWeight.bold,

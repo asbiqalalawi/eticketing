@@ -1,3 +1,5 @@
+import 'package:eticketing/adduser_page.dart';
+import 'package:eticketing/edituser_page.dart';
 import 'package:flutter/material.dart';
 
 class ManageUserPage extends StatefulWidget {
@@ -21,7 +23,11 @@ class _ManageUserPageState extends State<ManageUserPage> {
             IconButton(
                 icon: Icon(Icons.person_add),
                 color: Colors.black,
-                onPressed: () {})
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddUserPage();
+                  }));
+                })
           ],
         ),
         body: Stack(
@@ -117,7 +123,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(5),
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return EditUserPage();
+                                              }));
+                                            },
                                             child: Center(
                                               child: Text(
                                                 "Edit",
@@ -235,7 +247,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(5),
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return EditUserPage();
+                                              }));
+                                            },
                                             child: Center(
                                               child: Text(
                                                 "Edit",
@@ -353,7 +371,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(5),
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return EditUserPage();
+                                              }));
+                                            },
                                             child: Center(
                                               child: Text(
                                                 "Edit",
@@ -471,7 +495,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(5),
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return EditUserPage();
+                                              }));
+                                            },
                                             child: Center(
                                               child: Text(
                                                 "Edit",
@@ -589,7 +619,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(5),
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return EditUserPage();
+                                              }));
+                                            },
                                             child: Center(
                                               child: Text(
                                                 "Edit",
