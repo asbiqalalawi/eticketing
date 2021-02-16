@@ -1,3 +1,4 @@
+import 'package:eticketing/add_picket.dart';
 import 'package:flutter/material.dart';
 
 class PicketSchedule extends StatefulWidget {
@@ -27,10 +28,37 @@ class _PicketScheduleState extends State<PicketSchedule> {
         actions: [
           IconButton(
             icon: Icon(
+              Icons.add_circle_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return AddPicket();
+              }));
+            },
+          ),
+          IconButton(
+            icon: Icon(
               Icons.info,
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              return showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Untuk pindah"),
+                  content: Text("Geser ke kanan atau kiri"),
+                  actions: [
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("OK"),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
