@@ -1,4 +1,5 @@
 import 'package:eticketing/addticket_page.dart';
+import 'package:eticketing/list_ticket.dart';
 import 'package:eticketing/picket_schedule.dart';
 import 'package:flutter/material.dart';
 
@@ -153,16 +154,40 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                 )),
               ],
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 15, bottom: 18, top: 23),
-              child: Text(
-                "Ticket",
-                style: TextStyle(
-                    fontFamily: "RedHatDisplay",
-                    fontSize: 22,
-                    fontWeight: FontWeight.w900),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 18, top: 23, right: 200),
+                  child: Text(
+                    "Ticket",
+                    style: TextStyle(
+                        fontFamily: "RedHatDisplay",
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ListTicket();
+                    }));
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    margin: EdgeInsets.only(bottom: 18, top: 23),
+                    child: Text(
+                      "Show All",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "RedHatDisplay",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.4,
@@ -190,12 +215,12 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                             Container(
                               margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                               child: Text(
-                                "Unprocessed",
+                                "1",
                                 style: TextStyle(
                                     fontFamily: "PublicSans",
                                     color: Colors.black,
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w600),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ]),
@@ -242,6 +267,17 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 ),
                               ),
                             ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                              child: Text(
+                                "Sedang dikerjakan",
+                                style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            )
                           ])
                     ],
                   ),
@@ -268,12 +304,12 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                             Container(
                               margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                               child: Text(
-                                "Unprocessed",
+                                "1",
                                 style: TextStyle(
                                     fontFamily: "PublicSans",
                                     color: Colors.black,
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w600),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ]),
@@ -320,6 +356,17 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 ),
                               ),
                             ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                              child: Text(
+                                "Sedang dikerjakan",
+                                style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            )
                           ])
                     ],
                   ),
@@ -346,12 +393,12 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                             Container(
                               margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                               child: Text(
-                                "Unprocessed",
+                                "1",
                                 style: TextStyle(
                                     fontFamily: "PublicSans",
                                     color: Colors.black,
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w600),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ]),
@@ -398,6 +445,17 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 ),
                               ),
                             ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                              child: Text(
+                                "Sedang dikerjakan",
+                                style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            )
                           ])
                     ],
                   ),

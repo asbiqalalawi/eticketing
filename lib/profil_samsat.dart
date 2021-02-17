@@ -65,7 +65,7 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                             return ChangePassword();
                           }));
                         },
-                        child: Text("Change Password"),
+                        child: Text("Ubah Kata Sandi"),
                         color: Color(0xFFFFF0B2),
                       ),
                     ),
@@ -77,7 +77,7 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                           return LoginPage();
                         }));
                       },
-                      child: Text("Logout"),
+                      child: Text("Keluar"),
                       color: Color(0xFFFFCE00),
                     ),
                   ],
