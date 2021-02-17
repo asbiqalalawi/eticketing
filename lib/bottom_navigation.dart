@@ -1,6 +1,4 @@
 import 'package:eticketing/chat_samsat.dart';
-import 'package:eticketing/personal_chat.dart';
-import 'package:eticketing/picket_schedule.dart';
 import 'package:eticketing/profil_samsat.dart';
 import 'package:eticketing/dashboardSamsat.dart';
 import 'package:flutter/material.dart';

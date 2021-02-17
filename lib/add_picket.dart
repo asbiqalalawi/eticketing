@@ -6,7 +6,16 @@ class AddPicket extends StatefulWidget {
 }
 
 class _AddPicketState extends State<AddPicket> {
+  //
   DateTime selectedDate = DateTime.now();
+
+  String group;
+  List theGroup = [
+    'Merah',
+    'Biru',
+    'Kuning',
+    'Hijau',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +25,18 @@ class _AddPicketState extends State<AddPicket> {
         initialDate: selectedDate,
         firstDate: DateTime(2018),
         lastDate: DateTime(2050),
+        helpText: 'Pilih tanggal',
+        cancelText: 'Batal',
+        confirmText: 'OK',
+        errorFormatText: 'Format tanggal salah',
+        fieldLabelText: 'Masukkan tanggal',
+        fieldHintText: 'bulan/tanggal/tahun',
+        /* builder: (context, child) {
+          return Theme(
+            data: ThemeData.dark(),
+            child: child,
+          );
+        }, */
       );
       if (picked != null && picked != selectedDate) {
         setState(() {
@@ -33,23 +54,59 @@ class _AddPicketState extends State<AddPicket> {
         backgroundColor: Color(0xFFFFCE00),
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "${selectedDate.toLocal()}".split(' ')[0],
-            style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          RaisedButton(
-            onPressed: () => _selectDate(context),
-            child: Text(
-              "Select date",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "${selectedDate.toLocal()}".split(' ')[0],
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  RaisedButton(
+                    onPressed: () => _selectDate(context),
+                    child: Icon(
+                      Icons.date_range,
+                      color: Colors.black,
+                    ),
+                    color: Colors.white,
+                  ),
+                ],
+              ),
             ),
-            color: Colors.greenAccent,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.65,
+            child: Card(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(),
+                      SizedBox(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Grup: "),
+                      Spacer(
+                        flex: 1,
+                      ),
+                      Text("Merah"),
+                      Spacer(
+                        flex: 9,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

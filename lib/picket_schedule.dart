@@ -1,4 +1,4 @@
-import 'package:eticketing/add_picket.dart';
+import 'package:eticketing/addpickett.dart';
 import 'package:flutter/material.dart';
 
 class PicketSchedule extends StatefulWidget {
@@ -7,8 +7,39 @@ class PicketSchedule extends StatefulWidget {
 }
 
 class _PicketScheduleState extends State<PicketSchedule> {
+  //
+  DateTime selectedDate = DateTime.now();
+
+  String group;
+  List theGroup = [
+    'Merah',
+    'Biru',
+    'Kuning',
+    'Hijau',
+  ];
+
   @override
   Widget build(BuildContext context) {
+    _selectDate(BuildContext context) async {
+      final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2050),
+        helpText: 'Pilih tanggal',
+        cancelText: 'Batal',
+        confirmText: 'OK',
+        errorFormatText: 'Format tanggal salah',
+        fieldLabelText: 'Masukkan tanggal',
+        fieldHintText: 'bulan/tanggal/tahun',
+      );
+      if (picked != null && picked != selectedDate) {
+        setState(() {
+          selectedDate = picked;
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -28,12 +59,12 @@ class _PicketScheduleState extends State<PicketSchedule> {
         actions: [
           IconButton(
             icon: Icon(
-              Icons.add_circle_outlined,
+              Icons.edit,
               color: Colors.black,
             ),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return AddPicket();
+                return MyForm();
               }));
             },
           ),
@@ -43,11 +74,14 @@ class _PicketScheduleState extends State<PicketSchedule> {
               color: Colors.black,
             ),
             onPressed: () {
+              /* Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MyForm();
+              })); */
               return showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text("Untuk pindah"),
-                  content: Text("Geser ke kanan atau kiri"),
+                  title: Text("Lihat jadwal hari lain"),
+                  content: Text("Klik icon kalender"),
                   actions: [
                     FlatButton(
                       onPressed: () {
@@ -62,95 +96,127 @@ class _PicketScheduleState extends State<PicketSchedule> {
           ),
         ],
       ),
-      body: PageView(
-        children: [
-          buildContainer("1 Januari 2021"),
-          buildContainer("2 Januari 2021"),
-          buildContainer("3 Januari 2021"),
-          buildContainer("4 Januari 2021"),
-        ],
-      ),
-    );
-  }
-
-  Container buildContainer(String date) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Card(
-            elevation: 5,
-            child: Row(
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 70,
+                  child: Stack(
                     children: [
-                      Icon(Icons.navigate_before),
-                      Text(
-                        date,
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                      Card(
+                        elevation: 7,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 70,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${selectedDate.toLocal()}".split(' ')[0],
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.date_range),
+                                  tooltip: 'Pilih tanggal',
+                                  onPressed: () {
+                                    _selectDate(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      Icon(Icons.navigate_next),
                     ],
+                  ),
+                ),
+                // name textfield
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.74,
+                  child: Card(
+                    elevation: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 10, 20),
+                      child: Column(
+                        children: [
+                          //
+                          Padding(
+                            padding: const EdgeInsets.only(right: 32.0),
+                            child: Row(
+                              children: [
+                                Text("Grup: "),
+                                Spacer(
+                                  flex: 1,
+                                ),
+                                Text(
+                                  "Merah",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Spacer(
+                                  flex: 9,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Petugas piket',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Fikri',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.grey),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Mulya',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.grey),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Permana',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.65,
-            child: Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Group",
-                            style: TextStyle(fontSize: 15, color: Colors.grey),
-                          ),
-                          Spacer(
-                            flex: 1,
-                          ),
-                          Text(
-                            "Red",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                          Spacer(
-                            flex: 9,
-                          )
-                        ],
-                      ),
-                    ),
-                    Text(
-                      "Fikri",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                    Text(
-                      "Mulya",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                    Text(
-                      "Permana",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
