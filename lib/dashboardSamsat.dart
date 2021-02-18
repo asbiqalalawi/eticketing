@@ -1,6 +1,7 @@
 import 'package:eticketing/addticket_page.dart';
 import 'package:eticketing/detail_tiket.dart';
 import 'package:eticketing/list_ticket.dart';
+import 'package:eticketing/notification.dart';
 import 'package:eticketing/picket_schedule.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,11 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
             IconButton(
                 color: Colors.black,
                 icon: Icon(Icons.notifications),
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Notifikasi();
+                  }));
+                }),
             IconButton(
                 color: Colors.black,
                 icon: Icon(Icons.calendar_today_sharp),

@@ -1,5 +1,4 @@
 import 'package:eticketing/detail_tiket.dart';
-import 'package:eticketing/history.dart';
 import 'package:flutter/material.dart';
 
 class ListTicket extends StatefulWidget {
@@ -20,15 +19,11 @@ class _ListTicketState extends State<ListTicket> {
           ),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.history,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return HistoriTiket();
-                  }));
-                })
+              icon: Icon(
+                Icons.history,
+                color: Colors.black,
+              ),
+            )
           ],
         ),
         body: ListView(children: <Widget>[

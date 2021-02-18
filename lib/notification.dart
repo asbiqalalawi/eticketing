@@ -1,7 +1,7 @@
 import 'package:eticketing/detail_tiket.dart';
 import 'package:flutter/material.dart';
 
-class HistoriTiket extends StatelessWidget {
+class Notifikasi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -9,7 +9,7 @@ class HistoriTiket extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(255, 206, 0, 1),
           title: Text(
-            "Riwayat",
+            "Notifikasi",
             style: TextStyle(
               color: Colors.black,
               fontFamily: "RedHatDisplay",
@@ -17,7 +17,6 @@ class HistoriTiket extends StatelessWidget {
           ),
         ),
         body: Container(
-          margin: EdgeInsets.all(5),
           child: ListView(
             children: <Widget>[buildLog(context)],
           ),
@@ -35,7 +34,6 @@ class HistoriTiket extends StatelessWidget {
       },
       child: Card(
         color: Color.fromRGBO(255, 249, 224, 1),
-        elevation: 5,
         child: Column(
           children: <Widget>[
             Row(
@@ -54,6 +52,7 @@ class HistoriTiket extends StatelessWidget {
                     )),
                 Spacer(flex: 8),
                 Container(
+                  margin: EdgeInsets.only(top: 15),
                   child: Text(
                     "11:45",
                     style: TextStyle(
@@ -64,6 +63,7 @@ class HistoriTiket extends StatelessWidget {
                 ),
                 Spacer(flex: 1),
                 Container(
+                  margin: EdgeInsets.only(top: 15),
                   child: Text(
                     "18 Februari 2021",
                     style: TextStyle(
@@ -79,7 +79,7 @@ class HistoriTiket extends StatelessWidget {
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(left: 15, top: 10),
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
                     "Mohon dikerjakan dengan cara seksama dan dalam tempo yang sesingkat singkatnya",
                     style: TextStyle(
@@ -87,8 +87,7 @@ class HistoriTiket extends StatelessWidget {
                       fontFamily: "RedHatDisplay",
                       fontSize: 12,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                 ),
               ],
@@ -97,21 +96,20 @@ class HistoriTiket extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(left: 15, top: 10, bottom: 15),
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  margin: EdgeInsets.only(left: 15, top: 10, bottom: 5),
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
                     "Maaf harus saya cancel karna data kurang",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     style: TextStyle(
                         fontFamily: "RedHatDisplay",
                         color: Colors.black,
                         fontSize: 12),
                   ),
                 ),
-                Spacer(flex: 3),
+                Spacer(flex: 1),
                 Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 15),
+                  margin: EdgeInsets.only(top: 10, bottom: 5),
                   child: Text(
                     "Petugas : Yuan Ferdinand",
                     style: TextStyle(
