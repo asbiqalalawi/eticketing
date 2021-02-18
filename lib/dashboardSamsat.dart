@@ -1,4 +1,5 @@
 import 'package:eticketing/addticket_page.dart';
+import 'package:eticketing/detail_tiket.dart';
 import 'package:eticketing/list_ticket.dart';
 import 'package:eticketing/picket_schedule.dart';
 import 'package:flutter/material.dart';
@@ -190,274 +191,298 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
               ],
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: 300,
               width: MediaQuery.of(context).size.width * 0.95,
               child: ListView(children: <Widget>[
-                Card(
-                  elevation: 5,
-                  color: Color.fromRGBO(255, 249, 224, 1),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                              child: Text(
-                                "BE 3557 AN",
-                                style: TextStyle(
-                                    fontFamily: "RedHatDisplay",
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w900),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return DetailTiket();
+                    }));
+                  },
+                  child: Card(
+                    elevation: 5,
+                    color: Color.fromRGBO(255, 249, 224, 1),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                child: Text(
+                                  "BE 3557 AN",
+                                  style: TextStyle(
+                                      fontFamily: "RedHatDisplay",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900),
+                                ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Text(
-                                "1",
-                                style: TextStyle(
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Text(
+                                  "1",
+                                  style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                child: Text(
+                                  "Samsat Origin",
+                                  style: TextStyle(
                                     fontFamily: "PublicSans",
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                              child: Text(
-                                "Samsat Origin",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Text(
-                                "12:53",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            )
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                              child: Text(
-                                "Description of the ticket",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                              child: Text(
-                                "Sedang dikerjakan",
-                                style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.black,
+                                    color: Colors.grey,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16),
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
-                            )
-                          ])
-                    ],
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Text(
+                                  "12:53",
+                                  style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              )
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                child: Text(
+                                  "Description of the ticket",
+                                  style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                child: Text(
+                                  "Sedang dikerjakan",
+                                  style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              )
+                            ])
+                      ],
+                    ),
                   ),
                 ),
-                Card(
-                  elevation: 5,
-                  color: Color.fromRGBO(255, 249, 224, 1),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                              child: Text(
-                                "Nomor Polisi",
-                                style: TextStyle(
-                                    fontFamily: "RedHatDisplay",
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w900),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return DetailTiket();
+                    }));
+                  },
+                  child: Card(
+                    elevation: 5,
+                    color: Color.fromRGBO(255, 249, 224, 1),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                child: Text(
+                                  "Nomor Polisi",
+                                  style: TextStyle(
+                                      fontFamily: "RedHatDisplay",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900),
+                                ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Text(
-                                "1",
-                                style: TextStyle(
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Text(
+                                  "1",
+                                  style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                child: Text(
+                                  "Samsat Origin",
+                                  style: TextStyle(
                                     fontFamily: "PublicSans",
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                              child: Text(
-                                "Samsat Origin",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Text(
-                                "12:53",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                              child: Text(
-                                "Description of the ticket",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                              child: Text(
-                                "Sedang dikerjakan",
-                                style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.black,
+                                    color: Colors.grey,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16),
+                                  ),
+                                ),
                               ),
-                            )
-                          ])
-                    ],
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Text(
+                                  "12:53",
+                                  style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.grey,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                child: Text(
+                                  "Description of the ticket",
+                                  style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                child: Text(
+                                  "Sedang dikerjakan",
+                                  style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              )
+                            ])
+                      ],
+                    ),
                   ),
                 ),
-                Card(
-                  elevation: 5,
-                  color: Color.fromRGBO(255, 249, 224, 1),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                              child: Text(
-                                "BE 3941 VQ",
-                                style: TextStyle(
-                                    fontFamily: "RedHatDisplay",
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w900),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return DetailTiket();
+                    }));
+                  },
+                  child: Card(
+                    elevation: 5,
+                    color: Color.fromRGBO(255, 249, 224, 1),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                child: Text(
+                                  "BE 3941 VQ",
+                                  style: TextStyle(
+                                      fontFamily: "RedHatDisplay",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900),
+                                ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Text(
-                                "1",
-                                style: TextStyle(
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Text(
+                                  "1",
+                                  style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                child: Text(
+                                  "Samsat Origin",
+                                  style: TextStyle(
                                     fontFamily: "PublicSans",
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                              child: Text(
-                                "Samsat Origin",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              child: Text(
-                                "12:53",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                              child: Text(
-                                "Description of the ticket",
-                                style: TextStyle(
-                                  fontFamily: "PublicSans",
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                              child: Text(
-                                "Sedang dikerjakan",
-                                style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.black,
+                                    color: Colors.grey,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16),
+                                  ),
+                                ),
                               ),
-                            )
-                          ])
-                    ],
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Text(
+                                  "12:53",
+                                  style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.grey,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                child: Text(
+                                  "Description of the ticket",
+                                  style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                                child: Text(
+                                  "Sedang dikerjakan",
+                                  style: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              )
+                            ])
+                      ],
+                    ),
                   ),
                 ),
               ]),
