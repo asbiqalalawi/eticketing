@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644915597473",
+    "project_id": "e-ticketing-bapenda",
+    "storage_bucket": "e-ticketing-bapenda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644915597473:android:1567af204b098b3ee720e0",
+        "android_client_info": {
+          "package_name": "com.example.eticketing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644915597473-mv7qjgpjibff54p9798oel2nrl9mv9rd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMYh9iidB3RBfUhl0tsfBVtYwKCEW78PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644915597473-mv7qjgpjibff54p9798oel2nrl9mv9rd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

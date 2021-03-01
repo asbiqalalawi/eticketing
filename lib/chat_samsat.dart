@@ -31,11 +31,17 @@ class _ChatSamsatState extends State<ChatSamsat> {
                       Text(
                         "BE 1234 EE",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "RedHatDisplay"),
                       ),
                       Text(
                         "I have som question about...",
-                        style: TextStyle(fontSize: 15, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                            fontFamily: "PublicSans",
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -57,11 +63,17 @@ class _ChatSamsatState extends State<ChatSamsat> {
                       Text(
                         "BE 1234 EE",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "RedHatDisplay"),
                       ),
                       Text(
                         "I have som question about...",
-                        style: TextStyle(fontSize: 15, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                            fontFamily: "PublicSans",
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

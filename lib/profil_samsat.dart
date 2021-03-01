@@ -15,7 +15,7 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
         backgroundColor: Color(0xFFFFCE00),
         title: Text(
           "Profil",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
       ),
       body: Row(
@@ -38,12 +38,15 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                       child: Text(
                         "User name",
                         style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
+                            fontFamily: "RedHatDisplay",
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(
                       "Samsat Taggamus",
                       style: TextStyle(
+                          fontFamily: "RedHatDisplay",
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),
@@ -65,7 +68,10 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                             return ChangePassword();
                           }));
                         },
-                        child: Text("Ubah Kata Sandi"),
+                        child: Text(
+                          "Ubah Kata Sandi",
+                          style: TextStyle(fontFamily: "PublicSans", fontWeight: FontWeight.bold),
+                        ),
                         color: Color(0xFFFFF0B2),
                       ),
                     ),
@@ -77,7 +83,8 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                           return LoginPage();
                         }));
                       },
-                      child: Text("Keluar"),
+                      child: Text("Keluar",
+                          style: TextStyle(fontFamily: "PublicSans", fontWeight: FontWeight.bold)),
                       color: Color(0xFFFFCE00),
                     ),
                   ],
