@@ -1,4 +1,4 @@
-import 'package:eticketing/addpickett.dart';
+import 'package:eticketing/views/addpickett.dart';
 import 'package:flutter/material.dart';
 
 class PicketSchedule extends StatefulWidget {

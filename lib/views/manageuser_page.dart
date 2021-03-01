@@ -1,5 +1,5 @@
-import 'package:eticketing/adduser_page.dart';
-import 'package:eticketing/edituser_page.dart';
+import 'package:eticketing/views/adduser_page.dart';
+import 'package:eticketing/views/edituser_page.dart';
 import 'package:flutter/material.dart';
 
 class ManageUserPage extends StatefulWidget {

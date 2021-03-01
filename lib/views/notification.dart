@@ -1,4 +1,4 @@
-import 'package:eticketing/detail_tiket.dart';
+import 'package:eticketing/views/detail_tiket.dart';
 import 'package:flutter/material.dart';
 
 class Notifikasi extends StatelessWidget {

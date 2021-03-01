@@ -1,6 +1,6 @@
-import 'package:eticketing/chat_samsat.dart';
-import 'package:eticketing/profil_samsat.dart';
-import 'package:eticketing/dashboardSamsat.dart';
+import 'package:eticketing/views/chat_samsat.dart';
+import 'package:eticketing/views/profil_samsat.dart';
+import 'package:eticketing/views/dashboardSamsat.dart';
 import 'package:flutter/material.dart';
 
 class Bottom_Navigation extends StatefulWidget {

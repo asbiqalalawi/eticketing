@@ -1,4 +1,4 @@
-import 'package:eticketing/detail_tiket.dart';
+import 'package:eticketing/views/detail_tiket.dart';
 import 'package:flutter/material.dart';
 
 class ListTicket extends StatefulWidget {
@@ -22,7 +22,7 @@ class _ListTicketState extends State<ListTicket> {
               icon: Icon(
                 Icons.history,
                 color: Colors.black,
-              ),
+              ), onPressed: () {  },
             )
           ],
         ),

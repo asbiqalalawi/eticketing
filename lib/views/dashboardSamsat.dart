@@ -1,8 +1,8 @@
-import 'package:eticketing/addticket_page.dart';
-import 'package:eticketing/detail_tiket.dart';
-import 'package:eticketing/list_ticket.dart';
-import 'package:eticketing/notification.dart';
-import 'package:eticketing/picket_schedule.dart';
+import 'package:eticketing/views/addticket_page.dart';
+import 'package:eticketing/views/detail_tiket.dart';
+import 'package:eticketing/views/list_ticket.dart';
+import 'package:eticketing/views/notification.dart';
+import 'package:eticketing/views/picket_schedule.dart';
 import 'package:flutter/material.dart';
 
 class DashboardSamsat extends StatefulWidget {

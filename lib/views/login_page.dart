@@ -1,4 +1,4 @@
-import 'package:eticketing/bottom_navigation.dart';
+import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
