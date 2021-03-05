@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/views/addticket_page.dart';
-import 'package:eticketing/views/detail_tiket.dart';
+import 'package:eticketing/views/item_card.dart';
 import 'package:eticketing/views/list_ticket.dart';
 import 'package:eticketing/views/notification.dart';
 import 'package:eticketing/views/picket_schedule.dart';
@@ -13,6 +14,8 @@ class DashboardSamsat extends StatefulWidget {
 class _DashboardSamsatState extends State<DashboardSamsat> {
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference ticket = firestore.collection('ticket');
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -199,297 +202,20 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
               height: 300,
               width: MediaQuery.of(context).size.width * 0.95,
               child: ListView(children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return DetailTiket();
-                    }));
-                  },
-                  child: Card(
-                    elevation: 5,
-                    color: Color.fromRGBO(255, 249, 224, 1),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "BE 3557 AN",
-                                  style: TextStyle(
-                                      fontFamily: "RedHatDisplay",
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "1",
-                                  style: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "Samsat Origin",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "12:53",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              )
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Description of the ticket",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Sedang dikerjakan",
-                                  style: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                              )
-                            ])
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return DetailTiket();
-                    }));
-                  },
-                  child: Card(
-                    elevation: 5,
-                    color: Color.fromRGBO(255, 249, 224, 1),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "Nomor Polisi",
-                                  style: TextStyle(
-                                      fontFamily: "RedHatDisplay",
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "1",
-                                  style: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "Samsat Origin",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "12:53",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              )
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Description of the ticket",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Sedang dikerjakan",
-                                  style: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                              )
-                            ])
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return DetailTiket();
-                    }));
-                  },
-                  child: Card(
-                    elevation: 5,
-                    color: Color.fromRGBO(255, 249, 224, 1),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "BE 3941 VQ",
-                                  style: TextStyle(
-                                      fontFamily: "RedHatDisplay",
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "1",
-                                  style: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                child: Text(
-                                  "Samsat Origin",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                child: Text(
-                                  "12:53",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              )
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Description of the ticket",
-                                  style: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
-                                child: Text(
-                                  "Sedang dikerjakan",
-                                  style: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                              )
-                            ])
-                      ],
-                    ),
-                  ),
-                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: ticket.snapshots(),
+                    builder: (_, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data.docs
+                              .map((e) => ItemCard(e.data()['Nopol'],
+                                  e.data()['Description'], e.data()['Antrian']))
+                              .toList(),
+                        );
+                      } else {
+                        return Text("Loading");
+                      }
+                    })
               ]),
             )
           ],

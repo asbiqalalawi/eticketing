@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddTicketPage extends StatelessWidget {
-  const AddTicketPage({Key key}) : super(key: key);
+  AddTicketPage({Key key}) : super(key: key);
+  final TextEditingController nopolController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference ticket = firestore.collection('ticket');
+
+    int counter = 0;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 255, 206, 0),
@@ -24,6 +32,7 @@ class AddTicketPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextField(
+                    controller: nopolController,
                     decoration: InputDecoration(
                         fillColor: Color.fromARGB(255, 255, 249, 224),
                         filled: true,
@@ -34,6 +43,7 @@ class AddTicketPage extends StatelessWidget {
                         border: InputBorder.none),
                   ),
                   TextField(
+                    controller: descController,
                     maxLines: 14,
                     decoration: InputDecoration(
                         fillColor: Color.fromARGB(255, 255, 249, 224),
@@ -64,7 +74,16 @@ class AddTicketPage extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
+                    onTap: () {
+                      ticket.add({
+                        'Antrian': counter += 1,
+                        'Nopol': nopolController.text,
+                        'Description': descController.text
+                      });
+                      nopolController.text = ' ';
+                      descController.text = ' ';
+                      Navigator.pop(context);
+                    },
                     child: Center(
                       child: Text(
                         "Send",
