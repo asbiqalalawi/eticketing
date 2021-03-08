@@ -68,13 +68,13 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 fontWeight: FontWeight.w900,
                                 fontFamily: "RedHatDisplay",
                                 color: Color.fromRGBO(157, 153, 135, 1),
-                                fontSize: 36)),
+                                fontSize: 30)),
                         Text(
                           "21",
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Colors.black,
-                              fontSize: 48,
+                              fontSize: 42,
                               fontWeight: FontWeight.bold),
                         ),
                       ]),
@@ -97,14 +97,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Color.fromRGBO(157, 153, 135, 1),
-                              fontSize: 23),
+                              fontSize: 17),
                         ),
                         Text(
                           "3",
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Colors.black,
-                              fontSize: 28,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold),
                         ),
                       ]),
@@ -123,14 +123,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Color.fromRGBO(157, 153, 135, 1),
-                              fontSize: 23),
+                              fontSize: 17),
                         ),
                         Text(
                           "14",
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Colors.black,
-                              fontSize: 28,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold),
                         ),
                       ]),
@@ -149,14 +149,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Color.fromRGBO(157, 153, 135, 1),
-                              fontSize: 23),
+                              fontSize: 17),
                         ),
                         Text(
                           "7",
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Colors.black,
-                              fontSize: 28,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold),
                         ),
                       ]),

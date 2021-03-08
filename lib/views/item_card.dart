@@ -100,7 +100,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
                     child: Text(
-                      "Sedang dikerjakan",
+                      "dikerjakan",
                       style: TextStyle(
                           fontFamily: "PublicSans",
                           color: Colors.black,

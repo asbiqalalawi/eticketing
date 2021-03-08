@@ -44,7 +44,7 @@ class AddTicketPage extends StatelessWidget {
                   ),
                   TextField(
                     controller: descController,
-                    maxLines: 14,
+                    maxLines: 8,
                     decoration: InputDecoration(
                         fillColor: Color.fromARGB(255, 255, 249, 224),
                         filled: true,
