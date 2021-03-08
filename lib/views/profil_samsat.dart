@@ -1,5 +1,7 @@
 import 'package:eticketing/views/changepassword_page.dart';
 import 'package:eticketing/views/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class ProfilSamsat extends StatefulWidget {
@@ -8,6 +10,8 @@ class ProfilSamsat extends StatefulWidget {
 }
 
 class _ProfilSamsatState extends State<ProfilSamsat> {
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +74,9 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                         },
                         child: Text(
                           "Ubah Kata Sandi",
-                          style: TextStyle(fontFamily: "PublicSans", fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
                         ),
                         color: Color(0xFFFFF0B2),
                       ),
@@ -78,13 +84,16 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                     RaisedButton(
                       elevation: 5,
                       onPressed: () {
+                        auth.signOut();
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
                           return LoginPage();
                         }));
                       },
                       child: Text("Keluar",
-                          style: TextStyle(fontFamily: "PublicSans", fontWeight: FontWeight.bold)),
+                          style: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold)),
                       color: Color(0xFFFFCE00),
                     ),
                   ],

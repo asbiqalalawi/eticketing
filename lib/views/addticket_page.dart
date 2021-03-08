@@ -14,6 +14,7 @@ class AddTicketPage extends StatelessWidget {
     int counter = 0;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 255, 206, 0),
         title: Text(
