@@ -33,6 +33,7 @@ class AddTicketPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 255, 206, 0),
         title: Text(
