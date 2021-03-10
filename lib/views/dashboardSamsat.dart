@@ -13,6 +13,12 @@ class DashboardSamsat extends StatefulWidget {
 
 class _DashboardSamsatState extends State<DashboardSamsat> {
   String nomorPolisi, deskripsi;
+  int totalticket;
+
+  getTotalTicket(total) {
+    this.totalticket = total;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,7 +75,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 color: Color.fromRGBO(157, 153, 135, 1),
                                 fontSize: 36)),
                         Text(
-                          "1",
+                          "2",
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Colors.black,

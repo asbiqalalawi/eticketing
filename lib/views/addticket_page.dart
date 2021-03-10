@@ -1,3 +1,4 @@
+import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,7 +16,6 @@ class AddTicketPage extends StatelessWidget {
   }
 
   createData() {
-    print('Data Created');
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("ticket").doc(nomorPolisi);
 
@@ -26,8 +26,7 @@ class AddTicketPage extends StatelessWidget {
       "antrian": antrian,
       "createdAt": DateTime.now()
     };
-
-    documentReference.set(tiket).whenComplete(() => print("Ticket Created"));
+    documentReference.set(tiket);
   }
 
   @override
@@ -47,7 +46,7 @@ class AddTicketPage extends StatelessWidget {
             alignment: Alignment(0, -0.85),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.95,
-              height: MediaQuery.of(context).size.height * 0.42,
+              height: MediaQuery.of(context).size.height * 0.50,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -100,7 +99,10 @@ class AddTicketPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
                       createData();
-                      Navigator.pop(context);
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) {
+                        return Bottom_Navigation();
+                      }));
                     },
                     child: Center(
                       child: Text(
