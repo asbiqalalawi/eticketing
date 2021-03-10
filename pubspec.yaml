@@ -29,6 +29,8 @@ dependencies:
   provider: ^3.0.0+1
   intl:
   firebase_auth:
+  form_field_validator: ^1.0.1
+  fluttertoast: ^7.1.8
 
 dev_dependencies:
   flutter_test:

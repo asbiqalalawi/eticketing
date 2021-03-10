@@ -3,12 +3,12 @@ import 'package:eticketing/views/profil_samsat.dart';
 import 'package:eticketing/views/dashboardSamsat.dart';
 import 'package:flutter/material.dart';
 
-class BottoNavigation extends StatefulWidget {
+class Bottom_Navigation extends StatefulWidget {
   @override
-  _BottoNavigationState createState() => _BottoNavigationState();
+  _Bottom_NavigationState createState() => _Bottom_NavigationState();
 }
 
-class _BottoNavigationState extends State<BottoNavigation> {
+class _Bottom_NavigationState extends State<Bottom_Navigation> {
   int _selectedNavbar = 0;
 
   void _changeSelectedNavBar(int index) {
