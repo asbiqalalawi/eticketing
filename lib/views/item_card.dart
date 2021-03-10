@@ -1,24 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/views/detail_ticket_page.dart';
-import 'package:eticketing/views/detail_tiket.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
   final String nopol;
   final String deskripsi;
-  final int counter;
+  final String status;
+  final int antrian;
+  final Timestamp createdAt;
+
   //// Pointer to Update Function
   // final Function onUpdate;
   // //// Pointer to Delete Function
   // final Function onDelete;
 
-  ItemCard(this.nopol, this.deskripsi, this.counter);
+  ItemCard(
+      this.nopol, this.deskripsi, this.status, this.antrian, this.createdAt);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DetailPage(nopol, deskripsi);
+          return DetailPage(nopol, deskripsi, status, antrian, createdAt);
         }));
       },
       child: Card(
@@ -43,7 +47,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Text(
-                      counter.toString(),
+                      antrian.toString(),
                       style: TextStyle(
                           fontFamily: "PublicSans",
                           color: Colors.black,
@@ -70,12 +74,12 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Text(
-                      "12:53",
+                      createdAt.toDate().toString(),
                       style: TextStyle(
                         fontFamily: "PublicSans",
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
                     ),
                   )
@@ -100,7 +104,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
                     child: Text(
-                      "Sedang dikerjakan",
+                      status,
                       style: TextStyle(
                           fontFamily: "PublicSans",
                           color: Colors.black,

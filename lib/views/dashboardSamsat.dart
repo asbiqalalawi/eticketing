@@ -12,10 +12,9 @@ class DashboardSamsat extends StatefulWidget {
 }
 
 class _DashboardSamsatState extends State<DashboardSamsat> {
+  String nomorPolisi, deskripsi;
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference ticket = firestore.collection('ticket');
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -70,7 +69,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 color: Color.fromRGBO(157, 153, 135, 1),
                                 fontSize: 36)),
                         Text(
-                          "21",
+                          "1",
                           style: TextStyle(
                               fontFamily: "RedHatDisplay",
                               color: Colors.black,
@@ -201,22 +200,29 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
             Container(
               height: 300,
               width: MediaQuery.of(context).size.width * 0.95,
-              child: ListView(children: <Widget>[
-                StreamBuilder<QuerySnapshot>(
-                    stream: ticket.snapshots(),
-                    builder: (_, snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          children: snapshot.data.docs
-                              .map((e) => ItemCard(e.data()['Nopol'],
-                                  e.data()['Description'], e.data()['Antrian']))
-                              .toList(),
-                        );
-                      } else {
-                        return Text("Loading");
-                      }
-                    })
-              ]),
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("ticket")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot documentSnapshot =
+                                snapshot.data.docs[index];
+                            return ItemCard(
+                                documentSnapshot["nomorPolisi"],
+                                documentSnapshot["deskripsi"],
+                                documentSnapshot["status"],
+                                documentSnapshot["antrian"],
+                                documentSnapshot["createdAt"]);
+                          });
+                    } else {
+                      return Text('Loading');
+                    }
+                  }),
             )
           ],
         ),

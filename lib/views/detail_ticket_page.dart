@@ -1,14 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
   final String nopol;
   final String deskripsi;
+  final String status;
+  final int antrian;
+  final Timestamp createdAt;
   //// Pointer to Update Function
   // final Function onUpdate;
   // //// Pointer to Delete Function
   // final Function onDelete;
 
-  DetailPage(this.nopol, this.deskripsi);
+  DetailPage(
+      this.nopol, this.deskripsi, this.status, this.antrian, this.createdAt);
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +51,7 @@ class DetailPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "12:23, ",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                    Text(
-                      "12 Desember 2020",
+                      createdAt.toDate().toString(),
                       style: TextStyle(fontSize: 15, color: Colors.grey),
                     ),
                   ],
@@ -75,11 +76,11 @@ class DetailPage extends StatelessWidget {
                   children: [
                     Text(
                       nopol.toString(),
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Text(
-                      "Processed",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                      status,
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                   ],
                 ),
@@ -105,7 +106,7 @@ class DetailPage extends StatelessWidget {
                       children: [
                         Text(
                           deskripsi,
-                          style: TextStyle(fontSize: 15, color: Colors.grey),
+                          style: TextStyle(fontSize: 15, color: Colors.black),
                         ),
                       ],
                     ),

@@ -1,7 +1,13 @@
-import 'package:eticketing/views/detail_tiket.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/views/detail_ticket_page.dart';
 import 'package:flutter/material.dart';
 
 class Notifikasi extends StatelessWidget {
+  String nopol;
+  String deskripsi;
+  String status;
+  int antrian;
+  Timestamp createdAt;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +35,7 @@ class Notifikasi extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DetailTiket();
+          return DetailPage(nopol, deskripsi, status, antrian, createdAt);
         }));
       },
       child: Card(

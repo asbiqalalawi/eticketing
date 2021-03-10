@@ -3,12 +3,12 @@ import 'package:eticketing/views/profil_samsat.dart';
 import 'package:eticketing/views/dashboardSamsat.dart';
 import 'package:flutter/material.dart';
 
-class Bottom_Navigation extends StatefulWidget {
+class BottoNavigation extends StatefulWidget {
   @override
-  _Bottom_NavigationState createState() => _Bottom_NavigationState();
+  _BottoNavigationState createState() => _BottoNavigationState();
 }
 
-class _Bottom_NavigationState extends State<Bottom_Navigation> {
+class _BottoNavigationState extends State<BottoNavigation> {
   int _selectedNavbar = 0;
 
   void _changeSelectedNavBar(int index) {
@@ -34,15 +34,15 @@ class _Bottom_NavigationState extends State<Bottom_Navigation> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            title: Text('Dashboard'),
+            label: ('Dashboard'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            title: Text('Chat'),
+            label: ('Chat'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            title: Text('Account'),
+            label: ('Account'),
           ),
         ],
         currentIndex: _selectedNavbar,

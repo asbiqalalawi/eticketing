@@ -1,18 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddTicketPage extends StatelessWidget {
   AddTicketPage({Key key}) : super(key: key);
-  final TextEditingController nopolController = TextEditingController();
-  final TextEditingController descController = TextEditingController();
+  String nomorPolisi, deskripsi, status = "Tersedia";
+  int antrian = 1;
+
+  getNopol(nopol) {
+    this.nomorPolisi = nopol;
+  }
+
+  getDeskripsi(desk) {
+    this.deskripsi = desk;
+  }
+
+  createData() {
+    print('Data Created');
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("ticket").doc(nomorPolisi);
+
+    Map<String, dynamic> tiket = {
+      "nomorPolisi": nomorPolisi,
+      "deskripsi": deskripsi,
+      "status": status,
+      "antrian": antrian,
+      "createdAt": DateTime.now()
+    };
+
+    documentReference.set(tiket).whenComplete(() => print("Ticket Created"));
+  }
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference ticket = firestore.collection('ticket');
-
-    int counter = 0;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 255, 206, 0),
@@ -32,7 +51,9 @@ class AddTicketPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextField(
-                    controller: nopolController,
+                    onChanged: (String nopol) {
+                      getNopol(nopol);
+                    },
                     decoration: InputDecoration(
                         fillColor: Color.fromARGB(255, 255, 249, 224),
                         filled: true,
@@ -43,7 +64,9 @@ class AddTicketPage extends StatelessWidget {
                         border: InputBorder.none),
                   ),
                   TextField(
-                    controller: descController,
+                    onChanged: (String desk) {
+                      getDeskripsi(desk);
+                    },
                     maxLines: 14,
                     decoration: InputDecoration(
                         fillColor: Color.fromARGB(255, 255, 249, 224),
@@ -75,13 +98,7 @@ class AddTicketPage extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      ticket.add({
-                        'Antrian': counter += 1,
-                        'Nopol': nopolController.text,
-                        'Description': descController.text
-                      });
-                      nopolController.text = ' ';
-                      descController.text = ' ';
+                      createData();
                       Navigator.pop(context);
                     },
                     child: Center(
@@ -98,7 +115,7 @@ class AddTicketPage extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
