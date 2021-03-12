@@ -1,4 +1,4 @@
-import 'package:eticketing/views/chat_samsat.dart';
+import 'package:eticketing/views/chatlist_page.dart';
 import 'package:eticketing/views/profil_samsat.dart';
 import 'package:eticketing/views/dashboardSamsat.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     final _listPage = [
       // DashboardSamsat(),
       DashboardSamsat(),
-      ChatSamsat(),
+      ChatList(),
       ProfilSamsat(),
     ];
 

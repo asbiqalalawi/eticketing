@@ -228,6 +228,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                               documentSnapshot["status"],
                               documentSnapshot["antrian"],
                               documentSnapshot["createdAt"],
+                              documentSnapshot["pengirim"],
                             );
                           });
                     } else {

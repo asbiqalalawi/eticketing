@@ -9,12 +9,12 @@ class AddUserPage extends StatefulWidget {
 }
 
 class _AddUserPageState extends State<AddUserPage> {
-  String list;
-  List droplist = [
-    "Samsat Tanggamus",
-    "Samsat Pringsewu",
-    "Samsat Bandar Lampung"
-  ];
+  // String list;
+  // List droplist = [
+  //   "Samsat Tanggamus",
+  //   "Samsat Pringsewu",
+  //   "Samsat Bandar Lampung"
+  // ];
 
   bool isLoading = false;
 

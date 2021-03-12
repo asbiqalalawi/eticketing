@@ -1,5 +1,4 @@
 import 'package:eticketing/services/auth.dart';
-import 'package:eticketing/views/adduser_page.dart';
 import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:eticketing/views/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
