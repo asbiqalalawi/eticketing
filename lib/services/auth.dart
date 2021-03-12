@@ -1,48 +1,88 @@
-// import 'package:eticketing/model/user.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/helper/sharedpref_helper.dart';
+import 'package:eticketing/services/database.dart';
+import 'package:eticketing/views/bottom_navigation.dart';
+import 'package:eticketing/views/manageuser_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// class AuthMethods {
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
+class AuthMethods {
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
-//   User _userFromFirebaseUser(FirebaseUser user) {
-//     return user != null ? User(userId: user.uid) : null;
-//   }
+  getCurrentUser() async {
+    return await auth.currentUser;
+  }
 
-//   Future signInWithEmailAndPassword(String email, String password) async {
-//     try {
-//       AuthResult result = await _auth.signInWithEmailAndPassword(
-//           email: email, password: password);
-//       FirebaseUser firebaseUser = result.user;
-//       return _userFromFirebaseUser(firebaseUser);
-//     } catch (e) {
-//       print(e.toString());
-//     }
-//   }
+  signUp(String email, String password, String samsat, String name,
+      BuildContext context) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User userDetail = userCredential.user;
 
-//   Future singUpWithEmailAndPassword(String email, String password) async {
-//     try {
-//       AuthResult result = await _auth.createUserWithEmailAndPassword(
-//           email: email, password: password);
-//       FirebaseUser firebaseUser = result.user;
-//       return _userFromFirebaseUser(firebaseUser);
-//     } catch (e) {
-//       print(e.toString());
-//     }
-//   }
+      if (userCredential != null) {
+        SharedPreferenceHelper().saveUserEmail(userDetail.email);
+        SharedPreferenceHelper().saveUserId(userDetail.uid);
+        SharedPreferenceHelper().saveUserName(name);
+        SharedPreferenceHelper().saveSamsatName(samsat);
 
-//   Future resetPass(String email) async {
-//     try {
-//       return await _auth.sendPasswordResetEmail(email: email);
-//     } catch (e) {
-//       print(e.toString());
-//     }
-//   }
+        Map<String, dynamic> userInfoMap = {
+          "email": userDetail.email,
+          "name": name,
+          "samsatname": samsat
+        };
 
-//   Future signOut() async {
-//     try {
-//       return await _auth.signOut();
-//     } catch (e) {
-//       print(e.toString());
-//     }
-//   }
-// }
+        DatabaseMethods()
+            .addUserInfoToDB(userDetail.uid, userInfoMap)
+            .then((value) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => ManageUserPage()));
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  signIn(String email, String password, BuildContext context) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      User userDetail = userCredential.user;
+
+      QuerySnapshot querySnapshot =
+          await DatabaseMethods().getUserInfo(userDetail.email);
+
+      if (userCredential != null) {
+        SharedPreferenceHelper().saveUserEmail(userDetail.email);
+        SharedPreferenceHelper().saveUserId(userDetail.uid);
+        SharedPreferenceHelper().saveUserName(querySnapshot.docs[0]["name"]);
+        SharedPreferenceHelper()
+            .saveSamsatName(querySnapshot.docs[0]["samsatname"]);
+
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => BottomNavigation()));
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  Future signOut() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear();
+    await auth.signOut();
+  }
+}

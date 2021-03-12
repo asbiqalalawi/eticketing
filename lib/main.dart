@@ -1,3 +1,6 @@
+import 'package:eticketing/services/auth.dart';
+import 'package:eticketing/views/adduser_page.dart';
+import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:eticketing/views/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +19,16 @@ class MyApp extends StatelessWidget {
     // User user = Provider.of<User>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: FutureBuilder(
+        future: AuthMethods().getCurrentUser(),
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return BottomNavigation();
+          } else {
+            return LoginPage();
+          }
+        },
+      ),
       // home: (user == null) ? LoginPage() : DashboardSamsat(),
     );
   }

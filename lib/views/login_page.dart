@@ -1,4 +1,4 @@
-import 'package:eticketing/views/bottom_navigation.dart';
+import 'package:eticketing/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +10,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _email, _password;
+  String email, password;
   final auth = FirebaseAuth.instance;
   bool _obsecureText = true;
 
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                         keyboardType: TextInputType.emailAddress,
                         onChanged: (value) {
                           setState(() {
-                            _email = value.trim();
+                            email = value.trim();
                           });
                         },
                         decoration: InputDecoration(
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: _obsecureText,
                         onChanged: (value) {
                           setState(() {
-                            _password = value.trim();
+                            password = value.trim();
                           });
                         },
                         decoration: InputDecoration(
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           if (_formKey.currentState.validate()) {
                             print('Validated');
-                            return _signIn(_email, _password);
+                            AuthMethods().signIn(email, password, context);
                           } else {
                             print('Not Validated');
                           }
@@ -164,20 +164,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  _signIn(String _email, String _password) async {
-    try {
-      await auth.signInWithEmailAndPassword(email: _email, password: _password);
-
-      //success
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return BottomNavigation();
-      }));
-    } on FirebaseAuthException catch (error) {
-      Fluttertoast.showToast(msg: error.message, gravity: ToastGravity.TOP);
-    }
   }
 
   String validatePassword(String value) {
