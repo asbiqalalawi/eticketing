@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                           EmailValidator(errorText: 'Email tidak valid')
                         ]),
                         autocorrect: true,
-                        autofocus: true,
+                        // autofocus: true,
                         cursorColor: Colors.black,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.emailAddress,

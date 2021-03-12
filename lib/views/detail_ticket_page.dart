@@ -51,7 +51,7 @@ class DetailPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      createdAt.toDate().toString(),
+                      createdAt.toDate().toString().substring(0, 16),
                       style: TextStyle(fontSize: 15, color: Colors.grey),
                     ),
                   ],

@@ -32,6 +32,7 @@ dependencies:
   firebase_auth:
   form_field_validator: ^1.0.1
   fluttertoast: ^7.1.8
+  date_format: ^1.0.9
 
 dev_dependencies:
   flutter_test:

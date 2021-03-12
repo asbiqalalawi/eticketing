@@ -22,8 +22,8 @@ class _AddTicketPageState extends State<AddTicketPage> {
     this.deskripsi = desk;
   }
 
-  createData(int count) {
-    this.antrian = count;
+  createData(angka) {
+    this.antrian = angka;
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("ticket").doc(nomorPolisi);
 
@@ -31,30 +31,25 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "nomorPolisi": nomorPolisi,
       "deskripsi": deskripsi,
       "status": status,
-      "antrian": antrian,
+      "antrian": FieldValue.increment(1),
       "createdAt": DateTime.now(),
     };
     documentReference.set(tiket);
+    for (int i = 1; i < antrian; i++) {
+      documentReference.update(tiket);
+    }
   }
 
   getCounter() {
-    FirebaseFirestore dbfirebase = FirebaseFirestore.instance;
-    CollectionReference nomor = dbfirebase.collection('nomor');
-    DocumentReference noReference =
-        FirebaseFirestore.instance.collection("nomor").doc('antrian');
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('nomor').doc('antrian');
 
-    Map<String, dynamic> counter = {
-      "noAntrian": FieldValue.increment(1),
-    };
-    noReference.update(counter);
-    return StreamBuilder<DocumentSnapshot>(
-        stream: nomor.doc('antrian').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return createData(int.tryParse(snapshot.data.data()['noAntrian']));
-          } else
-            return createData(1);
-        });
+    return FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+      int newValue = snapshot.data()['noAntrian'] + 1;
+      transaction.update(documentReference, {'noAntrian': newValue});
+      return createData(newValue);
+    });
   }
 
   @override
@@ -95,7 +90,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                     onChanged: (String desk) {
                       getDeskripsi(desk);
                     },
-                    maxLines: 14,
+                    maxLines: 12,
                     decoration: InputDecoration(
                         fillColor: Color.fromARGB(255, 255, 249, 224),
                         filled: true,

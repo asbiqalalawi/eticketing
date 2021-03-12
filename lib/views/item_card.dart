@@ -74,7 +74,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Text(
-                      createdAt.toDate().toString(),
+                      createdAt.toDate().toString().substring(11, 16),
                       style: TextStyle(
                         fontFamily: "PublicSans",
                         color: Colors.black,
