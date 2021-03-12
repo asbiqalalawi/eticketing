@@ -1,3 +1,4 @@
+import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,8 +12,15 @@ class AddTicketPage extends StatefulWidget {
 
 class _AddTicketPageState extends State<AddTicketPage> {
   String nomorPolisi, deskripsi, status = "Tersedia";
+  String mySamsatName, myUserName, myEmail;
 
   int antrian = 1;
+
+  getMyInfoFromSharedPreferences() async {
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+  }
 
   getNopol(nopol) {
     this.nomorPolisi = nopol;
@@ -33,6 +41,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "status": status,
       "antrian": FieldValue.increment(1),
       "createdAt": DateTime.now(),
+      "pengirim": myUserName
     };
     documentReference.set(tiket);
     for (int i = 1; i < antrian; i++) {
@@ -50,6 +59,12 @@ class _AddTicketPageState extends State<AddTicketPage> {
       transaction.update(documentReference, {'noAntrian': newValue});
       return createData(newValue);
     });
+  }
+
+  @override
+  void initState() {
+    getMyInfoFromSharedPreferences();
+    super.initState();
   }
 
   @override
@@ -130,7 +145,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                     },
                     child: Center(
                       child: Text(
-                        "Send",
+                        "Kirim",
                         style: TextStyle(
                             fontFamily: "PublicSans",
                             fontWeight: FontWeight.bold,

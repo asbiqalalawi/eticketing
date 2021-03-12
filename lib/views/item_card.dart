@@ -8,6 +8,7 @@ class ItemCard extends StatelessWidget {
   final String status;
   final int antrian;
   final Timestamp createdAt;
+  final String pengirim;
 
   //// Pointer to Update Function
   // final Function onUpdate;
@@ -15,14 +16,14 @@ class ItemCard extends StatelessWidget {
   // final Function onDelete;
 
   ItemCard(
-      this.nopol, this.deskripsi, this.status, this.antrian, this.createdAt);
+      this.nopol, this.deskripsi, this.status, this.antrian, this.createdAt, this.pengirim);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DetailPage(nopol, deskripsi, status, antrian, createdAt);
+          return DetailPage(nopol, deskripsi, status, antrian, createdAt, pengirim);
         }));
       },
       child: Card(

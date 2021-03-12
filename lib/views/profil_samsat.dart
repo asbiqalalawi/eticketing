@@ -1,3 +1,4 @@
+import 'package:eticketing/services/auth.dart';
 import 'package:eticketing/views/changepassword_page.dart';
 import 'package:eticketing/views/login_page.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,7 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                     RaisedButton(
                       elevation: 5,
                       onPressed: () {
+                        AuthMethods().signOut();
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
                           return LoginPage();

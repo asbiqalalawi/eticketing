@@ -46,6 +46,7 @@ class _ListTicketState extends State<ListTicket> {
                           documentSnapshot["status"],
                           documentSnapshot["antrian"],
                           documentSnapshot["createdAt"],
+                          documentSnapshot["pengirim"],
                         );
                       });
                 } else {

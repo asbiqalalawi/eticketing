@@ -1,11 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:flutter/material.dart';
 
-class ChatSamsat extends StatefulWidget {
+class ChatList extends StatefulWidget {
   @override
-  _ChatSamsatState createState() => _ChatSamsatState();
+  _ChatListState createState() => _ChatListState();
 }
 
-class _ChatSamsatState extends State<ChatSamsat> {
+class _ChatListState extends State<ChatList> {
+  Stream chatRoomStream;
+  String mySamsatName, myUserName, myEmail;
+
+  getMyInfoFromSharedPreferences() async {
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+  }
+
+  // Widget chatRoomList() {
+  //   return StreamBuilder(
+  //     stream: chatRoomStream,
+  //     builder: (context, snapshot) {
+  //       return snapshot.hasData
+  //           ? ListView.builder(
+  //               itemCount: snapshot.data.docs.length,
+  //               shrinkWrap: true,
+  //               itemBuilder: (context, index) {
+  //                 DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
+  //                 return Text(documentSnapshot["nopol"]);
+  //               },
+  //             )
+  //           : Center(child: CircularProgressIndicator());
+  //     },
+  //   );
+  // }
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
