@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
       //success
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
-        return Bottom_Navigation();
+        return BottomNavigation();
       }));
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(msg: error.message, gravity: ToastGravity.TOP);

@@ -26,7 +26,8 @@ dependencies:
   cupertino_icons: ^1.0.0
   cloud_firestore:
   firebase_core:
-  provider: ^3.0.0+1
+  # provider: ^3.0.0+1
+  provider:
   intl:
   firebase_auth:
   form_field_validator: ^1.0.1

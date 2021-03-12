@@ -50,7 +50,7 @@ class _VerifyUserState extends State<VerifyUser> {
       timer.cancel();
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
-        return Bottom_Navigation();
+        return BottomNavigation();
       }));
     }
   }

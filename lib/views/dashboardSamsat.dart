@@ -13,14 +13,10 @@ class DashboardSamsat extends StatefulWidget {
 
 class _DashboardSamsatState extends State<DashboardSamsat> {
   String nomorPolisi, deskripsi;
-  int totalticket;
-
-  getTotalTicket(total) {
-    this.totalticket = total;
-  }
-
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore dbfirebase = FirebaseFirestore.instance;
+    CollectionReference nomor = dbfirebase.collection('nomor');
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -74,14 +70,21 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                 fontFamily: "RedHatDisplay",
                                 color: Color.fromRGBO(157, 153, 135, 1),
                                 fontSize: 36)),
-                        Text(
-                          "2",
-                          style: TextStyle(
-                              fontFamily: "RedHatDisplay",
-                              color: Colors.black,
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        StreamBuilder<DocumentSnapshot>(
+                            stream: nomor.doc('antrian').snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData)
+                                return Text(
+                                  snapshot.data.data()['noAntrian'].toString(),
+                                  style: TextStyle(
+                                      fontFamily: "RedHatDisplay",
+                                      color: Colors.black,
+                                      fontSize: 48,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              else
+                                return Text("Loading");
+                            }),
                       ]),
                 ),
               ]),
@@ -219,11 +222,12 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                             DocumentSnapshot documentSnapshot =
                                 snapshot.data.docs[index];
                             return ItemCard(
-                                documentSnapshot["nomorPolisi"],
-                                documentSnapshot["deskripsi"],
-                                documentSnapshot["status"],
-                                documentSnapshot["antrian"],
-                                documentSnapshot["createdAt"]);
+                              documentSnapshot["nomorPolisi"],
+                              documentSnapshot["deskripsi"],
+                              documentSnapshot["status"],
+                              documentSnapshot["antrian"],
+                              documentSnapshot["createdAt"],
+                            );
                           });
                     } else {
                       return Text('Loading');

@@ -41,11 +41,12 @@ class _ListTicketState extends State<ListTicket> {
                         DocumentSnapshot documentSnapshot =
                             snapshot.data.docs[index];
                         return ItemCard(
-                            documentSnapshot["nomorPolisi"],
-                            documentSnapshot["deskripsi"],
-                            documentSnapshot["status"],
-                            documentSnapshot["antrian"],
-                            documentSnapshot["createdAt"]);
+                          documentSnapshot["nomorPolisi"],
+                          documentSnapshot["deskripsi"],
+                          documentSnapshot["status"],
+                          documentSnapshot["antrian"],
+                          documentSnapshot["createdAt"],
+                        );
                       });
                 } else {
                   return Text('Loading');

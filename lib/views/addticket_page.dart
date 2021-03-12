@@ -2,9 +2,16 @@ import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AddTicketPage extends StatelessWidget {
+class AddTicketPage extends StatefulWidget {
   AddTicketPage({Key key}) : super(key: key);
+
+  @override
+  _AddTicketPageState createState() => _AddTicketPageState();
+}
+
+class _AddTicketPageState extends State<AddTicketPage> {
   String nomorPolisi, deskripsi, status = "Tersedia";
+
   int antrian = 1;
 
   getNopol(nopol) {
@@ -15,7 +22,8 @@ class AddTicketPage extends StatelessWidget {
     this.deskripsi = desk;
   }
 
-  createData() {
+  createData(int count) {
+    this.antrian = count;
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("ticket").doc(nomorPolisi);
 
@@ -24,9 +32,29 @@ class AddTicketPage extends StatelessWidget {
       "deskripsi": deskripsi,
       "status": status,
       "antrian": antrian,
-      "createdAt": DateTime.now()
+      "createdAt": DateTime.now(),
     };
     documentReference.set(tiket);
+  }
+
+  getCounter() {
+    FirebaseFirestore dbfirebase = FirebaseFirestore.instance;
+    CollectionReference nomor = dbfirebase.collection('nomor');
+    DocumentReference noReference =
+        FirebaseFirestore.instance.collection("nomor").doc('antrian');
+
+    Map<String, dynamic> counter = {
+      "noAntrian": FieldValue.increment(1),
+    };
+    noReference.update(counter);
+    return StreamBuilder<DocumentSnapshot>(
+        stream: nomor.doc('antrian').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return createData(int.tryParse(snapshot.data.data()['noAntrian']));
+          } else
+            return createData(1);
+        });
   }
 
   @override
@@ -98,10 +126,11 @@ class AddTicketPage extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      createData();
+                      getCounter();
+
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {
-                        return Bottom_Navigation();
+                        return BottomNavigation();
                       }));
                     },
                     child: Center(
