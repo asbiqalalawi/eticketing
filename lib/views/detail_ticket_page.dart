@@ -32,8 +32,8 @@ class _DetailPageState extends State<DetailPage> {
     mySamsatName = await SharedPreferenceHelper().getSamsatName();
   }
 
-  getChatRoomId(String usersamsat, String bapenda, String nopol) {
-    return "$nopol\_$usersamsat\_$bapenda";
+  getChatRoomId(String nopol) {
+    return "$nopol";
   }
 
   @override
@@ -165,8 +165,7 @@ class _DetailPageState extends State<DetailPage> {
                           DatabaseMethods()
                               .updateTicketTaken(widget.nopol, ticketTakenMap);
 
-                          var chatRoomId = getChatRoomId(
-                              widget.pengirim, myUserName, widget.nopol);
+                          var chatRoomId = getChatRoomId(widget.nopol);
                           Map<String, dynamic> chatRoomInfoMap = {
                             "users": [widget.pengirim, myUserName],
                             "nopol": widget.nopol

@@ -19,6 +19,13 @@ class DatabaseMethods {
         .get();
   }
 
+  Future<Stream<QuerySnapshot>> getTicketInfo(String name) async {
+    return FirebaseFirestore.instance
+        .collection("ticket")
+        .where("pengirim", isEqualTo: name)
+        .snapshots();
+  }
+
   ///Update documents ketika tiket dikerjakan
   updateTicketTaken(String nopol, Map ticketTakenMap) {
     return FirebaseFirestore.instance
@@ -46,12 +53,41 @@ class DatabaseMethods {
     }
   }
 
+  ///Mengembalikan Chatroom sesuai user
   Future<Stream<QuerySnapshot>> getChatRooms() async {
     String myUsername = await SharedPreferenceHelper().getUserName();
     return FirebaseFirestore.instance
         .collection("chatrooms")
         // .orderBy("lastMessageSendTs", descending: true)
         .where("users", arrayContains: myUsername)
+        .snapshots();
+  }
+
+  ///Menambahkan Pesan
+  Future addMessage(
+      String chatRoomId, String messageId, Map massageInfoMap) async {
+    return FirebaseFirestore.instance
+        .collection("chatrooms")
+        .doc(chatRoomId)
+        .collection("chats")
+        .doc(messageId)
+        .set(massageInfoMap);
+  }
+
+  ///Mengupdate document dengan informasi pesan terakhir
+  updateLastMessageSend(String chatRoomId, lastMessageInfoMap) {
+    return FirebaseFirestore.instance
+        .collection("chatrooms")
+        .doc(chatRoomId)
+        .update(lastMessageInfoMap);
+  }
+
+  Future<Stream<QuerySnapshot>> getChatRoomMessages(chatRoomId) async {
+    return FirebaseFirestore.instance
+        .collection("chatrooms")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy("ts", descending: true)
         .snapshots();
   }
 }

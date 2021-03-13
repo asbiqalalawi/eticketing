@@ -23,11 +23,10 @@ class _ChatListState extends State<ChatList> {
     return "$nopol\_$usersamsat\_$bapenda";
   }
 
-  Widget chatRoomListTile(nopol) {
+  Widget chatRoomListTile(nopol, lastMessage) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ChatScreen(nopol)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(nopol)));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 7, 0, 18),
@@ -45,7 +44,7 @@ class _ChatListState extends State<ChatList> {
                       fontFamily: "RedHatDisplay"),
                 ),
                 Text(
-                  "Test",
+                  lastMessage,
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.grey,
@@ -74,7 +73,7 @@ class _ChatListState extends State<ChatList> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
-                  return chatRoomListTile(documentSnapshot["nopol"]);
+                  return chatRoomListTile(documentSnapshot["nopol"], documentSnapshot["lastMessage"]);
                 },
               )
             : Center(child: CircularProgressIndicator());
