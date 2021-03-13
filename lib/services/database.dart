@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/helper/sharedpref_helper.dart';
 
 class DatabaseMethods {
   /// Menambah Info User ke Cloud Firestore
@@ -43,5 +44,14 @@ class DatabaseMethods {
           .doc(chatRoomId)
           .set(chatRoomInfoMap);
     }
+  }
+
+  Future<Stream<QuerySnapshot>> getChatRooms() async {
+    String myUsername = await SharedPreferenceHelper().getUserName();
+    return FirebaseFirestore.instance
+        .collection("chatrooms")
+        // .orderBy("lastMessageSendTs", descending: true)
+        .where("users", arrayContains: myUsername)
+        .snapshots();
   }
 }

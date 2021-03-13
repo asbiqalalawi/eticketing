@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
+import 'package:eticketing/services/database.dart';
+import 'package:eticketing/views/chatscreen_page.dart';
 import 'package:flutter/material.dart';
 
 class ChatList extends StatefulWidget {
@@ -17,24 +19,79 @@ class _ChatListState extends State<ChatList> {
     mySamsatName = await SharedPreferenceHelper().getSamsatName();
   }
 
-  // Widget chatRoomList() {
-  //   return StreamBuilder(
-  //     stream: chatRoomStream,
-  //     builder: (context, snapshot) {
-  //       return snapshot.hasData
-  //           ? ListView.builder(
-  //               itemCount: snapshot.data.docs.length,
-  //               shrinkWrap: true,
-  //               itemBuilder: (context, index) {
-  //                 DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
-  //                 return Text(documentSnapshot["nopol"]);
-  //               },
-  //             )
-  //           : Center(child: CircularProgressIndicator());
-  //     },
-  //   );
-  // }
-  
+  getChatRoomId(String usersamsat, String bapenda, String nopol) {
+    return "$nopol\_$usersamsat\_$bapenda";
+  }
+
+  Widget chatRoomListTile(nopol) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ChatScreen(nopol)));
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0, 7, 0, 18),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  nopol,
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "RedHatDisplay"),
+                ),
+                Text(
+                  "Test",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                      fontFamily: "PublicSans",
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Icon(
+              Icons.navigate_next,
+              size: 30,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget chatRoomList() {
+    return StreamBuilder(
+      stream: chatRoomStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
+                  return chatRoomListTile(documentSnapshot["nopol"]);
+                },
+              )
+            : Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  getChatRoom() async {
+    chatRoomStream = await DatabaseMethods().getChatRooms();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getChatRoom();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,70 +107,7 @@ class _ChatListState extends State<ChatList> {
         margin: EdgeInsets.all(13),
         child: ListView(
           children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 7, 0, 18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "BE 1234 EE",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "RedHatDisplay"),
-                      ),
-                      Text(
-                        "I have som question about...",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.navigate_next,
-                    size: 30,
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 7, 0, 18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "BE 1234 EE",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "RedHatDisplay"),
-                      ),
-                      Text(
-                        "I have som question about...",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.navigate_next,
-                    size: 30,
-                  )
-                ],
-              ),
-            ),
+            chatRoomList(),
           ],
         ),
       ),
