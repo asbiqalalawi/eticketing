@@ -1,7 +1,6 @@
 import 'package:eticketing/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import "package:form_field_validator/form_field_validator.dart";
 
 class LoginPage extends StatefulWidget {
@@ -27,10 +26,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromARGB(255, 255, 206, 0),
+
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          autovalidateMode: AutovalidateMode.always,
+          // autovalidateMode: AutovalidateMode.always,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

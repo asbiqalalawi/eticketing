@@ -158,9 +158,57 @@ class _PicketSchedulesState extends State<PicketSchedules> {
                                             size: 30,
                                             color: Colors.red,
                                           ),
-                                          onPressed: () {
-                                            //
-                                            schedule.doc(e.id).delete();
+                                          onPressed: () async {
+                                            await showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    title: Text('Hapus jadwal'),
+                                                    content:
+                                                        Text(e.data()['event']),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          //
+                                                        },
+                                                        child: Text(
+                                                          'Batal',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.blue,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          schedule
+                                                              .doc(e.id)
+                                                              .delete();
+                                                          Navigator.pop(
+                                                              context);
+                                                          //
+                                                        },
+                                                        child: Text(
+                                                          'Ya',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.blue,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+
+                                            //schedule.doc(e.id).delete();
                                           })
                                     ],
                                   ),
