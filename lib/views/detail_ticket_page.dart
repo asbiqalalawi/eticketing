@@ -38,8 +38,8 @@ class _DetailPageState extends State<DetailPage> {
     mySamsatName = await SharedPreferenceHelper().getSamsatName();
   }
 
-  getChatRoomId(String usersamsat, String bapenda, String nopol) {
-    return "$nopol\_$usersamsat\_$bapenda";
+  getChatRoomId(String nopol) {
+    return "$nopol";
   }
 
   @override

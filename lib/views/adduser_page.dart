@@ -1,5 +1,6 @@
 import 'package:eticketing/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({Key key}) : super(key: key);
@@ -17,6 +18,20 @@ class _AddUserPageState extends State<AddUserPage> {
   // ];
 
   bool isLoading = false;
+  bool _obsecureText = true;
+  // bool _obsecureText2 = true;
+
+  void _toggle() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
+
+  /* void _toggle2() {
+    setState(() {
+      _obsecureText2 = !_obsecureText2;
+    });
+  } */
 
   AuthMethods authMethods = new AuthMethods();
 
@@ -47,12 +62,21 @@ class _AddUserPageState extends State<AddUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xFFFFCE00),
         title: Text(
-          "Menambah Akun",
+          "Tambah Pengguna",
           style: TextStyle(color: Colors.black, fontFamily: "RedHatDisplay"),
         ),
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              return Navigator.pop(context);
+            }),
       ),
       body: isLoading
           ? Container(
@@ -68,35 +92,45 @@ class _AddUserPageState extends State<AddUserPage> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          child: TextFormField(
-                            validator: (val) {
-                              return val.isEmpty || val.length < 2
-                                  ? "Username tidak valid"
-                                  : null;
-                            },
-                            controller: userNameTextEditingController,
-                            decoration: InputDecoration(
-                                fillColor: Color.fromARGB(255, 255, 249, 224),
-                                filled: true,
-                                hintText: "Username",
-                                hintStyle: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold),
-                                border: InputBorder.none),
+                          child: SizedBox(
+                            height: 70,
+                            child: TextFormField(
+                              controller: userNameTextEditingController,
+                              validator: MultiValidator([
+                                RequiredValidator(
+                                    errorText: 'Nama tidak boleh kosong'),
+                              ]),
+                              decoration: InputDecoration(
+                                  fillColor: Color.fromARGB(255, 255, 249, 224),
+                                  filled: true,
+                                  hintText: "Nama",
+                                  hintStyle: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      fontWeight: FontWeight.bold),
+                                  border: InputBorder.none),
+                            ),
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          child: TextFormField(
-                            controller: samsatNameTextEditingController,
-                            decoration: InputDecoration(
-                                fillColor: Color.fromARGB(255, 255, 249, 224),
-                                filled: true,
-                                hintText: "Nama Samsat",
-                                hintStyle: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold),
-                                border: InputBorder.none),
+                          child: SizedBox(
+                            height: 70,
+                            child: TextFormField(
+                              controller: samsatNameTextEditingController,
+                              validator: MultiValidator([
+                                RequiredValidator(
+                                    errorText:
+                                        'Nama samsat tidak boleh kosong'),
+                              ]),
+                              decoration: InputDecoration(
+                                  fillColor: Color.fromARGB(255, 255, 249, 224),
+                                  filled: true,
+                                  hintText: "Nama Samsat",
+                                  hintStyle: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      fontWeight: FontWeight.bold),
+                                  border: InputBorder.none),
+                            ),
                           ),
                         ),
                         // Container(
@@ -131,24 +165,50 @@ class _AddUserPageState extends State<AddUserPage> {
                         // ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          child: TextFormField(
-                            controller: emailTextEditingController,
-                            decoration: InputDecoration(
-                                fillColor: Color.fromARGB(255, 255, 249, 224),
-                                filled: true,
-                                hintText: "Email",
-                                hintStyle: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold),
-                                border: InputBorder.none),
+                          child: SizedBox(
+                            height: 70,
+                            child: TextFormField(
+                              controller: emailTextEditingController,
+                              validator: MultiValidator([
+                                RequiredValidator(
+                                    errorText: 'Email tidak boleh kosong'),
+                                EmailValidator(errorText: 'Format email salah')
+                              ]),
+                              decoration: InputDecoration(
+                                  fillColor: Color.fromARGB(255, 255, 249, 224),
+                                  filled: true,
+                                  hintText: "Email",
+                                  hintStyle: TextStyle(
+                                      fontFamily: "PublicSans",
+                                      fontWeight: FontWeight.bold),
+                                  border: InputBorder.none),
+                            ),
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: TextFormField(
                             controller: passwordTextEditingController,
-                            obscureText: true,
+                            validator: MultiValidator([
+                              RequiredValidator(
+                                  errorText: 'Password tidak boleh kosong'),
+                              MinLengthValidator(6,
+                                  errorText:
+                                      'Password tidak boleh kurang dari 6')
+                            ]),
+                            obscureText: _obsecureText,
                             decoration: InputDecoration(
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    _toggle();
+                                  },
+                                  child: Icon(
+                                    _obsecureText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.black,
+                                  ),
+                                ),
                                 fillColor: Color.fromARGB(255, 255, 249, 224),
                                 filled: true,
                                 hintText: "Kata Sandi",
@@ -158,20 +218,31 @@ class _AddUserPageState extends State<AddUserPage> {
                                 border: InputBorder.none),
                           ),
                         ),
-                        // Container(
-                        //   margin: EdgeInsets.only(bottom: 10),
-                        //   child: TextField(
-                        //     obscureText: true,
-                        //     decoration: InputDecoration(
-                        //         fillColor: Color.fromARGB(255, 255, 249, 224),
-                        //         filled: true,
-                        //         hintText: "Konfirmasi Kata Sandi",
-                        //         hintStyle: TextStyle(
-                        //             fontFamily: "PublicSans",
-                        //             fontWeight: FontWeight.bold),
-                        //         border: InputBorder.none),
-                        //   ),
-                        // ),
+                        /* Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: TextField(
+                            obscureText: _obsecureText2,
+                            decoration: InputDecoration(
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    _toggle2();
+                                  },
+                                  child: Icon(
+                                    _obsecureText2
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                fillColor: Color.fromARGB(255, 255, 249, 224),
+                                filled: true,
+                                hintText: "Konfirmasi Kata Sandi",
+                                hintStyle: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    fontWeight: FontWeight.bold),
+                                border: InputBorder.none),
+                          ),
+                        ), */
                       ],
                     ),
                   ),

@@ -1,6 +1,8 @@
 import 'package:eticketing/services/auth.dart';
 import 'package:eticketing/views/changepassword_page.dart';
 import 'package:eticketing/views/login_page.dart';
+
+import 'package:eticketing/views/manageuser_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilSamsat extends StatefulWidget {
@@ -66,12 +68,33 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
+                            return ManageUserPage();
+                          }));
+                        },
+                        child: Text(
+                          "Manajemen User",
+                          style: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
+                        ),
+                        color: Color(0xFFFFF0B2),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: RaisedButton(
+                        elevation: 5,
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
                             return ChangePassword();
                           }));
                         },
                         child: Text(
                           "Ubah Kata Sandi",
-                          style: TextStyle(fontFamily: "PublicSans", fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
                         ),
                         color: Color(0xFFFFF0B2),
                       ),
@@ -86,7 +109,9 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
                         }));
                       },
                       child: Text("Keluar",
-                          style: TextStyle(fontFamily: "PublicSans", fontWeight: FontWeight.bold)),
+                          style: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold)),
                       color: Color(0xFFFFCE00),
                     ),
                   ],

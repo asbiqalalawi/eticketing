@@ -26,10 +26,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromARGB(255, 255, 206, 0),
+
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          autovalidateMode: AutovalidateMode.always,
+          // autovalidateMode: AutovalidateMode.always,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

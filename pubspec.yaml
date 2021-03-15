@@ -34,9 +34,12 @@ dependencies:
   fluttertoast: ^7.1.8
   date_format: ^1.0.9
   shared_preferences:
-  image_picker: ^0.6.5
+  random_string:
+  table_calendar:
   firebase_storage:
-  path_provider:
+  image_picker:
+  cached_network_image:
+  photo_view:
 
 dev_dependencies:
   flutter_test:

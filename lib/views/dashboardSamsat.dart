@@ -3,7 +3,8 @@ import 'package:eticketing/views/addticket_page.dart';
 import 'package:eticketing/views/item_card.dart';
 import 'package:eticketing/views/list_ticket.dart';
 import 'package:eticketing/views/notification.dart';
-import 'package:eticketing/views/picket_schedule.dart';
+// import 'package:eticketing/views/picket_schedule.dart';
+import 'package:eticketing/views/picket_schedules.dart';
 import 'package:flutter/material.dart';
 
 class DashboardSamsat extends StatefulWidget {
@@ -38,7 +39,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                 icon: Icon(Icons.calendar_today_sharp),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return PicketSchedule();
+                    return PicketSchedules();
                   }));
                 }),
             IconButton(
