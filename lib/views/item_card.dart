@@ -9,21 +9,24 @@ class ItemCard extends StatelessWidget {
   final int antrian;
   final Timestamp createdAt;
   final String pengirim;
+  final String samsatName;
+  final String gambar;
 
   //// Pointer to Update Function
   // final Function onUpdate;
   // //// Pointer to Delete Function
   // final Function onDelete;
 
-  ItemCard(
-      this.nopol, this.deskripsi, this.status, this.antrian, this.createdAt, this.pengirim);
+  ItemCard(this.nopol, this.deskripsi, this.status, this.antrian,
+      this.createdAt, this.pengirim, this.samsatName, this.gambar);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DetailPage(nopol, deskripsi, status, antrian, createdAt, pengirim);
+          return DetailPage(nopol, deskripsi, status, antrian, createdAt,
+              pengirim, samsatName, gambar);
         }));
       },
       child: Card(
@@ -63,7 +66,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
                     child: Text(
-                      "Samsat Origin",
+                      samsatName,
                       style: TextStyle(
                         fontFamily: "PublicSans",
                         color: Colors.black,
@@ -90,7 +93,7 @@ class ItemCard extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width * 0.5,
-                    margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                    margin: EdgeInsets.fromLTRB(5, 5, 0, 20),
                     child: Text(
                       deskripsi.toString(),
                       overflow: TextOverflow.ellipsis,
@@ -103,7 +106,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(5, 5, 0, 50),
+                    margin: EdgeInsets.fromLTRB(5, 5, 0, 20),
                     child: Text(
                       status,
                       style: TextStyle(
@@ -113,7 +116,7 @@ class ItemCard extends StatelessWidget {
                           fontSize: 16),
                     ),
                   )
-                ])
+                ]),
           ],
         ),
       ),

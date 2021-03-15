@@ -45,6 +45,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                 color: Colors.black,
                 icon: Icon(Icons.add_circle_rounded),
                 onPressed: () {
+                  setState(() {});
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return AddTicketPage();
                   }));
@@ -56,36 +57,44 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
           children: <Widget>[
             Center(
               child: Stack(children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  color: Color.fromRGBO(255, 249, 224, 1),
-                  margin: EdgeInsets.fromLTRB(0, 5, 0, 8),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Total Ticket",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontFamily: "RedHatDisplay",
-                                color: Color.fromRGBO(157, 153, 135, 1),
-                                fontSize: 30)),
-                        StreamBuilder<DocumentSnapshot>(
-                            stream: nomor.doc('antrian').snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData)
-                                return Text(
-                                  snapshot.data.data()['noAntrian'].toString(),
-                                  style: TextStyle(
-                                      fontFamily: "RedHatDisplay",
-                                      color: Colors.black,
-                                      fontSize: 42,
-                                      fontWeight: FontWeight.bold),
-                                );
-                              else
-                                return Text("Loading");
-                            }),
-                      ]),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ListTicket();
+                    }));
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    color: Color.fromRGBO(255, 249, 224, 1),
+                    margin: EdgeInsets.fromLTRB(0, 5, 0, 8),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("Total Ticket",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: "RedHatDisplay",
+                                  color: Color.fromRGBO(157, 153, 135, 1),
+                                  fontSize: 30)),
+                          StreamBuilder<DocumentSnapshot>(
+                              stream: nomor.doc('totalTicket').snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData)
+                                  return Text(
+                                    snapshot.data.data()['total'].toString(),
+                                    style: TextStyle(
+                                        fontFamily: "RedHatDisplay",
+                                        color: Colors.black,
+                                        fontSize: 42,
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                else
+                                  return Text("Loading");
+                              }),
+                        ]),
+                  ),
                 ),
               ]),
             ),
@@ -207,7 +216,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
               ],
             ),
             Container(
-              height: 300,
+              height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width * 0.95,
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -223,13 +232,14 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                             DocumentSnapshot documentSnapshot =
                                 snapshot.data.docs[index];
                             return ItemCard(
-                              documentSnapshot["nomorPolisi"],
-                              documentSnapshot["deskripsi"],
-                              documentSnapshot["status"],
-                              documentSnapshot["antrian"],
-                              documentSnapshot["createdAt"],
-                              documentSnapshot["pengirim"],
-                            );
+                                documentSnapshot["nomorPolisi"],
+                                documentSnapshot["deskripsi"],
+                                documentSnapshot["status"],
+                                documentSnapshot["antrian"],
+                                documentSnapshot["createdAt"],
+                                documentSnapshot["pengirim"],
+                                documentSnapshot["asalSamsat"],
+                                documentSnapshot["gambar"]);
                           });
                     } else {
                       return Text('Loading');

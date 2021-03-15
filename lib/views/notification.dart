@@ -9,6 +9,8 @@ class Notifikasi extends StatelessWidget {
   int antrian;
   Timestamp createdAt;
   String pengirim;
+  String samsatName;
+  String gambar;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,7 +38,8 @@ class Notifikasi extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DetailPage(nopol, deskripsi, status, antrian, createdAt, pengirim);
+          return DetailPage(nopol, deskripsi, status, antrian, createdAt,
+              pengirim, samsatName, gambar);
         }));
       },
       child: Card(

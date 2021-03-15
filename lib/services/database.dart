@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class DatabaseMethods {
   /// Menambah Info User ke Cloud Firestore
@@ -25,6 +29,20 @@ class DatabaseMethods {
         .collection("ticket")
         .doc(nopol)
         .update(ticketTakenMap);
+  }
+
+  updateTicketCancel(String nopol, Map ticketCancelMap) {
+    return FirebaseFirestore.instance
+        .collection("ticket")
+        .doc(nopol)
+        .update(ticketCancelMap);
+  }
+
+  updateTicketSelesai(String nopol, Map ticketSelesaiMap) {
+    return FirebaseFirestore.instance
+        .collection("ticket")
+        .doc(nopol)
+        .update(ticketSelesaiMap);
   }
 
   /// Membuat Chat Room
@@ -53,5 +71,13 @@ class DatabaseMethods {
         // .orderBy("lastMessageSendTs", descending: true)
         .where("users", arrayContains: myUsername)
         .snapshots();
+  }
+
+  static Future<String> uploadImage(File imageFile) async {
+    String fileName = basename(imageFile.path);
+    Reference ref = FirebaseStorage.instance.ref().child(fileName);
+    UploadTask task = ref.putFile(imageFile);
+    TaskSnapshot snapshot = await task;
+    return await snapshot.ref.getDownloadURL();
   }
 }

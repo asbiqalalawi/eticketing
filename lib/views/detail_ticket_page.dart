@@ -11,13 +11,16 @@ class DetailPage extends StatefulWidget {
   final int antrian;
   final Timestamp createdAt;
   final String pengirim;
+  final String samsatName;
+  final String gambar;
+
   //// Pointer to Update Function
   // final Function onUpdate;
   // //// Pointer to Delete Function
   // final Function onDelete;
 
   DetailPage(this.nopol, this.deskripsi, this.status, this.antrian,
-      this.createdAt, this.pengirim);
+      this.createdAt, this.pengirim, this.samsatName, this.gambar);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -29,6 +32,9 @@ class _DetailPageState extends State<DetailPage> {
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
+  }
+
+  getSamsatNameFromSharedPreferences() async {
     mySamsatName = await SharedPreferenceHelper().getSamsatName();
   }
 
@@ -64,7 +70,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: Row(
                       children: [
                         Text(
-                          "Samsat Tanggamus",
+                          widget.samsatName,
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
@@ -139,63 +145,189 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                        margin: EdgeInsets.only(top: 50),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.width * 0.6,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            border: Border.all(color: Colors.black),
+                            image: DecorationImage(
+                                image: NetworkImage(widget.gambar),
+                                fit: BoxFit.cover))),
+                  )
                 ],
               ),
               //button
               Container(
-                alignment: Alignment(1, 0.9),
-                margin: EdgeInsets.only(top: 220),
-                child: Material(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Container(
-                    width: 110,
-                    height: 43,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.black),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(50),
-                        onTap: () {
-                          Map<String, dynamic> ticketTakenMap = {
-                            "status": "Diproses",
-                            "petugas": myUserName
-                          };
-                          DatabaseMethods()
-                              .updateTicketTaken(widget.nopol, ticketTakenMap);
-
-                          var chatRoomId = getChatRoomId(
-                              widget.pengirim, myUserName, widget.nopol);
-                          Map<String, dynamic> chatRoomInfoMap = {
-                            "users": [widget.pengirim, myUserName],
-                            "nopol": widget.nopol
-                          };
-                          DatabaseMethods()
-                              .createChatRoom(chatRoomId, chatRoomInfoMap);
-
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashboardSamsat()));
-                        },
-                        child: Center(
-                          child: Text(
-                            "Kerjakan",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "PublicSans",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
+                  child: (widget.status.toString() == "Tersedia" &&
+                          getSamsatNameFromSharedPreferences() == "Bapenda")
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildKerjakan(context),
+                          ],
+                        )
+                      : (widget.status.toString() == "Diproses" &&
+                              getSamsatNameFromSharedPreferences() == "Bapenda")
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                  buildBatalkan(context),
+                                  buildSelesai(context)
+                                ])
+                          : Container(
+                              alignment: Alignment(0, 0.9),
+                              margin: EdgeInsets.only(top: 220),
+                              child: Text(
+                                "*Hanya Petugas Bapenda yang dapat ambil tiket",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontFamily: "PublicSans",
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              )))
             ],
           ),
         ));
+  }
+
+  Container buildSelesai(BuildContext context) {
+    return Container(
+      alignment: Alignment(1, 0.9),
+      margin: EdgeInsets.only(top: 220),
+      child: Material(
+        borderRadius: BorderRadius.circular(50),
+        child: Container(
+          width: 110,
+          height: 43,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50), color: Colors.green),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {
+                Map<String, dynamic> ticketSelesaiMap = {
+                  "status": "Selesai",
+                };
+
+                DatabaseMethods()
+                    .updateTicketTaken(widget.nopol, ticketSelesaiMap);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DashboardSamsat()));
+              },
+              child: Center(
+                child: Text(
+                  "Selesai",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "PublicSans",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildBatalkan(BuildContext context) {
+    return Container(
+      alignment: Alignment(1, 0.9),
+      margin: EdgeInsets.only(top: 220),
+      child: Material(
+        borderRadius: BorderRadius.circular(50),
+        child: Container(
+          width: 110,
+          height: 43,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50), color: Colors.red),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {
+                Map<String, dynamic> ticketCancelMap = {
+                  "status": "Tersedia",
+                  "petugas": " "
+                };
+
+                DatabaseMethods()
+                    .updateTicketTaken(widget.nopol, ticketCancelMap);
+
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DashboardSamsat()));
+              },
+              child: Center(
+                child: Text(
+                  "Batalkan",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "PublicSans",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildKerjakan(BuildContext context) {
+    return Container(
+      alignment: Alignment(1, 0.9),
+      margin: EdgeInsets.only(top: 220),
+      child: Material(
+        borderRadius: BorderRadius.circular(50),
+        child: Container(
+          width: 110,
+          height: 43,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50), color: Colors.blue),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () {
+                Map<String, dynamic> ticketTakenMap = {
+                  "status": "Diproses",
+                  "petugas": myUserName
+                };
+                DatabaseMethods()
+                    .updateTicketTaken(widget.nopol, ticketTakenMap);
+
+                var chatRoomId =
+                    getChatRoomId(widget.pengirim, myUserName, widget.nopol);
+                Map<String, dynamic> chatRoomInfoMap = {
+                  "users": [widget.pengirim, myUserName],
+                  "nopol": widget.nopol
+                };
+                DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
+
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DashboardSamsat()));
+              },
+              child: Center(
+                child: Text(
+                  "Kerjakan",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "PublicSans",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

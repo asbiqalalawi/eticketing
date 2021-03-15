@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:eticketing/helper/sharedpref_helper.dart';
+import 'package:eticketing/services/database.dart';
 import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddTicketPage extends StatefulWidget {
   AddTicketPage({Key key}) : super(key: key);
@@ -13,6 +17,8 @@ class AddTicketPage extends StatefulWidget {
 class _AddTicketPageState extends State<AddTicketPage> {
   String nomorPolisi, deskripsi, status = "Tersedia";
   String mySamsatName, myUserName, myEmail;
+  String imagePath;
+  var imageDir;
 
   int antrian = 1;
 
@@ -30,23 +36,42 @@ class _AddTicketPageState extends State<AddTicketPage> {
     this.deskripsi = desk;
   }
 
+  Future<File> getImage() async {
+    var imageFile;
+    final picker = ImagePicker();
+    PickedFile pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+      return imageDir = imageFile;
+    } else {
+      return imageDir = imageFile;
+    }
+  }
+
   createData(angka) {
     this.antrian = angka;
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("ticket").doc(nomorPolisi);
+    DocumentReference jumlahReference =
+        FirebaseFirestore.instance.collection("nomor").doc('totalTicket');
 
     Map<String, dynamic> tiket = {
       "nomorPolisi": nomorPolisi,
       "deskripsi": deskripsi,
       "status": status,
-      "antrian": FieldValue.increment(1),
+      "antrian": antrian,
       "createdAt": DateTime.now(),
-      "pengirim": myUserName
+      "pengirim": myUserName,
+      "asalSamsat": mySamsatName,
+      "gambar": imagePath,
     };
+    Map<String, dynamic> total = {
+      "total": antrian,
+    };
+    jumlahReference.update(total);
     documentReference.set(tiket);
-    for (int i = 1; i < antrian; i++) {
-      documentReference.update(tiket);
-    }
   }
 
   getCounter() {
@@ -83,40 +108,77 @@ class _AddTicketPageState extends State<AddTicketPage> {
           Align(
             alignment: Alignment(0, -0.85),
             child: Container(
+              margin: EdgeInsets.fromLTRB(10, 15, 10, 0),
               width: MediaQuery.of(context).size.width * 0.95,
-              height: MediaQuery.of(context).size.height * 0.50,
+              // height: MediaQuery.of(context).size.height * 0.50,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextField(
-                    onChanged: (String nopol) {
-                      getNopol(nopol);
-                    },
-                    decoration: InputDecoration(
-                        fillColor: Color.fromARGB(255, 255, 249, 224),
-                        filled: true,
-                        hintText: "Nopol",
-                        hintStyle: TextStyle(
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: TextField(
+                      onChanged: (String nopol) {
+                        getNopol(nopol);
+                      },
+                      decoration: InputDecoration(
+                          fillColor: Color.fromARGB(255, 255, 249, 224),
+                          filled: true,
+                          hintText: "Nopol",
+                          hintStyle: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold),
+                          border: InputBorder.none),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: TextField(
+                      onChanged: (String desk) {
+                        getDeskripsi(desk);
+                      },
+                      maxLines: 12,
+                      decoration: InputDecoration(
+                          fillColor: Color.fromARGB(255, 255, 249, 224),
+                          filled: true,
+                          hintText: "Description",
+                          hintStyle: TextStyle(
                             fontFamily: "PublicSans",
-                            fontWeight: FontWeight.bold),
-                        border: InputBorder.none),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          border: InputBorder.none),
+                    ),
                   ),
-                  TextField(
-                    onChanged: (String desk) {
-                      getDeskripsi(desk);
-                    },
-                    maxLines: 12,
-                    decoration: InputDecoration(
-                        fillColor: Color.fromARGB(255, 255, 249, 224),
-                        filled: true,
-                        hintText: "Description",
-                        hintStyle: TextStyle(
-                          fontFamily: "PublicSans",
-                          fontWeight: FontWeight.bold,
-                        ),
-                        border: InputBorder.none),
-                  ),
-                  //Upload File
+                  Container(
+                      padding: EdgeInsets.only(left: 13),
+                      alignment: Alignment.centerLeft,
+                      height: 55,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      color: Color.fromARGB(255, 255, 249, 224),
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: (imageDir == null)
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Upload file",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontFamily: "PublicSans",
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17)),
+                                IconButton(
+                                    icon: Icon(Icons.upload_file),
+                                    onPressed: () {
+                                      getImage();
+                                    })
+                              ],
+                            )
+                          : Text(
+                              imageDir.toString(),
+                              style: TextStyle(
+                                  fontFamily: "PublicSans",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                            )),
                 ],
               ),
             ),
@@ -135,7 +197,10 @@ class _AddTicketPageState extends State<AddTicketPage> {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: () {
+                    onTap: () async {
+                      if (imageDir != null) {
+                        imagePath = await DatabaseMethods.uploadImage(imageDir);
+                      }
                       getCounter();
 
                       Navigator.of(context).pushReplacement(
