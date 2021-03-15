@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class DatabaseMethods {
   /// Menambah Info User ke Cloud Firestore
@@ -89,5 +93,13 @@ class DatabaseMethods {
         .collection("chats")
         .orderBy("ts", descending: true)
         .snapshots();
+  }
+
+  static Future<String> uploadImage(File imageFIle) async {
+    String fileName = basename(imageFIle.path);
+    Reference ref = FirebaseStorage.instance.ref().child(fileName);
+    UploadTask task = ref.putFile(imageFIle);
+    TaskSnapshot snapshot = await task;
+    return await snapshot.ref.getDownloadURL();
   }
 }

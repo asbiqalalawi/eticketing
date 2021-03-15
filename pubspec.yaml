@@ -36,6 +36,10 @@ dependencies:
   shared_preferences:
   random_string:
   table_calendar:
+  firebase_storage:
+  image_picker:
+  cached_network_image:
+  photo_view:
 
 dev_dependencies:
   flutter_test:

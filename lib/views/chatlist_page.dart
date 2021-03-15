@@ -19,14 +19,11 @@ class _ChatListState extends State<ChatList> {
     mySamsatName = await SharedPreferenceHelper().getSamsatName();
   }
 
-  getChatRoomId(String usersamsat, String bapenda, String nopol) {
-    return "$nopol\_$usersamsat\_$bapenda";
-  }
-
   Widget chatRoomListTile(nopol, lastMessage) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(nopol)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ChatScreen(nopol)));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 7, 0, 18),
@@ -45,6 +42,7 @@ class _ChatListState extends State<ChatList> {
                 ),
                 Text(
                   lastMessage,
+                  overflow: TextOverflow.fade,
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.grey,
@@ -73,7 +71,8 @@ class _ChatListState extends State<ChatList> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
-                  return chatRoomListTile(documentSnapshot["nopol"], documentSnapshot["lastMessage"]);
+                  return chatRoomListTile(documentSnapshot["nopol"],
+                      documentSnapshot["lastMessage"]);
                 },
               )
             : Center(child: CircularProgressIndicator());
