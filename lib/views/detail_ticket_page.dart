@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/database.dart';
 import 'package:eticketing/views/dashboardSamsat.dart';
+import 'package:eticketing/widgets/full_photo.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
@@ -146,7 +147,13 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  FullPhoto(url: widget.gambar)));
+                    },
                     child: Container(
                         margin: EdgeInsets.only(top: 50),
                         width: MediaQuery.of(context).size.width * 0.9,
@@ -303,8 +310,7 @@ class _DetailPageState extends State<DetailPage> {
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketTakenMap);
 
-                var chatRoomId =
-                    getChatRoomId(widget.pengirim, myUserName, widget.nopol);
+                var chatRoomId = getChatRoomId(widget.nopol);
                 Map<String, dynamic> chatRoomInfoMap = {
                   "users": [widget.pengirim, myUserName],
                   "nopol": widget.nopol
