@@ -33,9 +33,6 @@ class _DetailPageState extends State<DetailPage> {
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
-  }
-
-  getSamsatNameFromSharedPreferences() async {
     mySamsatName = await SharedPreferenceHelper().getSamsatName();
   }
 
@@ -46,6 +43,8 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     getMyInfoFromSharedPreferences();
+    print(widget.status);
+    print(mySamsatName);
     super.initState();
   }
 
@@ -168,9 +167,10 @@ class _DetailPageState extends State<DetailPage> {
                 ],
               ),
               //button
+
               Container(
                   child: (widget.status.toString() == "Tersedia" &&
-                          getSamsatNameFromSharedPreferences() == "Bapenda")
+                          mySamsatName == "Bapenda")
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -178,7 +178,7 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         )
                       : (widget.status.toString() == "Diproses" &&
-                              getSamsatNameFromSharedPreferences() == "Bapenda")
+                              mySamsatName == "Bapenda")
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -221,6 +221,9 @@ class _DetailPageState extends State<DetailPage> {
                   "status": "Selesai",
                 };
 
+                var chatRoomId = getChatRoomId(widget.nopol);
+                DatabaseMethods().deleteChat(chatRoomId);
+
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketSelesaiMap);
                 Navigator.pushReplacement(context,
@@ -261,8 +264,11 @@ class _DetailPageState extends State<DetailPage> {
               onTap: () {
                 Map<String, dynamic> ticketCancelMap = {
                   "status": "Tersedia",
-                  "petugas": " "
+                  "petugas": ""
                 };
+
+                var chatRoomId = getChatRoomId(widget.nopol);
+                DatabaseMethods().deleteChat(chatRoomId);
 
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketCancelMap);
@@ -313,7 +319,9 @@ class _DetailPageState extends State<DetailPage> {
                 var chatRoomId = getChatRoomId(widget.nopol);
                 Map<String, dynamic> chatRoomInfoMap = {
                   "users": [widget.pengirim, myUserName],
-                  "nopol": widget.nopol
+                  "nopol": widget.nopol,
+                  "lastMessage": "Ketik Pesan disini...",
+                  "antrian": widget.antrian
                 };
                 DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
 

@@ -5,7 +5,6 @@ import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:eticketing/views/login_page.dart';
 import 'package:eticketing/views/manageuser_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +13,7 @@ class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   getCurrentUser() async {
-    return await auth.currentUser;
+    return auth.currentUser;
   }
 
   signUp(String email, String password, String samsat, String name,

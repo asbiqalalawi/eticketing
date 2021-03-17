@@ -75,31 +75,30 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget chatMessageTile(String message, bool sendByMe, int type) {
     return type == 0
-        ? Row(
-            mainAxisAlignment:
-                sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft:
-                          sendByMe ? Radius.circular(16) : Radius.circular(0),
-                      bottomRight:
-                          sendByMe ? Radius.circular(0) : Radius.circular(24)),
-                  color: sendByMe ? Color(0xFFFFF0B2) : Color(0xFFFFCE00),
-                ),
-                child: Text(
-                  message,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black),
-                ),
+        //Pesan Teks
+        ? Container(
+            alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
+            child: Container(
+              // width: message.length > 20 ? 200 : ,
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                    bottomLeft:
+                        sendByMe ? Radius.circular(16) : Radius.circular(0),
+                    bottomRight:
+                        sendByMe ? Radius.circular(0) : Radius.circular(24)),
+                color: sendByMe ? Color(0xFFFFF0B2) : Color(0xFFFFCE00),
               ),
-            ],
+              child: Text(
+                message,
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
           )
+        // Pesan Gambar
         : Container(
             child: FlatButton(
               child: Material(
@@ -157,7 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                padding: EdgeInsets.only(bottom: 70, top: 8),
+                padding: EdgeInsets.only(bottom: 80, top: 8),
                 reverse: true,
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
@@ -274,7 +273,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white.withOpacity(0.4),
+        backgroundColor: Color(0xFFFFCE00),
         title: Text(
           widget.nopol,
           style: TextStyle(color: Colors.black),
@@ -295,6 +294,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Row(
                   children: [
+                    Expanded(
+                        child: TextField(
+                      controller: messageEditingController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Ketik disini...",
+                      ),
+                    )),
+                    SizedBox(
+                      width: 8,
+                    ),
                     GestureDetector(
                         onTap: () {
                           _showPicker(context);
@@ -305,14 +315,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     SizedBox(
                       width: 8,
                     ),
-                    Expanded(
-                        child: TextField(
-                      controller: messageEditingController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Ketik disini...",
-                      ),
-                    )),
                     GestureDetector(
                         onTap: () {
                           String message = messageEditingController.text;
