@@ -76,7 +76,7 @@ class DatabaseMethods {
     String myUsername = await SharedPreferenceHelper().getUserName();
     return FirebaseFirestore.instance
         .collection("chatrooms")
-        // .orderBy("lastMessageSendTs", descending: true)
+        .orderBy("antrian")
         .where("users", arrayContains: myUsername)
         .snapshots();
   }
@@ -115,5 +115,15 @@ class DatabaseMethods {
     UploadTask task = ref.putFile(imageFIle);
     TaskSnapshot snapshot = await task;
     return await snapshot.ref.getDownloadURL();
+  }
+
+  /// Menghapus pesan
+  Future deleteChat(String chatRoomId) {
+    return FirebaseFirestore.instance
+        .collection('chatrooms')
+        .doc(chatRoomId)
+        .delete()
+        .then((value) => print("Chat Deleted"))
+        .catchError((error) => print("Failed to delete chat: $error"));
   }
 }

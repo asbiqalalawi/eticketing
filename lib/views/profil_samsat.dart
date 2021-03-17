@@ -1,3 +1,4 @@
+import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/auth.dart';
 import 'package:eticketing/views/changepassword_page.dart';
 import 'package:eticketing/views/login_page.dart';
@@ -11,6 +12,21 @@ class ProfilSamsat extends StatefulWidget {
 }
 
 class _ProfilSamsatState extends State<ProfilSamsat> {
+  String mySamsatName, myUserName, myEmail;
+
+  getMyInfoFromSharedPreferences() async {
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getMyInfoFromSharedPreferences();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,35 +44,37 @@ class _ProfilSamsatState extends State<ProfilSamsat> {
             // mainAxisAlignment: MainAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.account_circle_outlined,
-                      size: 200,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 7),
-                      child: Text(
-                        "User name",
-                        style: TextStyle(
-                            fontFamily: "RedHatDisplay",
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold),
+              myUserName != null
+                  ? Container(
+                      margin: EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.account_circle_outlined,
+                            size: 200,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 7),
+                            child: Text(
+                              myUserName.toString(),
+                              style: TextStyle(
+                                  fontFamily: "RedHatDisplay",
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Text(
+                            mySamsatName.toString(),
+                            style: TextStyle(
+                                fontFamily: "RedHatDisplay",
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      "Samsat Taggamus",
-                      style: TextStyle(
-                          fontFamily: "RedHatDisplay",
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : Container(),
               Container(
                 margin: EdgeInsets.only(bottom: 60),
                 child: Column(
