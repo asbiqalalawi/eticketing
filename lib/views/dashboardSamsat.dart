@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/views/addticket_page.dart';
 import 'package:eticketing/views/item_card.dart';
 import 'package:eticketing/views/list_ticket.dart';
@@ -13,11 +14,52 @@ class DashboardSamsat extends StatefulWidget {
 }
 
 class _DashboardSamsatState extends State<DashboardSamsat> {
-  String nomorPolisi, deskripsi;
+  String mySamsatName, myUserName, myEmail;
+  String nomorPolisi, deskripsi, nameCollection;
+  int newValue;
+
+  getMyInfoFromSharedPreferences() async {
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+  }
+
+  void initState() {
+    getMyInfoFromSharedPreferences();
+
+    super.initState();
+  }
+
+  getCounter() {
+    if (mySamsatName == "Bapenda" || mySamsatName == "Admin") {
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('myTicketBapenda')
+          .doc(myUserName);
+
+      FirebaseFirestore.instance.runTransaction((transaction) async {
+        DocumentSnapshot snapshot = await transaction.get(documentReference);
+        newValue = snapshot.data()['ticket'];
+        return newValue;
+      });
+    } else {
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('myTicketSamsat')
+          .doc(myUserName);
+
+      FirebaseFirestore.instance.runTransaction((transaction) async {
+        DocumentSnapshot snapshot = await transaction.get(documentReference);
+        newValue = snapshot.data()['ticket'];
+        return newValue;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore dbfirebase = FirebaseFirestore.instance;
     CollectionReference nomor = dbfirebase.collection('nomor');
+    CollectionReference bapenda = dbfirebase.collection('myTicketBapenda');
+    CollectionReference samsat = dbfirebase.collection('myTicketSamsat');
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -80,7 +122,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                   color: Color.fromRGBO(157, 153, 135, 1),
                                   fontSize: 30)),
                           StreamBuilder<DocumentSnapshot>(
-                              stream: nomor.doc('totalTicket').snapshots(),
+                              stream: nomor.doc("totalTicket").snapshots(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData)
                                   return Text(
@@ -91,8 +133,9 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                                         fontSize: 42,
                                         fontWeight: FontWeight.bold),
                                   );
-                                else
+                                else {
                                   return Text("Loading");
+                                }
                               }),
                         ]),
                   ),
@@ -117,14 +160,39 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                               color: Color.fromRGBO(157, 153, 135, 1),
                               fontSize: 17),
                         ),
-                        Text(
-                          "0",
-                          style: TextStyle(
-                              fontFamily: "RedHatDisplay",
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        (mySamsatName == "Bapenda" || mySamsatName == "Admin")
+                            ? StreamBuilder<DocumentSnapshot>(
+                                stream: bapenda.doc(myUserName).snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData)
+                                    return Text(
+                                      snapshot.data.data()['ticket'].toString(),
+                                      style: TextStyle(
+                                          fontFamily: "RedHatDisplay",
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  else {
+                                    return Text("Loading");
+                                  }
+                                })
+                            : StreamBuilder<DocumentSnapshot>(
+                                stream: samsat.doc(myUserName).snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData)
+                                    return Text(
+                                      snapshot.data.data()['ticket'].toString(),
+                                      style: TextStyle(
+                                          fontFamily: "RedHatDisplay",
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  else {
+                                    return Text("Loading");
+                                  }
+                                })
                       ]),
                 )),
                 Flexible(
@@ -143,14 +211,43 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                               color: Color.fromRGBO(157, 153, 135, 1),
                               fontSize: 17),
                         ),
-                        Text(
-                          "0",
-                          style: TextStyle(
-                              fontFamily: "RedHatDisplay",
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        (mySamsatName == "Bapenda" || mySamsatName == "Admin")
+                            ? StreamBuilder<DocumentSnapshot>(
+                                stream: bapenda.doc(myUserName).snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData)
+                                    return Text(
+                                      snapshot.data
+                                          .data()['onProcess']
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontFamily: "RedHatDisplay",
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  else {
+                                    return Text("Loading");
+                                  }
+                                })
+                            : StreamBuilder<DocumentSnapshot>(
+                                stream: samsat.doc(myUserName).snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData)
+                                    return Text(
+                                      snapshot.data
+                                          .data()['onProcess']
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontFamily: "RedHatDisplay",
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  else {
+                                    return Text("Loading");
+                                  }
+                                })
                       ]),
                 )),
                 Flexible(
@@ -169,14 +266,41 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
                               color: Color.fromRGBO(157, 153, 135, 1),
                               fontSize: 17),
                         ),
-                        Text(
-                          "0",
-                          style: TextStyle(
-                              fontFamily: "RedHatDisplay",
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        (mySamsatName == "Bapenda" || mySamsatName == "Admin")
+                            ? StreamBuilder<DocumentSnapshot>(
+                                stream: bapenda.doc(myUserName).snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData)
+                                    return Text(
+                                      snapshot.data.data()['finish'].toString(),
+                                      style: TextStyle(
+                                          fontFamily: "RedHatDisplay",
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  else {
+                                    return Text("Loading");
+                                  }
+                                })
+                            : StreamBuilder<DocumentSnapshot>(
+                                stream: samsat.doc(myUserName).snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData)
+                                    return Text(
+                                      snapshot.data
+                                          .data()['available']
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontFamily: "RedHatDisplay",
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  else {
+                                    return Text("Loading");
+                                  }
+                                })
                       ]),
                 )),
               ],

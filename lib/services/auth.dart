@@ -4,7 +4,6 @@ import 'package:eticketing/services/database.dart';
 import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:eticketing/views/manageuser_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +33,23 @@ class AuthMethods {
           "name": name,
           "samsatname": samsat
         };
-
+        if (samsat == "Bapenda" || samsat == "Admin") {
+          Map<String, dynamic> bapenda = {
+            "ticket": 0,
+            "lastUpdate": DateTime.now(),
+            "onProcess": 0,
+            "finish": 0
+          };
+          DatabaseMethods().addUserMyTicketToDB(name, bapenda, samsat);
+        } else {
+          Map<String, dynamic> userTicketMap = {
+            "ticket": 0,
+            "lastUpdate": DateTime.now(),
+            "onProcess": 0,
+            "available": 0
+          };
+          DatabaseMethods().addUserMyTicketToDB(name, userTicketMap, samsat);
+        }
         DatabaseMethods()
             .addUserInfoToDB(userDetail.uid, userInfoMap)
             .then((value) {

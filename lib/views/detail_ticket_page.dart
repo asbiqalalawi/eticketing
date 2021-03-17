@@ -148,11 +148,13 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  FullPhoto(url: widget.gambar)));
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    FullPhoto(url: widget.gambar)));
+                      });
                     },
                     child: Container(
                         margin: EdgeInsets.only(top: 50),
@@ -170,7 +172,9 @@ class _DetailPageState extends State<DetailPage> {
               //button
               Container(
                   child: (widget.status.toString() == "Tersedia" &&
-                          getSamsatNameFromSharedPreferences() == "Bapenda")
+                              getSamsatNameFromSharedPreferences() ==
+                                  "Bapenda" ||
+                          getSamsatNameFromSharedPreferences() == "Admin")
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -178,7 +182,9 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         )
                       : (widget.status.toString() == "Diproses" &&
-                              getSamsatNameFromSharedPreferences() == "Bapenda")
+                                  getSamsatNameFromSharedPreferences() ==
+                                      "Bapenda" ||
+                              getSamsatNameFromSharedPreferences() == "Admin")
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -307,6 +313,8 @@ class _DetailPageState extends State<DetailPage> {
                   "status": "Diproses",
                   "petugas": myUserName
                 };
+                DatabaseMethods().updateTicketTakenMyTicket(
+                    mySamsatName, myUserName, ticketTakenMap);
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketTakenMap);
 

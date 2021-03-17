@@ -21,6 +21,11 @@ class _AddTicketPageState extends State<AddTicketPage> {
   var imageDir;
 
   int antrian = 1;
+  @override
+  void initState() {
+    getMyInfoFromSharedPreferences();
+    super.initState();
+  }
 
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
@@ -67,11 +72,36 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "asalSamsat": mySamsatName,
       "gambar": imagePath,
     };
+
     Map<String, dynamic> total = {
       "total": antrian,
     };
     jumlahReference.update(total);
     documentReference.set(tiket);
+  }
+
+  getTotalMyTicket(myUserName, mySamsatName) {
+    if (mySamsatName == "Bapenda" || mySamsatName == "Admin") {
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('myTicketBapenda')
+          .doc(myUserName);
+      Map<String, dynamic> total = {
+        "totalTicket": FieldValue.increment(1),
+        "lastUpdate": DateTime.now(),
+        "available": FieldValue.increment(1),
+      };
+      documentReference.update(total);
+    } else {
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('myTicketSamsat')
+          .doc(myUserName);
+      Map<String, dynamic> total = {
+        "totalTicket": FieldValue.increment(1),
+        "lastUpdate": DateTime.now(),
+        "available": FieldValue.increment(1),
+      };
+      documentReference.update(total);
+    }
   }
 
   getCounter() {
@@ -84,12 +114,6 @@ class _AddTicketPageState extends State<AddTicketPage> {
       transaction.update(documentReference, {'noAntrian': newValue});
       return createData(newValue);
     });
-  }
-
-  @override
-  void initState() {
-    getMyInfoFromSharedPreferences();
-    super.initState();
   }
 
   @override
@@ -202,6 +226,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                         imagePath = await DatabaseMethods.uploadImage(imageDir);
                       }
                       getCounter();
+                      getTotalMyTicket(myUserName, mySamsatName);
 
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {
