@@ -26,30 +26,33 @@ class _ChatListState extends State<ChatList> {
             MaterialPageRoute(builder: (context) => ChatScreen(nopol)));
       },
       child: Container(
+        color: Colors.transparent,
         margin: EdgeInsets.fromLTRB(0, 7, 0, 18),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nopol,
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "RedHatDisplay"),
-                ),
-                Text(
-                  lastMessage,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                      fontFamily: "PublicSans",
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    nopol,
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "RedHatDisplay"),
+                  ),
+                  Text(
+                    lastMessage,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                        fontFamily: "PublicSans",
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             Icon(
               Icons.navigate_next,
@@ -75,7 +78,7 @@ class _ChatListState extends State<ChatList> {
                       documentSnapshot["lastMessage"]);
                 },
               )
-            : Center(child: CircularProgressIndicator());
+            : Container();
       },
     );
   }
@@ -97,7 +100,7 @@ class _ChatListState extends State<ChatList> {
       appBar: AppBar(
         title: Text(
           "Chat",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
         backgroundColor: Color(0xFFFFCE00),
       ),

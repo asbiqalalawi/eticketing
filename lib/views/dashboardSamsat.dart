@@ -341,7 +341,7 @@ class _DashboardSamsatState extends State<DashboardSamsat> {
               ],
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.39,
               width: MediaQuery.of(context).size.width * 0.95,
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance

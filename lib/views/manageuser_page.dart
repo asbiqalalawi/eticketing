@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/services/auth.dart';
+import 'package:eticketing/services/search_service.dart';
 import 'package:eticketing/views/adduser_page.dart';
 import 'package:eticketing/views/edituser_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ManageUserPage extends StatefulWidget {
@@ -11,11 +14,45 @@ class ManageUserPage extends StatefulWidget {
 }
 
 class _ManageUserPageState extends State<ManageUserPage> {
-  String search = '';
+  // String search = '';
+  // var queryResultSet = [];
+  // var tempSearchStore = [];
+  // TextEditingController searchController = TextEditingController();
+
+  /* initiateSearch(value) {
+    if (value.length == 0) {
+      setState(() {
+        queryResultSet = [];
+        tempSearchStore = [];
+      });
+    }
+    var capitalizedValue =
+        value.subString(0, 1).toUpperCase() + value.subString(1);
+
+    if (queryResultSet.length == 0 && value.length == 1) {
+      //
+      SearchService().searchByName(value).then((QuerySnapshot docs) {
+        for (int i = 0; i < docs.docs.length; ++i) {
+          queryResultSet.add(docs.docs[i].data);
+        }
+      });
+    } else {
+      tempSearchStore = [];
+      queryResultSet.forEach((element) {
+        if (element['name'].startWith(capitalizedValue)) {
+          setState(() {
+            tempSearchStore.add(element);
+          });
+        }
+      });
+    }
+  } */
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference _users = firestore.collection('users');
+    final FirebaseAuth _auth = FirebaseAuth.instance;
     /* Query where(
       String field, {
       dynamic isEqualTo,
@@ -74,10 +111,10 @@ class _ManageUserPageState extends State<ManageUserPage> {
                     ),
                     Expanded(
                         child: TextField(
+                      // controller: searchController,
                       onChanged: (val) {
-                        setState(() {
-                          search = val;
-                        });
+                        // initiateSearch(val);
+                        // searchController.text = val;
                       },
                       decoration: InputDecoration(border: InputBorder.none),
                     ))
@@ -91,12 +128,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                 children: <Widget>[
                   StreamBuilder<QuerySnapshot>(
                     stream: _users
-                        .where('name')
+                        // .where('name', arrayContains: searchController.text)
                         .orderBy('name', descending: false)
                         .snapshots(),
                     builder: (_, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        Center(child: CircularProgressIndicator());
+                        // Center(child: CircularProgressIndicator());
+                        return Container();
                       } else {
                         if (snapshot.hasData) {
                           return Column(
@@ -245,6 +283,8 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                                   TextButton(
                                                                     onPressed:
                                                                         () {
+                                                                      print(_auth
+                                                                          .currentUser);
                                                                       Navigator.pop(
                                                                           context);
                                                                       //
@@ -258,6 +298,8 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                                               FontWeight.bold),
                                                                     ),
                                                                   ),
+
+                                                                  ///button delete user
                                                                   TextButton(
                                                                     onPressed:
                                                                         () {
@@ -265,8 +307,13 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                                           .doc(e
                                                                               .id)
                                                                           .delete();
+                                                                      _auth
+                                                                          .currentUser
+                                                                          .delete();
+
                                                                       Navigator.pop(
                                                                           context);
+
                                                                       //
                                                                     },
                                                                     child: Text(
@@ -310,10 +357,23 @@ class _ManageUserPageState extends State<ManageUserPage> {
                               );
                             }).toList(),
                           );
+                        } else {
+                          return Container();
                         }
                       }
                     },
                   ),
+                  /* SizedBox(height: 20),
+                  GridView.count(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4,
+                      mainAxisSpacing: 4,
+                      primary: false,
+                      shrinkWrap: true,
+                      children: tempSearchStore.map((element) {
+                        return buildResultCard(element);
+                      }).toList()) */
                 ],
               ),
             ),
@@ -321,3 +381,19 @@ class _ManageUserPageState extends State<ManageUserPage> {
         ));
   }
 }
+
+// Widget buildResultCard(data) {
+//   return Card(
+//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//     elevation: 2,
+//     child: Container(
+//       child: Center(
+//         child: Text(
+//           data['name'],
+//           textAlign: TextAlign.center,
+//           style: TextStyle(color: Colors.black, fontSize: 20),
+//         ),
+//       ),
+//     ),
+//   );
+// }

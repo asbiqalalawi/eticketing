@@ -230,36 +230,37 @@ class _PicketSchedulesState extends State<PicketSchedules> {
         child: Icon(Icons.add),
         onPressed: () async {
           await showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: Colors.white,
-                  title: Text('Nama Petugas'),
-                  content: TextField(
-                    controller: _scheduleController,
-                    textInputAction: TextInputAction.go,
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        schedule.add({
-                          'date': _controller.selectedDay.toString(),
-                          'event': _scheduleController.text
-                        });
-                        _scheduleController.text = '';
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: Colors.white,
+                title: Text('Nama Petugas'),
+                content: TextField(
+                  controller: _scheduleController,
+                  textInputAction: TextInputAction.go,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      schedule.add({
+                        'date': _controller.selectedDay.toString(),
+                        'event': _scheduleController.text
+                      });
+                      _scheduleController.text = '';
 
-                        Navigator.pop(context);
-                        //
-                      },
-                      child: Text(
-                        'Simpan',
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
-                      ),
+                      Navigator.pop(context);
+                      //
+                    },
+                    child: Text(
+                      'Simpan',
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
-                  ],
-                );
-              });
+                  ),
+                ],
+              );
+            },
+          );
         },
       ),
     );
