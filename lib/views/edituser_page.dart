@@ -1,3 +1,4 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:eticketing/services/auth.dart';
@@ -26,11 +27,28 @@ class _EditUserPageState extends State<EditUserPage> {
     });
   }
 
-  /* void _toggle2() {
-    setState(() {
-      _obsecureText2 = !_obsecureText2;
-    });
-  } */
+  List<String> suggestions = [
+    'Admin',
+    'Bapenda',
+    'Samsat Bandar Lampung',
+    'Samsat Gunung Sugih',
+    'Samsat Kotabumi',
+    'Samsat Kalianda',
+    'Samsat Menggala',
+    'Samsat Sukadana',
+    'Samsat Metro',
+    'Samsat Way kanan',
+    'Samsat Liwa',
+    'Samsat Tanggamus',
+    'Samsat Mesuji',
+    'Samsat Pringsewu',
+    'Samsat Pesawaran',
+    'Samsat Tulang Bawang Barat',
+    'Samsat Pesisir Barat',
+  ];
+
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  SimpleAutoCompleteTextField textField;
 
   AuthMethods authMethods = new AuthMethods();
 
@@ -128,13 +146,15 @@ class _EditUserPageState extends State<EditUserPage> {
                           margin: EdgeInsets.only(bottom: 10),
                           child: SizedBox(
                             height: 70,
-                            child: TextFormField(
+                            child: SimpleAutoCompleteTextField(
+                              key: key,
+                              suggestions: suggestions,
                               controller: samsatNameTextEditingController,
-                              validator: MultiValidator([
+                              /* validator: MultiValidator([
                                 RequiredValidator(
                                     errorText:
                                         'Nama samsat tidak boleh kosong'),
-                              ]),
+                              ]), */
                               decoration: InputDecoration(
                                   fillColor: Color.fromARGB(255, 255, 249, 224),
                                   filled: true,

@@ -1,4 +1,6 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:eticketing/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -10,16 +12,8 @@ class AddUserPage extends StatefulWidget {
 }
 
 class _AddUserPageState extends State<AddUserPage> {
-  // String list;
-  // List droplist = [
-  //   "Samsat Tanggamus",
-  //   "Samsat Pringsewu",
-  //   "Samsat Bandar Lampung"
-  // ];
-
   bool isLoading = false;
   bool _obsecureText = true;
-  // bool _obsecureText2 = true;
 
   void _toggle() {
     setState(() {
@@ -27,11 +21,28 @@ class _AddUserPageState extends State<AddUserPage> {
     });
   }
 
-  /* void _toggle2() {
-    setState(() {
-      _obsecureText2 = !_obsecureText2;
-    });
-  } */
+  List<String> suggestions = [
+    'Admin',
+    'Bapenda',
+    'Samsat Bandar Lampung',
+    'Samsat Gunung Sugih',
+    'Samsat Kotabumi',
+    'Samsat Kalianda',
+    'Samsat Menggala',
+    'Samsat Sukadana',
+    'Samsat Metro',
+    'Samsat Way kanan',
+    'Samsat Liwa',
+    'Samsat Tanggamus',
+    'Samsat Mesuji',
+    'Samsat Pringsewu',
+    'Samsat Pesawaran',
+    'Samsat Tulang Bawang Barat',
+    'Samsat Pesisir Barat',
+  ];
+
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  SimpleAutoCompleteTextField textField;
 
   AuthMethods authMethods = new AuthMethods();
 
@@ -115,17 +126,19 @@ class _AddUserPageState extends State<AddUserPage> {
                           margin: EdgeInsets.only(bottom: 10),
                           child: SizedBox(
                             height: 70,
-                            child: TextFormField(
+                            child: SimpleAutoCompleteTextField(
+                              key: key,
+                              suggestions: suggestions,
                               controller: samsatNameTextEditingController,
-                              validator: MultiValidator([
+                              /* validator: MultiValidator([
                                 RequiredValidator(
                                     errorText:
                                         'Nama samsat tidak boleh kosong'),
-                              ]),
+                              ]), */
                               decoration: InputDecoration(
                                   fillColor: Color.fromARGB(255, 255, 249, 224),
                                   filled: true,
-                                  hintText: "Nama Samsat",
+                                  hintText: "Petugas (*Bapenda/Samsat...)",
                                   hintStyle: TextStyle(
                                       fontFamily: "PublicSans",
                                       fontWeight: FontWeight.bold),
@@ -261,9 +274,75 @@ class _AddUserPageState extends State<AddUserPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(50),
-                          onTap: () {
+                          onTap: () async {
                             //TODO
-                            signMeUp();
+                            await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    title: Text('Buat akun'),
+                                    content: Container(
+                                      height: 110,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              userNameTextEditingController
+                                                  .text,
+                                              overflow: TextOverflow.ellipsis),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                              samsatNameTextEditingController
+                                                  .text,
+                                              overflow: TextOverflow.ellipsis),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(emailTextEditingController.text,
+                                              overflow: TextOverflow.ellipsis),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                              passwordTextEditingController
+                                                  .text,
+                                              overflow: TextOverflow.ellipsis),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          //
+                                        },
+                                        child: Text(
+                                          'Batal',
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          signMeUp();
+                                          //
+                                        },
+                                        child: Text(
+                                          'Ya',
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                });
+                            // signMeUp();
                           },
                           child: Center(
                             child: Text(
