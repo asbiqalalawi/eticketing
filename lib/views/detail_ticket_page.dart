@@ -267,6 +267,9 @@ class _DetailPageState extends State<DetailPage> {
                   "petugas": ""
                 };
 
+                var chatRoomId = getChatRoomId(widget.nopol);
+                DatabaseMethods().deleteChat(chatRoomId);
+
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketCancelMap);
 

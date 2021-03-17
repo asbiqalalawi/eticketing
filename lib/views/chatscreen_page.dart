@@ -273,7 +273,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white.withOpacity(0.4),
+        backgroundColor: Color(0xFFFFCE00),
         title: Text(
           widget.nopol,
           style: TextStyle(color: Colors.black),
@@ -294,16 +294,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Row(
                   children: [
-                    GestureDetector(
-                        onTap: () {
-                          _showPicker(context);
-                        },
-                        child: Icon(
-                          Icons.image,
-                        )),
-                    SizedBox(
-                      width: 8,
-                    ),
                     Expanded(
                         child: TextField(
                       controller: messageEditingController,
@@ -312,6 +302,16 @@ class _ChatScreenState extends State<ChatScreen> {
                         hintText: "Ketik disini...",
                       ),
                     )),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          _showPicker(context);
+                        },
+                        child: Icon(
+                          Icons.image,
+                        )),
                     SizedBox(
                       width: 8,
                     ),
