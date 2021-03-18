@@ -30,8 +30,10 @@ class _ListTicketState extends State<ListTicket> {
             ],
           ),
           body: StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection("ticket").snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection("ticket")
+                  .orderBy('antrian', descending: false)
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
@@ -47,7 +49,7 @@ class _ListTicketState extends State<ListTicket> {
                             documentSnapshot["antrian"],
                             documentSnapshot["createdAt"],
                             documentSnapshot["pengirim"],
-                            documentSnapshot["asalSamsat"],
+                            documentSnapshot["asal"],
                             documentSnapshot["gambar"]);
                       });
                 } else {

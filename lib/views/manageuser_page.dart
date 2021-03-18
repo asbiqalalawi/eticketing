@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eticketing/services/auth.dart';
-import 'package:eticketing/services/search_service.dart';
 import 'package:eticketing/views/adduser_page.dart';
 import 'package:eticketing/views/edituser_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -157,7 +155,7 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                       margin: EdgeInsets.only(left: 20, top: 5),
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        e.data()['samsatname'].toString(),
+                                        e.data()['originName'].toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.normal,
                                             fontFamily: "RedHatDisplay"),
@@ -221,9 +219,9 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                             return EditUserPage(
                                                               name: e.data()[
                                                                   'name'],
-                                                              samsatName: e
+                                                              originName: e
                                                                       .data()[
-                                                                  'samsatname'],
+                                                                  'originName'],
                                                               email: e.data()[
                                                                   'email'],
                                                               uid: e.id,

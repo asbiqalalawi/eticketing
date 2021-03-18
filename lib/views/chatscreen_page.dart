@@ -21,7 +21,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   String chatRoomId, messageId = "";
-  String mySamsatName, myUserName, myEmail;
+  String myOriginName, myUserName, myEmail;
   Stream messageStream;
   bool isLoading;
   TextEditingController messageEditingController = TextEditingController();
@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
-    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+    myOriginName = await SharedPreferenceHelper().getOriginName();
 
     chatRoomId = widget.nopol;
   }

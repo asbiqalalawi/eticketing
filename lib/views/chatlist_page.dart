@@ -11,12 +11,12 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
   Stream chatRoomStream;
-  String mySamsatName, myUserName, myEmail;
+  String myOriginName, myUserName, myEmail;
 
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
-    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+    myOriginName = await SharedPreferenceHelper().getOriginName();
   }
 
   Widget chatRoomListTile(nopol, lastMessage) {

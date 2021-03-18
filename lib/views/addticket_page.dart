@@ -16,7 +16,7 @@ class AddTicketPage extends StatefulWidget {
 
 class _AddTicketPageState extends State<AddTicketPage> {
   String nomorPolisi, deskripsi, status = "Tersedia";
-  String mySamsatName, myUserName, myEmail;
+  String myOriginName, myUserName, myEmail;
   String imagePath;
   var imageDir;
 
@@ -30,7 +30,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
-    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+    myOriginName = await SharedPreferenceHelper().getOriginName();
   }
 
   getNopol(nopol) {
@@ -69,7 +69,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "antrian": antrian,
       "createdAt": DateTime.now(),
       "pengirim": myUserName,
-      "asalSamsat": mySamsatName,
+      "asal": myOriginName,
       "gambar": imagePath,
     };
 
@@ -80,8 +80,8 @@ class _AddTicketPageState extends State<AddTicketPage> {
     documentReference.set(tiket);
   }
 
-  getTotalMyTicket(myUserName, mySamsatName) {
-    if (mySamsatName == "Bapenda" || mySamsatName == "Admin") {
+  getTotalMyTicket(myUserName, myOriginName) {
+    if (myOriginName == "Bapenda" || myOriginName == "Admin") {
       DocumentReference documentReference = FirebaseFirestore.instance
           .collection('myTicketBapenda')
           .doc(myUserName);
@@ -226,7 +226,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                         imagePath = await DatabaseMethods.uploadImage(imageDir);
                       }
                       getCounter();
-                      getTotalMyTicket(myUserName, mySamsatName);
+                      getTotalMyTicket(myUserName, myOriginName);
 
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {

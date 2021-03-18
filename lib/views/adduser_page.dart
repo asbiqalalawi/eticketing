@@ -1,6 +1,5 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:eticketing/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -49,7 +48,7 @@ class _AddUserPageState extends State<AddUserPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController userNameTextEditingController =
       new TextEditingController();
-  TextEditingController samsatNameTextEditingController =
+  TextEditingController originNameTextEditingController =
       new TextEditingController();
   TextEditingController emailTextEditingController =
       new TextEditingController();
@@ -64,7 +63,7 @@ class _AddUserPageState extends State<AddUserPage> {
       authMethods.signUp(
           emailTextEditingController.text,
           passwordTextEditingController.text,
-          samsatNameTextEditingController.text,
+          originNameTextEditingController.text,
           userNameTextEditingController.text,
           context);
     }
@@ -129,7 +128,7 @@ class _AddUserPageState extends State<AddUserPage> {
                             child: SimpleAutoCompleteTextField(
                               key: key,
                               suggestions: suggestions,
-                              controller: samsatNameTextEditingController,
+                              controller: originNameTextEditingController,
                               /* validator: MultiValidator([
                                 RequiredValidator(
                                     errorText:
@@ -296,7 +295,7 @@ class _AddUserPageState extends State<AddUserPage> {
                                             height: 5,
                                           ),
                                           Text(
-                                              samsatNameTextEditingController
+                                              originNameTextEditingController
                                                   .text,
                                               overflow: TextOverflow.ellipsis),
                                           SizedBox(

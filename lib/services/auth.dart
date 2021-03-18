@@ -16,7 +16,7 @@ class AuthMethods {
     return auth.currentUser;
   }
 
-  signUp(String email, String password, String samsat, String name,
+  signUp(String email, String password, String origin, String name,
       BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -27,21 +27,21 @@ class AuthMethods {
         SharedPreferenceHelper().saveUserEmail(userDetail.email);
         SharedPreferenceHelper().saveUserId(userDetail.uid);
         SharedPreferenceHelper().saveUserName(name);
-        SharedPreferenceHelper().saveSamsatName(samsat);
+        SharedPreferenceHelper().saveOriginName(origin);
 
         Map<String, dynamic> userInfoMap = {
           "email": userDetail.email,
           "name": name,
-          "samsatname": samsat
+          "originName": origin
         };
-        if (samsat == "Bapenda" || samsat == "Admin") {
+        if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
             "ticket": 0,
             "lastUpdate": DateTime.now(),
             "onProcess": 0,
             "finish": 0
           };
-          DatabaseMethods().addUserMyTicketToDB(name, bapenda, samsat);
+          DatabaseMethods().addUserMyTicketToDB(name, bapenda, origin);
         } else {
           Map<String, dynamic> userTicketMap = {
             "ticket": 0,
@@ -49,7 +49,7 @@ class AuthMethods {
             "onProcess": 0,
             "available": 0
           };
-          DatabaseMethods().addUserMyTicketToDB(name, userTicketMap, samsat);
+          DatabaseMethods().addUserMyTicketToDB(name, userTicketMap, origin);
         }
         DatabaseMethods()
             .addUserInfoToDB(userDetail.uid, userInfoMap)
@@ -108,7 +108,7 @@ class AuthMethods {
         SharedPreferenceHelper().saveUserId(userDetail.uid);
         SharedPreferenceHelper().saveUserName(querySnapshot.docs[0]["name"]);
         SharedPreferenceHelper()
-            .saveSamsatName(querySnapshot.docs[0]["samsatname"]);
+            .saveOriginName(querySnapshot.docs[0]["originName"]);
 
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => BottomNavigation()));

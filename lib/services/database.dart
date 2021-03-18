@@ -18,8 +18,8 @@ class DatabaseMethods {
   }
 
   Future addUserMyTicketToDB(
-      String userId, Map<String, dynamic> userTicketMap, samsat) async {
-    if (samsat == "Bapenda" || samsat == "Admin") {
+      String userId, Map<String, dynamic> userTicketMap, origin) async {
+    if (origin == "Bapenda" || origin == "Admin") {
       return FirebaseFirestore.instance
           .collection("myTicketBapenda")
           .doc(userId)
@@ -56,8 +56,8 @@ class DatabaseMethods {
   }
 
   updateTicketTakenMyTicket(
-      String mySamsatName, String myUserName, Map ticketTakenMap) {
-    if (mySamsatName == "Bapenda" || mySamsatName == "Admin") {
+      String myOriginName, String myUserName, Map ticketTakenMap) {
+    if (myOriginName == "Bapenda" || myOriginName == "Admin") {
       Map<String, dynamic> update = {
         "lastUpdate": DateTime.now(),
         "onProcess": FieldValue.increment(1),
@@ -77,8 +77,8 @@ class DatabaseMethods {
   }
 
   updateTicketCancelMyTicket(
-      String mySamsatName, String myUserName, Map ticketTakenMap) {
-    if (mySamsatName == "Bapenda" || mySamsatName == "Admin") {
+      String myOriginName, String myUserName, Map ticketTakenMap) {
+    if (myOriginName == "Bapenda" || myOriginName == "Admin") {
       Map<String, dynamic> update = {
         "lastUpdate": DateTime.now(),
         "onProcess": FieldValue.increment(-1),
@@ -98,8 +98,8 @@ class DatabaseMethods {
   }
 
   updateTicketFinishMyTicket(
-      String mySamsatName, String myUserName, Map ticketTakenMap) {
-    if (mySamsatName == "Bapenda" || mySamsatName == "Admin") {
+      String myOriginName, String myUserName, Map ticketTakenMap) {
+    if (myOriginName == "Bapenda" || myOriginName == "Admin") {
       Map<String, dynamic> update = {
         "lastUpdate": DateTime.now(),
         "Finish": FieldValue.increment(1),

@@ -7,10 +7,10 @@ import 'package:form_field_validator/form_field_validator.dart';
 class EditUserPage extends StatefulWidget {
   // const EditUserPage({Key key}) : super(key: key);
   final String name;
-  final String samsatName;
+  final String originName;
   final String email;
   final String uid;
-  EditUserPage({this.name, this.samsatName, this.email, this.uid});
+  EditUserPage({this.name, this.originName, this.email, this.uid});
 
   @override
   _EditUserPageState createState() => _EditUserPageState();
@@ -55,7 +55,7 @@ class _EditUserPageState extends State<EditUserPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController userNameTextEditingController =
       new TextEditingController();
-  TextEditingController samsatNameTextEditingController =
+  TextEditingController originNameTextEditingController =
       new TextEditingController();
   TextEditingController emailTextEditingController =
       new TextEditingController();
@@ -70,7 +70,7 @@ class _EditUserPageState extends State<EditUserPage> {
       authMethods.signUp(
           emailTextEditingController.text,
           passwordTextEditingController.text,
-          samsatNameTextEditingController.text,
+          originNameTextEditingController.text,
           userNameTextEditingController.text,
           context);
     }
@@ -79,7 +79,7 @@ class _EditUserPageState extends State<EditUserPage> {
   @override
   void initState() {
     userNameTextEditingController.text = widget.name;
-    samsatNameTextEditingController.text = widget.samsatName;
+    originNameTextEditingController.text = widget.originName;
     emailTextEditingController.text = widget.email;
 
     super.initState();
@@ -149,7 +149,7 @@ class _EditUserPageState extends State<EditUserPage> {
                             child: SimpleAutoCompleteTextField(
                               key: key,
                               suggestions: suggestions,
-                              controller: samsatNameTextEditingController,
+                              controller: originNameTextEditingController,
                               /* validator: MultiValidator([
                                 RequiredValidator(
                                     errorText:
@@ -244,8 +244,8 @@ class _EditUserPageState extends State<EditUserPage> {
                             // signMeUp();
                             _users.doc(widget.uid).update({
                               'name': userNameTextEditingController.text,
-                              'samsatname':
-                                  samsatNameTextEditingController.text,
+                              'originName':
+                                  originNameTextEditingController.text,
                               'email': emailTextEditingController.text
                             });
 

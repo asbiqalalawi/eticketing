@@ -9,7 +9,7 @@ class ItemCard extends StatelessWidget {
   final int antrian;
   final Timestamp createdAt;
   final String pengirim;
-  final String samsatName;
+  final String originName;
   final String gambar;
 
   //// Pointer to Update Function
@@ -18,7 +18,7 @@ class ItemCard extends StatelessWidget {
   // final Function onDelete;
 
   ItemCard(this.nopol, this.deskripsi, this.status, this.antrian,
-      this.createdAt, this.pengirim, this.samsatName, this.gambar);
+      this.createdAt, this.pengirim, this.originName, this.gambar);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ItemCard extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return DetailPage(nopol, deskripsi, status, antrian, createdAt,
-              pengirim, samsatName, gambar);
+              pengirim, originName, gambar);
         }));
       },
       child: Card(
@@ -66,7 +66,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
                     child: Text(
-                      samsatName,
+                      originName,
                       style: TextStyle(
                         fontFamily: "PublicSans",
                         color: Colors.black,

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/database.dart';
-import 'package:eticketing/views/dashboardSamsat.dart';
+import 'package:eticketing/views/dashboard.dart';
 import 'package:eticketing/widgets/full_photo.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class DetailPage extends StatefulWidget {
   final int antrian;
   final Timestamp createdAt;
   final String pengirim;
-  final String samsatName;
+  final String originName;
   final String gambar;
 
   //// Pointer to Update Function
@@ -21,19 +21,19 @@ class DetailPage extends StatefulWidget {
   // final Function onDelete;
 
   DetailPage(this.nopol, this.deskripsi, this.status, this.antrian,
-      this.createdAt, this.pengirim, this.samsatName, this.gambar);
+      this.createdAt, this.pengirim, this.originName, this.gambar);
 
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  String mySamsatName, myUserName, myEmail;
+  String myOriginName, myUserName, myEmail;
 
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
-    mySamsatName = await SharedPreferenceHelper().getSamsatName();
+    myOriginName = await SharedPreferenceHelper().getOriginName();
   }
 
   getChatRoomId(String nopol) {
@@ -44,7 +44,7 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     getMyInfoFromSharedPreferences();
     print(widget.status);
-    print(mySamsatName);
+    print(myOriginName);
     super.initState();
   }
 
@@ -70,7 +70,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: Row(
                       children: [
                         Text(
-                          widget.samsatName,
+                          widget.originName,
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
@@ -172,7 +172,7 @@ class _DetailPageState extends State<DetailPage> {
 
               Container(
                   child: (widget.status.toString() == "Tersedia" &&
-                          mySamsatName == "Bapenda")
+                          myOriginName == "Bapenda")
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -180,7 +180,7 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         )
                       : (widget.status.toString() == "Diproses" &&
-                              mySamsatName == "Bapenda")
+                              myOriginName == "Bapenda")
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -229,7 +229,7 @@ class _DetailPageState extends State<DetailPage> {
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketSelesaiMap);
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => DashboardSamsat()));
+                    MaterialPageRoute(builder: (context) => Dashboard()));
               },
               child: Center(
                 child: Text(
@@ -276,7 +276,7 @@ class _DetailPageState extends State<DetailPage> {
                     .updateTicketTaken(widget.nopol, ticketCancelMap);
 
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => DashboardSamsat()));
+                    MaterialPageRoute(builder: (context) => Dashboard()));
               },
               child: Center(
                 child: Text(
@@ -316,7 +316,7 @@ class _DetailPageState extends State<DetailPage> {
                   "petugas": myUserName
                 };
                 DatabaseMethods().updateTicketTakenMyTicket(
-                    mySamsatName, myUserName, ticketTakenMap);
+                    myOriginName, myUserName, ticketTakenMap);
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketTakenMap);
 
@@ -330,7 +330,7 @@ class _DetailPageState extends State<DetailPage> {
                 DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
 
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => DashboardSamsat()));
+                    MaterialPageRoute(builder: (context) => Dashboard()));
               },
               child: Center(
                 child: Text(

@@ -1,6 +1,6 @@
 import 'package:eticketing/views/chatlist_page.dart';
-import 'package:eticketing/views/profil_samsat.dart';
-import 'package:eticketing/views/dashboardSamsat.dart';
+import 'package:eticketing/views/profil.dart';
+import 'package:eticketing/views/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -21,9 +21,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     final _listPage = [
       // DashboardSamsat(),
-      DashboardSamsat(),
+      Dashboard(),
       ChatList(),
-      ProfilSamsat(),
+      Profil(),
     ];
 
     return Scaffold(
