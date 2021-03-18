@@ -55,18 +55,28 @@ class DatabaseMethods {
         .update(ticketTakenMap);
   }
 
-  updateTicketTakenMyTicket(
+  updateTicketTakenMyTicketBapenda(
       String myOriginName, String myUserName, Map ticketTakenMap) {
-    if (myOriginName == "Bapenda" || myOriginName == "Admin") {
-      Map<String, dynamic> update = {
-        "lastUpdate": DateTime.now(),
-        "onProcess": FieldValue.increment(1),
-      };
-      return FirebaseFirestore.instance
-          .collection("myTicketBapenda")
-          .doc(myUserName)
-          .update(update);
-    }
+    Map<String, dynamic> update = {
+      "lastUpdate": DateTime.now(),
+      "onProcess": FieldValue.increment(1),
+    };
+    return FirebaseFirestore.instance
+        .collection("myTicketBapenda")
+        .doc(myUserName)
+        .update(update);
+  }
+
+  updateTicketTakenMyTicketSamsat(String senderName, Map ticketTakenMap) {
+    Map<String, dynamic> update = {
+      "lastUpdate": DateTime.now(),
+      "available": FieldValue.increment(-1),
+      "onProcess": FieldValue.increment(1)
+    };
+    return FirebaseFirestore.instance
+        .collection("myTicketSamsat")
+        .doc(senderName)
+        .update(update);
   }
 
   updateTicketCancel(String nopol, Map ticketCancelMap) {

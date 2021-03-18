@@ -158,7 +158,7 @@ class _DashboardState extends State<Dashboard> {
                                         if (snapshot.hasData) {
                                           return Text(
                                             snapshot.data
-                                                .data()['ticket']
+                                                .data()['totalTicket']
                                                 .toString(),
                                             style: TextStyle(
                                                 fontFamily: "RedHatDisplay",

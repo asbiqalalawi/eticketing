@@ -14,38 +14,40 @@ class DetailPage extends StatefulWidget {
   final String pengirim;
   final String originName;
   final String gambar;
+  final String myUserName;
+  final String myOriginName;
 
   //// Pointer to Update Function
   // final Function onUpdate;
   // //// Pointer to Delete Function
   // final Function onDelete;
 
-  DetailPage(this.nopol, this.deskripsi, this.status, this.antrian,
-      this.createdAt, this.pengirim, this.originName, this.gambar);
+  DetailPage(
+      this.nopol,
+      this.deskripsi,
+      this.status,
+      this.antrian,
+      this.createdAt,
+      this.pengirim,
+      this.originName,
+      this.gambar,
+      this.myUserName,
+      this.myOriginName);
 
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  String myOriginName = " ", myUserName = " ", myEmail = "";
-
-  getMyInfoFromSharedPreferences() async {
-    myUserName = await SharedPreferenceHelper().getUserName();
-    myEmail = await SharedPreferenceHelper().getUserEmail();
-    myOriginName = await SharedPreferenceHelper().getOriginName();
+  @override
+  void initState() {
+    print(widget.status);
+    print(widget.myOriginName);
+    super.initState();
   }
 
   getChatRoomId(String nopol) {
     return "$nopol";
-  }
-
-  @override
-  void initState() {
-    getMyInfoFromSharedPreferences();
-    print(widget.status);
-    print(myOriginName);
-    super.initState();
   }
 
   @override
@@ -172,8 +174,8 @@ class _DetailPageState extends State<DetailPage> {
 
               Container(
                   child: (widget.status.toString() == "Tersedia" &&
-                          (myOriginName == "Bapenda" ||
-                              myOriginName == "Admin"))
+                          (widget.myOriginName == "Bapenda" ||
+                              widget.myOriginName == "Admin"))
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -181,8 +183,8 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         )
                       : (widget.status.toString() == "Diproses" &&
-                              (myOriginName == "Bapenda" ||
-                                  myOriginName == "Admin"))
+                              (widget.myOriginName == "Bapenda" ||
+                                  widget.myOriginName == "Admin"))
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -313,18 +315,24 @@ class _DetailPageState extends State<DetailPage> {
             child: InkWell(
               borderRadius: BorderRadius.circular(50),
               onTap: () {
-                Map<String, dynamic> ticketTakenMap = {
+                Map<String, dynamic> ticketTakenBapenda = {
                   "status": "Diproses",
-                  "petugas": myUserName
+                  "petugas": widget.myUserName
                 };
-                DatabaseMethods().updateTicketTakenMyTicket(
-                    myOriginName, myUserName, ticketTakenMap);
+                Map<String, dynamic> ticketTakenSamsat = {
+                  "status": "Diproses",
+                  "petugas": widget.myUserName
+                };
+                DatabaseMethods().updateTicketTakenMyTicketBapenda(
+                    widget.myOriginName, widget.myUserName, ticketTakenBapenda);
+                DatabaseMethods().updateTicketTakenMyTicketSamsat(
+                    widget.pengirim, ticketTakenSamsat);
                 DatabaseMethods()
-                    .updateTicketTaken(widget.nopol, ticketTakenMap);
+                    .updateTicketTaken(widget.nopol, ticketTakenBapenda);
 
                 var chatRoomId = getChatRoomId(widget.nopol);
                 Map<String, dynamic> chatRoomInfoMap = {
-                  "users": [widget.pengirim, myUserName],
+                  "users": [widget.pengirim, widget.myUserName],
                   "nopol": widget.nopol,
                   "lastMessage": "Ketik Pesan disini...",
                   "antrian": widget.antrian

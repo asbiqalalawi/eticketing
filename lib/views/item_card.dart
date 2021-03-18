@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/views/detail_ticket_page.dart';
 import 'package:flutter/material.dart';
 
-class ItemCard extends StatelessWidget {
+class ItemCard extends StatefulWidget {
   final String nopol;
   final String deskripsi;
   final String status;
@@ -21,12 +22,40 @@ class ItemCard extends StatelessWidget {
       this.createdAt, this.pengirim, this.originName, this.gambar);
 
   @override
+  _ItemCardState createState() => _ItemCardState();
+}
+
+class _ItemCardState extends State<ItemCard> {
+  String myOriginName = " ", myUserName = " ", myEmail = " ";
+
+  getMyInfoFromSharedPreferences() async {
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    myOriginName = await SharedPreferenceHelper().getOriginName();
+    setState(() {});
+  }
+
+  void initState() {
+    getMyInfoFromSharedPreferences();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DetailPage(nopol, deskripsi, status, antrian, createdAt,
-              pengirim, originName, gambar);
+          return DetailPage(
+              widget.nopol,
+              widget.deskripsi,
+              widget.status,
+              widget.antrian,
+              widget.createdAt,
+              widget.pengirim,
+              widget.originName,
+              widget.gambar,
+              myUserName,
+              myOriginName);
         }));
       },
       child: Card(
@@ -40,7 +69,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
                     child: Text(
-                      nopol,
+                      widget.nopol,
                       style: TextStyle(
                           fontFamily: "RedHatDisplay",
                           color: Colors.black,
@@ -51,7 +80,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Text(
-                      antrian.toString(),
+                      widget.antrian.toString(),
                       style: TextStyle(
                           fontFamily: "PublicSans",
                           color: Colors.black,
@@ -66,7 +95,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 5),
                     child: Text(
-                      originName,
+                      widget.originName,
                       style: TextStyle(
                         fontFamily: "PublicSans",
                         color: Colors.black,
@@ -78,7 +107,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Text(
-                      createdAt.toDate().toString().substring(11, 16),
+                      widget.createdAt.toDate().toString().substring(11, 16),
                       style: TextStyle(
                         fontFamily: "PublicSans",
                         color: Colors.black,
@@ -95,7 +124,7 @@ class ItemCard extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.5,
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 20),
                     child: Text(
-                      deskripsi.toString(),
+                      widget.deskripsi.toString(),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: "PublicSans",
@@ -108,7 +137,7 @@ class ItemCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 20),
                     child: Text(
-                      status,
+                      widget.status,
                       style: TextStyle(
                           fontFamily: "PublicSans",
                           color: Colors.black,
