@@ -172,8 +172,8 @@ class _DetailPageState extends State<DetailPage> {
 
               Container(
                   child: (widget.status.toString() == "Tersedia" &&
-                              myOriginName == "Bapenda" ||
-                          myOriginName == "Admin")
+                          (myOriginName == "Bapenda" ||
+                              myOriginName == "Admin"))
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -181,8 +181,8 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         )
                       : (widget.status.toString() == "Diproses" &&
-                                  myOriginName == "Bapenda" ||
-                              myOriginName == "Admin")
+                              (myOriginName == "Bapenda" ||
+                                  myOriginName == "Admin"))
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
