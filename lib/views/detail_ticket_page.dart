@@ -28,7 +28,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  String myOriginName, myUserName, myEmail;
+  String myOriginName = " ", myUserName = " ", myEmail = "";
 
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
