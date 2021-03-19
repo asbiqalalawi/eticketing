@@ -35,6 +35,7 @@ class _DashboardState extends State<Dashboard> {
     CollectionReference bapenda = dbfirebase.collection('myTicketBapenda');
     CollectionReference samsat = dbfirebase.collection('myTicketSamsat');
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -158,7 +159,7 @@ class _DashboardState extends State<Dashboard> {
                                         if (snapshot.hasData) {
                                           return Text(
                                             snapshot.data
-                                                .data()['totalTicket']
+                                                .data()['ticket']
                                                 .toString(),
                                             style: TextStyle(
                                                 fontFamily: "RedHatDisplay",
@@ -333,6 +334,7 @@ class _DashboardState extends State<Dashboard> {
                   stream: FirebaseFirestore.instance
                       .collection("ticket")
                       .orderBy('antrian' /* , descending: true */)
+                      .where(myUserName)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {

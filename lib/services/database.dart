@@ -55,7 +55,7 @@ class DatabaseMethods {
         .update(ticketTakenMap);
   }
 
-  updateTicketTakenMyTicketBapenda(
+  updateMyTicketBapenda(
       String myOriginName, String myUserName, Map ticketTakenMap) {
     Map<String, dynamic> update = {
       "lastUpdate": DateTime.now(),
@@ -66,8 +66,18 @@ class DatabaseMethods {
         .doc(myUserName)
         .update(update);
   }
+// getCounter(senderName) {
+//     DocumentReference documentReference =
+//         FirebaseFirestore.instance.collection('myTicketSamsat').doc(senderName);
 
-  updateTicketTakenMyTicketSamsat(String senderName, Map ticketTakenMap) {
+//     return FirebaseFirestore.instance.runTransaction((transaction) async {
+//       DocumentSnapshot snapshot = await transaction.get(documentReference);
+//       int newValue = snapshot.data()['available'];
+//       return newValue;
+//     });
+//   }
+  updateMyTicketSamsat(String senderName, Map ticketTakenMap) {
+    // int newValue;
     Map<String, dynamic> update = {
       "lastUpdate": DateTime.now(),
       "available": FieldValue.increment(-1),

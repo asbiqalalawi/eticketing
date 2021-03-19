@@ -41,8 +41,6 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
-    print(widget.status);
-    print(widget.myOriginName);
     super.initState();
   }
 
@@ -270,7 +268,7 @@ class _DetailPageState extends State<DetailPage> {
               onTap: () {
                 Map<String, dynamic> ticketCancelMap = {
                   "status": "Tersedia",
-                  "petugas": ""
+                  "petugas": " "
                 };
 
                 var chatRoomId = getChatRoomId(widget.nopol);
@@ -323,10 +321,10 @@ class _DetailPageState extends State<DetailPage> {
                   "status": "Diproses",
                   "petugas": widget.myUserName
                 };
-                DatabaseMethods().updateTicketTakenMyTicketBapenda(
+                DatabaseMethods().updateMyTicketBapenda(
                     widget.myOriginName, widget.myUserName, ticketTakenBapenda);
-                DatabaseMethods().updateTicketTakenMyTicketSamsat(
-                    widget.pengirim, ticketTakenSamsat);
+                DatabaseMethods()
+                    .updateMyTicketSamsat(widget.pengirim, ticketTakenSamsat);
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketTakenBapenda);
 

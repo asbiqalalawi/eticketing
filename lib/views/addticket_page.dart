@@ -86,7 +86,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
           .collection('myTicketBapenda')
           .doc(myUserName);
       Map<String, dynamic> total = {
-        "totalTicket": FieldValue.increment(1),
+        "ticket": FieldValue.increment(1),
         "lastUpdate": DateTime.now(),
         "available": FieldValue.increment(1),
       };
@@ -96,7 +96,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
           .collection('myTicketSamsat')
           .doc(myUserName);
       Map<String, dynamic> total = {
-        "totalTicket": FieldValue.increment(1),
+        "ticket": FieldValue.increment(1),
         "lastUpdate": DateTime.now(),
         "available": FieldValue.increment(1),
       };
