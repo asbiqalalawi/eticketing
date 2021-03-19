@@ -375,6 +375,8 @@ class _DetailPageState extends State<DetailPage> {
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketCancelMap);
                 DatabaseMethods().updateCancelMyTicketSamsat(widget.pengirim);
+                DatabaseMethods()
+                    .updateCancelMyTicketBapenda(widget.myUserName);
 
                 Map<String, dynamic> historycanceledMap = {
                   "nopol": widget.nopol,
