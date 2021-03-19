@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/views/addticket_page.dart';
+import 'package:eticketing/views/historyticket_page.dart';
 import 'package:eticketing/views/item_card.dart';
 import 'package:eticketing/views/list_ticket.dart';
 import 'package:eticketing/views/picket_schedules.dart';
@@ -34,6 +35,7 @@ class _DashboardState extends State<Dashboard> {
     CollectionReference nomor = dbfirebase.collection('nomor');
     CollectionReference bapenda = dbfirebase.collection('myTicketBapenda');
     CollectionReference samsat = dbfirebase.collection('myTicketSamsat');
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -51,6 +53,14 @@ class _DashboardState extends State<Dashboard> {
                     return PicketSchedules();
                   }));
                 }),
+            // IconButton(
+            //     color: Colors.black,
+            //     icon: Icon(Icons.history),
+            //     onPressed: () {
+            //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //         return HistoryTicketPage();
+            //       }));
+            //     }),
             (myOriginName != "Bapenda" && myOriginName != "Admin")
                 ? IconButton(
                     color: Colors.black,
@@ -352,7 +362,8 @@ class _DashboardState extends State<Dashboard> {
                                 documentSnapshot["createdAt"],
                                 documentSnapshot["pengirim"],
                                 documentSnapshot["asal"],
-                                documentSnapshot["gambar"]);
+                                documentSnapshot["gambar"],
+                                documentSnapshot["takenAt"]);
                           });
                     } else {
                       return Text('Loading');

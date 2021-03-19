@@ -278,6 +278,14 @@ class _ChatScreenState extends State<ChatScreen> {
           widget.nopol,
           style: TextStyle(color: Colors.black),
         ),
+        leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                return Navigator.pop(context);
+              }),
       ),
       body: Container(
         child: Stack(

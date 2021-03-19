@@ -24,10 +24,10 @@ class AuthMethods {
       User userDetail = userCredential.user;
 
       if (userCredential != null) {
-        SharedPreferenceHelper().saveUserEmail(userDetail.email);
-        SharedPreferenceHelper().saveUserId(userDetail.uid);
-        SharedPreferenceHelper().saveUserName(name);
-        SharedPreferenceHelper().saveOriginName(origin);
+        // SharedPreferenceHelper().saveUserEmail(userDetail.email);
+        // SharedPreferenceHelper().saveUserId(userDetail.uid);
+        // SharedPreferenceHelper().saveUserName(name);
+        // SharedPreferenceHelper().saveOriginName(origin);
 
         Map<String, dynamic> userInfoMap = {
           "email": userDetail.email,
@@ -54,8 +54,8 @@ class AuthMethods {
         DatabaseMethods()
             .addUserInfoToDB(userDetail.uid, userInfoMap)
             .then((value) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => ManageUserPage()));
+          Navigator.pop(context);
+          Navigator.pop(context);
         });
       }
     } on FirebaseAuthException catch (e) {

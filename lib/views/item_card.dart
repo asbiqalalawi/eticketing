@@ -12,14 +12,23 @@ class ItemCard extends StatefulWidget {
   final String pengirim;
   final String originName;
   final String gambar;
+  final Timestamp takenAt;
 
   //// Pointer to Update Function
   // final Function onUpdate;
   // //// Pointer to Delete Function
   // final Function onDelete;
 
-  ItemCard(this.nopol, this.deskripsi, this.status, this.antrian,
-      this.createdAt, this.pengirim, this.originName, this.gambar);
+  ItemCard(
+      this.nopol,
+      this.deskripsi,
+      this.status,
+      this.antrian,
+      this.createdAt,
+      this.pengirim,
+      this.originName,
+      this.gambar,
+      this.takenAt);
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -55,7 +64,8 @@ class _ItemCardState extends State<ItemCard> {
               widget.originName,
               widget.gambar,
               myUserName,
-              myOriginName);
+              myOriginName,
+              widget.takenAt);
         }));
       },
       child: Card(

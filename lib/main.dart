@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // User user = Provider.of<User>(context);
+    
     return MaterialApp(
+      // theme: ThemeData(accentColor: Colors.black, primaryColor: Colors.black),
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: AuthMethods().getCurrentUser(),

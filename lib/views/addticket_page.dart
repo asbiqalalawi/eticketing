@@ -71,6 +71,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "pengirim": myUserName,
       "asal": myOriginName,
       "gambar": imagePath,
+      "takenAt": null
     };
 
     Map<String, dynamic> total = {
@@ -126,6 +127,14 @@ class _AddTicketPageState extends State<AddTicketPage> {
           "Add ticket",
           style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
+        leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                return Navigator.pop(context);
+              }),
       ),
       body: Stack(
         children: [

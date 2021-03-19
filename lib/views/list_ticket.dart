@@ -10,7 +10,9 @@ class ListTicket extends StatefulWidget {
 class _ListTicketState extends State<ListTicket> {
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
             backgroundColor: Color.fromRGBO(255, 206, 0, 1),
@@ -19,15 +21,23 @@ class _ListTicketState extends State<ListTicket> {
               style:
                   TextStyle(color: Colors.black, fontFamily: "RedHatDisplay"),
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.history,
-                  color: Colors.black,
-                ),
-                onPressed: () {},
-              )
-            ],
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                return Navigator.pop(context);
+              }),
+            // actions: <Widget>[
+            //   IconButton(
+            //     icon: Icon(
+            //       Icons.history,
+            //       color: Colors.black,
+            //     ),
+            //     onPressed: () {},
+            //   )
+            // ],
           ),
           body: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -50,7 +60,8 @@ class _ListTicketState extends State<ListTicket> {
                             documentSnapshot["createdAt"],
                             documentSnapshot["pengirim"],
                             documentSnapshot["asal"],
-                            documentSnapshot["gambar"]);
+                            documentSnapshot["gambar"],
+                            documentSnapshot["takenAt"]);
                       });
                 } else {
                   return Text('Loading');

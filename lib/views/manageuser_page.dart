@@ -1,3 +1,6 @@
+// import 'dart:html';
+
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/views/adduser_page.dart';
 import 'package:eticketing/views/edituser_page.dart';
@@ -12,55 +15,26 @@ class ManageUserPage extends StatefulWidget {
 }
 
 class _ManageUserPageState extends State<ManageUserPage> {
-  // String search = '';
-  // var queryResultSet = [];
-  // var tempSearchStore = [];
-  // TextEditingController searchController = TextEditingController();
+  List<String> _searchList = [];
 
-  /* initiateSearch(value) {
-    if (value.length == 0) {
-      setState(() {
-        queryResultSet = [];
-        tempSearchStore = [];
-      });
-    }
-    var capitalizedValue =
-        value.subString(0, 1).toUpperCase() + value.subString(1);
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  SimpleAutoCompleteTextField textField;
 
-    if (queryResultSet.length == 0 && value.length == 1) {
-      //
-      SearchService().searchByName(value).then((QuerySnapshot docs) {
-        for (int i = 0; i < docs.docs.length; ++i) {
-          queryResultSet.add(docs.docs[i].data);
-        }
-      });
-    } else {
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        if (element['name'].startWith(capitalizedValue)) {
-          setState(() {
-            tempSearchStore.add(element);
-          });
-        }
-      });
-    }
-  } */
+  String _valSort = 'name';
+  String _orderBy = 'name';
+  List _listSort = ['email', 'name', 'originName'];
+  List _list = ['email', 'nama', 'Samsat/Bapenda'];
+
+  TextEditingController searchTextEditingController =
+      new TextEditingController();
+
+  String searchText;
 
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference _users = firestore.collection('users');
     final FirebaseAuth _auth = FirebaseAuth.instance;
-    /* Query where(
-      String field, {
-      dynamic isEqualTo,
-      dynamic isLessThan,
-      dynamic isLessThanOrEqualTo,
-      dynamic isGreaterThan,
-      dynamic isGreaterThanOrEqualTo,
-      dynamic arrayContains,
-      bool isNull,
-    }) {} */
 
     return Scaffold(
         appBar: AppBar(
@@ -100,20 +74,44 @@ class _ManageUserPageState extends State<ManageUserPage> {
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.search,
-                      color: Colors.black,
+                    DropdownButton(
+                      hint: Text('Urutkan berdasarkan'),
+                      value: _valSort,
+                      items: _listSort
+                          .map((e) => DropdownMenuItem(
+                                child: Text(e),
+                                value: e,
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _valSort = value;
+                          print(_valSort);
+                          print('XXXXXXXXXXXXXX');
+                        });
+                      },
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     Expanded(
-                        child: TextField(
+                        child: SimpleAutoCompleteTextField(
+                      key: key,
+                      // submitOnSuggestionTap: ,
+                      suggestions: _searchList,
+                      controller: searchTextEditingController,
+                      textSubmitted: (text) => setState(() {
+                        if (text != "") {
+                          searchText = text;
+                          searchTextEditingController.text = text;
+                        }
+                      }),
+
                       // controller: searchController,
-                      onChanged: (val) {
-                        // initiateSearch(val);
-                        // searchController.text = val;
-                      },
+                      // onChanged: (val) {
+                      // initiateSearch(val);
+                      // searchController.text = val;
+                      // },
                       decoration: InputDecoration(border: InputBorder.none),
                     ))
                   ],
@@ -124,243 +122,266 @@ class _ManageUserPageState extends State<ManageUserPage> {
               margin: EdgeInsets.fromLTRB(10, 70, 10, 0),
               child: ListView(
                 children: <Widget>[
-                  StreamBuilder<QuerySnapshot>(
-                    stream: _users
-                        // .where('name', arrayContains: searchController.text)
-                        .orderBy('name', descending: false)
-                        .snapshots(),
-                    builder: (_, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // Center(child: CircularProgressIndicator());
-                        return Container();
-                      } else {
-                        if (snapshot.hasData) {
-                          return Column(
-                            children: snapshot.data.docs.map((e) {
-                              return Card(
-                                elevation: 5,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        margin:
-                                            EdgeInsets.only(left: 20, top: 20),
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          e.data()['name'].toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: "RedHatDisplay"),
-                                        )),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 20, top: 5),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        e.data()['originName'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "RedHatDisplay"),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(left: 20, top: 20),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Email:  " +
-                                            e.data()['email'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            color: Colors.grey,
-                                            fontFamily: "RedHatDisplay"),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.fromLTRB(20, 5, 20, 20),
-                                      alignment: Alignment.centerLeft,
-                                      child: Row(
+                  (searchTextEditingController.text == null ||
+                          searchTextEditingController.text == '')
+                      ? StreamBuilder<QuerySnapshot>(
+                          stream: _users
+                              .orderBy(_valSort, descending: false)
+                              .snapshots(),
+                          builder: (_, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              // Center(child: CircularProgressIndicator());
+                              return Container();
+                            } else {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  children: snapshot.data.docs.map((e) {
+                                    _searchList.add(e.data()['name']);
+                                    return Card(
+                                      elevation: 5,
+                                      child: Column(
                                         children: [
-                                          Text(
-                                            "Kata sandi : *****...",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                color: Colors.grey,
-                                                fontFamily: "RedHatDisplay"),
+                                          Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 20, top: 20),
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                e.data()['name'].toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily:
+                                                        "RedHatDisplay"),
+                                              )),
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                left: 20, top: 5),
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              e.data()['originName'].toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontFamily: "RedHatDisplay"),
+                                            ),
                                           ),
-                                          Spacer(),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 5),
-                                                child: Material(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  child: Container(
-                                                    width: 70,
-                                                    height: 25,
-                                                    decoration: BoxDecoration(
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                left: 20, top: 20),
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Email:  " +
+                                                  e.data()['email'].toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Colors.grey,
+                                                  fontFamily: "RedHatDisplay"),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.fromLTRB(
+                                                20, 5, 20, 20),
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Kata sandi : *****...",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      color: Colors.grey,
+                                                      fontFamily:
+                                                          "RedHatDisplay"),
+                                                ),
+                                                Spacer(),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                          right: 5),
+                                                      child: Material(
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
-                                                        color: Colors.black),
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      child: InkWell(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                            return EditUserPage(
-                                                              name: e.data()[
-                                                                  'name'],
-                                                              originName: e
-                                                                      .data()[
-                                                                  'originName'],
-                                                              email: e.data()[
-                                                                  'email'],
-                                                              uid: e.id,
-                                                            );
-                                                          }));
-                                                        },
-                                                        child: Center(
-                                                          child: Text(
-                                                            "Edit",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontFamily:
-                                                                    "RedHatDisplay",
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 12),
+                                                        child: Container(
+                                                          width: 70,
+                                                          height: 25,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              color:
+                                                                  Colors.black),
+                                                          child: Material(
+                                                            color: Colors
+                                                                .transparent,
+                                                            child: InkWell(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              onTap: () {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) {
+                                                                  return EditUserPage(
+                                                                    name: e.data()[
+                                                                        'name'],
+                                                                    originName:
+                                                                        e.data()[
+                                                                            'originName'],
+                                                                    email: e.data()[
+                                                                        'email'],
+                                                                    uid: e.id,
+                                                                  );
+                                                                }));
+                                                              },
+                                                              child: Center(
+                                                                child: Text(
+                                                                  "Edit",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontFamily:
+                                                                          "RedHatDisplay",
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Material(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                child: Container(
-                                                  width: 70,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
+                                                    Material(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               5),
-                                                      color: Colors.black),
-                                                  child: Material(
-                                                    color: Colors.transparent,
-                                                    child: InkWell(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      onTap: () async {
-                                                        await showDialog(
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return AlertDialog(
-                                                                backgroundColor:
-                                                                    Colors
+                                                      child: Container(
+                                                        width: 70,
+                                                        height: 25,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            color:
+                                                                Colors.black),
+                                                        child: Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: InkWell(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            onTap: () async {
+                                                              print(e.id);
+                                                              print(e.data()[
+                                                                  'name']);
+                                                              print(
+                                                                  'XXXXXXXXX');
+                                                              print(
+                                                                  _searchList);
+
+                                                              await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return AlertDialog(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      title: Text(
+                                                                          'Hapus akun'),
+                                                                      content: Text(
+                                                                          e.data()[
+                                                                              'name']),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            print(_auth.currentUser);
+                                                                            Navigator.pop(context);
+                                                                            //
+                                                                          },
+                                                                          child:
+                                                                              Text(
+                                                                            'Batal',
+                                                                            style:
+                                                                                TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                        ),
+
+                                                                        ///button delete user
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            _users.doc(e.id).delete();
+                                                                            _auth.currentUser.delete();
+
+                                                                            firestore.collection('myTicketBapenda').doc(e.data()['name']).delete();
+                                                                            firestore.collection('myTicketSamsat').doc(e.data()['name']).delete();
+
+                                                                            Navigator.pop(context);
+
+                                                                            //
+                                                                          },
+                                                                          child:
+                                                                              Text(
+                                                                            'Ya',
+                                                                            style:
+                                                                                TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  });
+                                                            },
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Delete",
+                                                                style: TextStyle(
+                                                                    color: Colors
                                                                         .white,
-                                                                title: Text(
-                                                                    'Hapus akun'),
-                                                                content: Text(e
-                                                                        .data()[
-                                                                    'name']),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      print(_auth
-                                                                          .currentUser);
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                      //
-                                                                    },
-                                                                    child: Text(
-                                                                      'Batal',
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .blue,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                  ),
-
-                                                                  ///button delete user
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      _users
-                                                                          .doc(e
-                                                                              .id)
-                                                                          .delete();
-                                                                      _auth
-                                                                          .currentUser
-                                                                          .delete();
-
-                                                                      Navigator.pop(
-                                                                          context);
-
-                                                                      //
-                                                                    },
-                                                                    child: Text(
-                                                                      'Ya',
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .blue,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            });
-                                                      },
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Delete",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  "RedHatDisplay",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 12),
+                                                                    fontFamily:
+                                                                        "RedHatDisplay",
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        12),
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      }
-                    },
-                  ),
+                                    );
+                                  }).toList(),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }
+                          },
+                        )
+                      : Container(
+                          child: Text(searchText),
+                        )
                   /* SizedBox(height: 20),
                   GridView.count(
                       padding: EdgeInsets.only(left: 10, right: 10),

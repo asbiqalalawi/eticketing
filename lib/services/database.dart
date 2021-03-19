@@ -206,4 +206,36 @@ class DatabaseMethods {
         .then((value) => print("Chat Deleted"))
         .catchError((error) => print("Failed to delete chat: $error"));
   }
+
+  Future createHistory(String nopol, Map historycanceledMap) async {
+    return FirebaseFirestore.instance
+        .collection("history")
+        .doc(nopol)
+        .set(historycanceledMap);
+  }
+
+  updatehistory(String nopol, Map historydoneMap) async {
+    final snapShot =
+        await FirebaseFirestore.instance.collection("history").doc(nopol).get();
+
+    if (snapShot.exists) {
+      FirebaseFirestore.instance
+          .collection("history")
+          .doc(nopol)
+          .update(historydoneMap);
+    } else {
+      FirebaseFirestore.instance
+          .collection("history")
+          .doc(nopol)
+          .set(historydoneMap);
+    }
+  }
+
+  deleteTicket(String nopol) {
+    return FirebaseFirestore.instance.collection('ticket').doc(nopol).delete();
+  }
+
+  Future<Stream<QuerySnapshot>> getHistory() async {
+    return FirebaseFirestore.instance.collection("history").snapshots();
+  }
 }
