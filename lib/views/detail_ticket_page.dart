@@ -57,9 +57,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
             "Detail",
@@ -100,7 +99,10 @@ class _DetailPageState extends State<DetailPage> {
                       child: Row(
                         children: [
                           Text(
-                            widget.createdAt.toDate().toString().substring(0, 16),
+                            widget.createdAt
+                                .toDate()
+                                .toString()
+                                .substring(0, 16),
                             style: TextStyle(fontSize: 15, color: Colors.grey),
                           ),
                         ],
@@ -155,8 +157,8 @@ class _DetailPageState extends State<DetailPage> {
                             children: [
                               Text(
                                 widget.deskripsi,
-                                style:
-                                    TextStyle(fontSize: 15, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.black),
                               ),
                             ],
                           ),
@@ -255,7 +257,7 @@ class _DetailPageState extends State<DetailPage> {
                       actions: [
                         // TextButton(
                         //   onPressed: () {
-                            
+
                         //     Navigator.pop(context);
                         //     //
                         //   },
@@ -295,6 +297,10 @@ class _DetailPageState extends State<DetailPage> {
 
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketSelesaiMap);
+                DatabaseMethods().updateFinishMyTicketBapenda(
+                    widget.originName, widget.myUserName);
+                DatabaseMethods().updateFinishMyTicketSamsat(
+                    widget.originName, widget.pengirim);
 
                 // petugas.add(widget.myUserName);
 
@@ -305,7 +311,6 @@ class _DetailPageState extends State<DetailPage> {
                   "takenAt": widget.takenAt,
                   "doneAt": DateTime.now(),
                   "description": widget.deskripsi,
-
                   'petugas': FieldValue.arrayUnion([widget.myUserName]),
                   "note": note
                 };
@@ -369,6 +374,7 @@ class _DetailPageState extends State<DetailPage> {
 
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketCancelMap);
+                DatabaseMethods().updateCancelMyTicketSamsat(widget.pengirim);
 
                 Map<String, dynamic> historycanceledMap = {
                   "nopol": widget.nopol,
@@ -416,22 +422,15 @@ class _DetailPageState extends State<DetailPage> {
             child: InkWell(
               borderRadius: BorderRadius.circular(50),
               onTap: () {
-                Map<String, dynamic> ticketTakenBapenda = {
-                  "status": "Diproses",
-                  "petugas": widget.myUserName,
-                  "takenAt": DateTime.now(),
-                };
-                Map<String, dynamic> ticketTakenSamsat = {
+                Map<String, dynamic> ticketTaken = {
                   "status": "Diproses",
                   "petugas": widget.myUserName,
                   "takenAt": DateTime.now(),
                 };
                 DatabaseMethods().updateMyTicketBapenda(
-                    widget.myOriginName, widget.myUserName, ticketTakenBapenda);
-                DatabaseMethods()
-                    .updateMyTicketSamsat(widget.pengirim, ticketTakenSamsat);
-                DatabaseMethods()
-                    .updateTicketTaken(widget.nopol, ticketTakenBapenda);
+                    widget.myOriginName, widget.myUserName);
+                DatabaseMethods().updateMyTicketSamsat(widget.pengirim);
+                DatabaseMethods().updateTicketTaken(widget.nopol, ticketTaken);
 
                 var chatRoomId = getChatRoomId(widget.nopol);
                 Map<String, dynamic> chatRoomInfoMap = {
