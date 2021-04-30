@@ -117,31 +117,27 @@ class DatabaseMethods {
         .update(ticketSelesaiMap);
   }
 
-  updateFinishMyTicketBapenda(String myOriginName, String myUserName) {
-    if (myOriginName == "Bapenda" || myOriginName == "Admin") {
-      Map<String, dynamic> update = {
-        "lastUpdate": DateTime.now(),
-        "Finish": FieldValue.increment(1),
-        "onProcess": FieldValue.increment(-1),
-      };
-      return FirebaseFirestore.instance
-          .collection("myTicketBapenda")
-          .doc(myUserName)
-          .update(update);
-    }
+  updateFinishMyTicketBapenda(String myUserName) {
+    Map<String, dynamic> update = {
+      "lastUpdate": DateTime.now(),
+      "finish": FieldValue.increment(1),
+      "onProcess": FieldValue.increment(-1),
+    };
+    return FirebaseFirestore.instance
+        .collection("myTicketBapenda")
+        .doc(myUserName)
+        .update(update);
   }
 
-  updateFinishMyTicketSamsat(String myOriginName, String senderName) {
-    if (myOriginName != "Bapenda" && myOriginName != "Admin") {
-      Map<String, dynamic> update = {
-        "lastUpdate": DateTime.now(),
-        "onProcess": FieldValue.increment(-1),
-      };
-      return FirebaseFirestore.instance
-          .collection("myTicketSamsat")
-          .doc(senderName)
-          .update(update);
-    }
+  updateFinishMyTicketSamsat(String senderName) {
+    Map<String, dynamic> update = {
+      "lastUpdate": DateTime.now(),
+      "onProcess": FieldValue.increment(-1),
+    };
+    return FirebaseFirestore.instance
+        .collection("myTicketSamsat")
+        .doc(senderName)
+        .update(update);
   }
 
   /// Membuat Chat Room

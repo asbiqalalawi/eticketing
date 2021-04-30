@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/database.dart';
-import 'package:eticketing/views/dashboard.dart';
 import 'package:eticketing/widgets/full_photo.dart';
 import 'package:flutter/material.dart';
 
@@ -297,10 +295,9 @@ class _DetailPageState extends State<DetailPage> {
 
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketSelesaiMap);
-                DatabaseMethods().updateFinishMyTicketBapenda(
-                    widget.originName, widget.myUserName);
-                DatabaseMethods().updateFinishMyTicketSamsat(
-                    widget.originName, widget.pengirim);
+                DatabaseMethods()
+                    .updateFinishMyTicketBapenda(widget.myUserName);
+                DatabaseMethods().updateFinishMyTicketSamsat(widget.pengirim);
 
                 // petugas.add(widget.myUserName);
 
@@ -429,10 +426,10 @@ class _DetailPageState extends State<DetailPage> {
                   "petugas": widget.myUserName,
                   "takenAt": DateTime.now(),
                 };
+                DatabaseMethods().updateTicketTaken(widget.nopol, ticketTaken);
                 DatabaseMethods().updateMyTicketBapenda(
                     widget.myOriginName, widget.myUserName);
                 DatabaseMethods().updateMyTicketSamsat(widget.pengirim);
-                DatabaseMethods().updateTicketTaken(widget.nopol, ticketTaken);
 
                 var chatRoomId = getChatRoomId(widget.nopol);
                 Map<String, dynamic> chatRoomInfoMap = {

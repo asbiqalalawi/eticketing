@@ -3,7 +3,6 @@ import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/database.dart';
 import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:eticketing/views/login_page.dart';
-import 'package:eticketing/views/manageuser_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

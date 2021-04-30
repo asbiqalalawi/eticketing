@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/views/addticket_page.dart';
-import 'package:eticketing/views/historyticket_page.dart';
 import 'package:eticketing/views/item_card.dart';
 import 'package:eticketing/views/list_ticket.dart';
 import 'package:eticketing/views/picket_schedules.dart';
@@ -13,8 +12,10 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  String myOriginName = " ", myUserName = " ", myEmail = " ";
-  String nomorPolisi = " ", deskripsi = " ";
+  String myOriginName = "ORIGINNAME",
+      myUserName = "USERNAME",
+      myEmail = "EMAIL";
+  String nomorPolisi = "NOPOL", deskripsi = "DESKRIPSI";
   int newValue = 0;
 
   getMyInfoFromSharedPreferences() async {
@@ -366,7 +367,12 @@ class _DashboardState extends State<Dashboard> {
                                 documentSnapshot["takenAt"]);
                           });
                     } else {
-                      return Text('Loading');
+                      return Center(
+                          child: Text(
+                        'Loading',
+                        style: TextStyle(
+                            fontFamily: "RedHatDisplay", fontSize: 15),
+                      ));
                     }
                   }),
             )
