@@ -43,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     Map<String, dynamic> messageInfoMap = {
       "message": message,
-      "sendBy": myUserName,
+      "sendBy": myEmail,
       "ts": lastMessageTs,
       "type": type
     };
@@ -59,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
       Map<String, dynamic> lastMessageInfoMap = {
         "lastMessage": message,
         "lastMessageSendTs": lastMessageTs,
-        "lastMessageSendBy": myUserName
+        "lastMessageSendBy": myEmail
       };
 
       DatabaseMethods().updateLastMessageSend(chatRoomId, lastMessageInfoMap);
@@ -163,7 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   DocumentSnapshot documentSnapshot = snapshot.data.docs[index];
                   return chatMessageTile(
                       documentSnapshot["message"],
-                      myUserName == documentSnapshot["sendBy"],
+                      myEmail == documentSnapshot["sendBy"],
                       documentSnapshot["type"]);
                 })
             : Center(child: CircularProgressIndicator());

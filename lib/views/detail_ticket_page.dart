@@ -444,7 +444,7 @@ class _DetailPageState extends State<DetailPage> {
 
                 var chatRoomId = getChatRoomId(widget.nopol);
                 Map<String, dynamic> chatRoomInfoMap = {
-                  "users": [widget.pengirim, widget.myUserName],
+                  "users": [widget.pengirim, myEmail],
                   "nopol": widget.nopol,
                   "lastMessage": "Ketik Pesan disini...",
                   "antrian": widget.antrian

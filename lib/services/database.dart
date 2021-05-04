@@ -161,11 +161,11 @@ class DatabaseMethods {
 
   ///Mengembalikan Chatroom sesuai user
   Future<Stream<QuerySnapshot>> getChatRooms() async {
-    String myUsername = await SharedPreferenceHelper().getUserName();
+    String myEmail = await SharedPreferenceHelper().getUserEmail();
     return FirebaseFirestore.instance
         .collection("chatrooms")
         .orderBy("antrian")
-        .where("users", arrayContains: myUsername)
+        .where("users", arrayContains: myEmail)
         .snapshots();
   }
 
