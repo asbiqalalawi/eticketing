@@ -1,5 +1,3 @@
-// import 'dart:html';
-
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/views/adduser_page.dart';
@@ -20,9 +18,9 @@ class _ManageUserPageState extends State<ManageUserPage> {
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   SimpleAutoCompleteTextField textField;
 
-  String _valSort = 'name';
-  String _orderBy = 'name';
-  List _listSort = ['email', 'name', 'originName'];
+  String _valSort = 'displayName';
+  String _orderBy = 'displayName';
+  List _listSort = ['email', 'displayName', 'originName'];
   List _list = ['email', 'nama', 'Samsat/Bapenda'];
 
   TextEditingController searchTextEditingController =
@@ -137,7 +135,7 @@ class _ManageUserPageState extends State<ManageUserPage> {
                               if (snapshot.hasData) {
                                 return Column(
                                   children: snapshot.data.docs.map((e) {
-                                    _searchList.add(e.data()['name']);
+                                    _searchList.add(e.data()['displayName']);
                                     return Card(
                                       elevation: 5,
                                       child: Column(
@@ -147,7 +145,9 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                   left: 20, top: 20),
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                e.data()['name'].toString(),
+                                                e
+                                                    .data()['displayName']
+                                                    .toString(),
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontFamily:
@@ -227,8 +227,9 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                                         builder:
                                                                             (context) {
                                                                   return EditUserPage(
-                                                                    name: e.data()[
-                                                                        'name'],
+                                                                    displayName:
+                                                                        e.data()[
+                                                                            'displayName'],
                                                                     originName:
                                                                         e.data()[
                                                                             'originName'],
@@ -302,7 +303,7 @@ class _ManageUserPageState extends State<ManageUserPage> {
                                                                           'Hapus akun'),
                                                                       content: Text(
                                                                           e.data()[
-                                                                              'name']),
+                                                                              'displayName']),
                                                                       actions: [
                                                                         TextButton(
                                                                           onPressed:

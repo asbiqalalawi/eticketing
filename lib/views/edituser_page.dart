@@ -6,11 +6,11 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 class EditUserPage extends StatefulWidget {
   // const EditUserPage({Key key}) : super(key: key);
-  final String name;
+  final String displayName;
   final String originName;
   final String email;
   final String uid;
-  EditUserPage({this.name, this.originName, this.email, this.uid});
+  EditUserPage({this.displayName, this.originName, this.email, this.uid});
 
   @override
   _EditUserPageState createState() => _EditUserPageState();
@@ -53,7 +53,7 @@ class _EditUserPageState extends State<EditUserPage> {
   AuthMethods authMethods = new AuthMethods();
 
   final formKey = GlobalKey<FormState>();
-  TextEditingController userNameTextEditingController =
+  TextEditingController displayNameTextEditingController =
       new TextEditingController();
   TextEditingController originNameTextEditingController =
       new TextEditingController();
@@ -71,14 +71,14 @@ class _EditUserPageState extends State<EditUserPage> {
           emailTextEditingController.text,
           passwordTextEditingController.text,
           originNameTextEditingController.text,
-          userNameTextEditingController.text,
+          displayNameTextEditingController.text,
           context);
     }
   }
 
   @override
   void initState() {
-    userNameTextEditingController.text = widget.name;
+    displayNameTextEditingController.text = widget.displayName;
     originNameTextEditingController.text = widget.originName;
     emailTextEditingController.text = widget.email;
 
@@ -126,7 +126,7 @@ class _EditUserPageState extends State<EditUserPage> {
                           child: SizedBox(
                             height: 70,
                             child: TextFormField(
-                              controller: userNameTextEditingController,
+                              controller: displayNameTextEditingController,
                               validator: MultiValidator([
                                 RequiredValidator(
                                     errorText: 'Nama tidak boleh kosong'),
@@ -166,61 +166,6 @@ class _EditUserPageState extends State<EditUserPage> {
                             ),
                           ),
                         ),
-                        /* Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: SizedBox(
-                            height: 70,
-                            child: TextFormField(
-                              controller: emailTextEditingController,
-                              validator: MultiValidator([
-                                RequiredValidator(
-                                    errorText: 'Email tidak boleh kosong'),
-                                EmailValidator(errorText: 'Format email salah')
-                              ]),
-                              decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(255, 255, 249, 224),
-                                  filled: true,
-                                  hintText: "Email",
-                                  hintStyle: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      fontWeight: FontWeight.bold),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ), */
-                        /* Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: TextFormField(
-                            controller: passwordTextEditingController,
-                            validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: 'Password tidak boleh kosong'),
-                              MinLengthValidator(6,
-                                  errorText:
-                                      'Password tidak boleh kurang dari 6')
-                            ]),
-                            obscureText: _obsecureText,
-                            decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    _toggle();
-                                  },
-                                  child: Icon(
-                                    _obsecureText
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                fillColor: Color.fromARGB(255, 255, 249, 224),
-                                filled: true,
-                                hintText: "Kata Sandi",
-                                hintStyle: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold),
-                                border: InputBorder.none),
-                          ),
-                        ), */
                       ],
                     ),
                   ),
@@ -240,10 +185,9 @@ class _EditUserPageState extends State<EditUserPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(50),
                           onTap: () {
-                            //TODO
-                            // signMeUp();
                             _users.doc(widget.uid).update({
-                              'name': userNameTextEditingController.text,
+                              'displayName':
+                                  displayNameTextEditingController.text,
                               'originName':
                                   originNameTextEditingController.text,
                               'email': emailTextEditingController.text

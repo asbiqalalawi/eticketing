@@ -3,12 +3,18 @@ import 'package:eticketing/views/bottom_navigation.dart';
 import 'package:eticketing/views/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'services/auth.dart';
 import 'views/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    RestartWidget(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // User user = Provider.of<User>(context);
-    
+
     return MaterialApp(
       // theme: ThemeData(accentColor: Colors.black, primaryColor: Colors.black),
       debugShowCheckedModeBanner: false,
