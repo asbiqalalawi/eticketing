@@ -279,13 +279,13 @@ class _ChatScreenState extends State<ChatScreen> {
           style: TextStyle(color: Colors.black),
         ),
         leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                return Navigator.pop(context);
-              }),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              return Navigator.pop(context);
+            }),
       ),
       body: Container(
         child: Stack(
@@ -294,7 +294,6 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: 50,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     color: Color.fromARGB(255, 255, 249, 224)),
@@ -326,7 +325,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     GestureDetector(
                         onTap: () {
                           String message = messageEditingController.text;
-                          addMessage(true, message, 0);
+                          if (message != "") {
+                            addMessage(true, message, 0);
+                          }
                         },
                         child: Icon(Icons.send_rounded))
                   ],
