@@ -8,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main.dart';
-import '../main.dart';
-
 class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -34,8 +31,7 @@ class AuthMethods {
         Map<String, dynamic> userInfoMap = {
           "email": userDetail.email,
           "name": name,
-          "originName": origin,
-          "displayName": name
+          "originName": origin
         };
         if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
@@ -111,8 +107,6 @@ class AuthMethods {
         SharedPreferenceHelper().saveUserId(userDetail.uid);
         SharedPreferenceHelper().saveUserName(querySnapshot.docs[0]["name"]);
         SharedPreferenceHelper()
-            .saveDisplayName(querySnapshot.docs[0]["displayName"]);
-        SharedPreferenceHelper()
             .saveOriginName(querySnapshot.docs[0]["originName"]);
 
         Navigator.pushReplacement(context,
@@ -172,43 +166,52 @@ class AuthMethods {
   Future signOut(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
-
-    auth.signOut();
-    RestartWidget.restartApp(context);
-
-    // return new LoginPage();
-  }
-  // await auth.signOut();
-
-}
-
-class RestartWidget extends StatefulWidget {
-  RestartWidget({this.child});
-
-  final Widget child;
-
-  static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_RestartWidgetState>().restartApp();
-  }
-
-  @override
-  _RestartWidgetState createState() => _RestartWidgetState();
-}
-
-class _RestartWidgetState extends State<RestartWidget> {
-  Key key = UniqueKey();
-
-  void restartApp() {
-    setState(() {
-      key = UniqueKey();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: key,
-      child: widget.child,
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text('Keluar dari akun'),
+          content: Text('Apakah anda yakin ingin keluar?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Batal',
+                style:
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // Navigator.pop(context);
+                auth.signOut().then(
+                      (value) => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LoginPage();
+                          },
+                        ),
+                      ),
+                    );
+              },
+              child: Text(
+                'Ya',
+                style:
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        );
+      },
     );
+    // await auth.signOut();
   }
+
+  /* Future deleteUser(String uid) {
+    auth.
+  } */
 }

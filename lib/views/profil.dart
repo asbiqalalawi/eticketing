@@ -10,13 +10,12 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
-  String myOriginName, myUserName, myEmail, displayName;
+  String myOriginName, myUserName, myEmail;
 
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
     myOriginName = await SharedPreferenceHelper().getOriginName();
-    displayName = await SharedPreferenceHelper().getDisplayName();
     setState(() {});
   }
 
@@ -55,7 +54,7 @@ class _ProfilState extends State<Profil> {
                           Container(
                             margin: EdgeInsets.only(bottom: 7),
                             child: Text(
-                              displayName.toString(),
+                              myUserName.toString(),
                               style: TextStyle(
                                   fontFamily: "RedHatDisplay",
                                   fontSize: 28,

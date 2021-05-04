@@ -23,26 +23,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  autocomplete_textfield: null
-  cached_network_image: null
-  cloud_firestore: null
   cupertino_icons: ^1.0.0
-  date_format: ^1.0.9
-  firebase_auth: null
-  firebase_core: null
-  firebase_storage: null
-  flutter_launcher_icons: null
-  flutter_phoenix: ^1.0.0
-  flutter_typeahead: null
-  fluttertoast: ^7.1.8
+  cloud_firestore:
+  firebase_core:
+  # provider: ^3.0.0+1
+  provider:
+  intl:
+  firebase_auth:
   form_field_validator: ^1.0.1
-  image_picker: null
-  intl: null
-  photo_view: null
-  provider: null
-  random_string: null
-  shared_preferences: null
-  table_calendar: null
+  fluttertoast: ^7.1.8
+  date_format: ^1.0.9
+  shared_preferences:
+  random_string:
+  table_calendar:
+  firebase_storage:
+  image_picker:
+  cached_network_image:
+  photo_view:
+  flutter_typeahead:
+  autocomplete_textfield:
+  flutter_launcher_icons:
 
 dev_dependencies:
   flutter_test:
