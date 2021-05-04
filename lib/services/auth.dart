@@ -31,7 +31,6 @@ class AuthMethods {
           "email": userDetail.email,
           "name": name,
           "originName": origin,
-          "displayName": name
         };
         if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
