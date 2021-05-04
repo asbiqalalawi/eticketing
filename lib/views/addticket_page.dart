@@ -15,7 +15,9 @@ class AddTicketPage extends StatefulWidget {
 }
 
 class _AddTicketPageState extends State<AddTicketPage> {
-  String nomorPolisi, deskripsi, status = "Tersedia";
+  String nomorPolisi = "Nomor Polisi Kosong",
+      deskripsi = "Tidak ada deskripsi",
+      status = "Tersedia";
   String myOriginName, myUserName, myEmail;
   String imagePath;
   var imageDir;
@@ -68,7 +70,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "status": status,
       "antrian": antrian,
       "createdAt": DateTime.now(),
-      "pengirim": myUserName,
+      "pengirim": myEmail,
       "asal": myOriginName,
       "gambar": imagePath,
       "takenAt": null
@@ -83,9 +85,8 @@ class _AddTicketPageState extends State<AddTicketPage> {
 
   getTotalMyTicket(myUserName, myOriginName) {
     if (myOriginName == "Bapenda" || myOriginName == "Admin") {
-      DocumentReference documentReference = FirebaseFirestore.instance
-          .collection('myTicketBapenda')
-          .doc(myUserName);
+      DocumentReference documentReference =
+          FirebaseFirestore.instance.collection('myTicketBapenda').doc(myEmail);
       Map<String, dynamic> total = {
         "ticket": FieldValue.increment(1),
         "lastUpdate": DateTime.now(),
@@ -93,9 +94,8 @@ class _AddTicketPageState extends State<AddTicketPage> {
       };
       documentReference.update(total);
     } else {
-      DocumentReference documentReference = FirebaseFirestore.instance
-          .collection('myTicketSamsat')
-          .doc(myUserName);
+      DocumentReference documentReference =
+          FirebaseFirestore.instance.collection('myTicketSamsat').doc(myEmail);
       Map<String, dynamic> total = {
         "ticket": FieldValue.increment(1),
         "lastUpdate": DateTime.now(),
@@ -128,13 +128,13 @@ class _AddTicketPageState extends State<AddTicketPage> {
           style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
         leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                return Navigator.pop(context);
-              }),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              return Navigator.pop(context);
+            }),
       ),
       body: Stack(
         children: [
@@ -235,7 +235,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                         imagePath = await DatabaseMethods.uploadImage(imageDir);
                       }
                       getCounter();
-                      getTotalMyTicket(myUserName, myOriginName);
+                      getTotalMyTicket(myEmail, myOriginName);
 
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {

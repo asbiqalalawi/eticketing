@@ -18,16 +18,16 @@ class DatabaseMethods {
   }
 
   Future addUserMyTicketToDB(
-      String userId, Map<String, dynamic> userTicketMap, origin) async {
+      String email, Map<String, dynamic> userTicketMap, origin) async {
     if (origin == "Bapenda" || origin == "Admin") {
       return FirebaseFirestore.instance
           .collection("myTicketBapenda")
-          .doc(userId)
+          .doc(email)
           .set(userTicketMap);
     } else {
       return FirebaseFirestore.instance
           .collection("myTicketSamsat")
-          .doc(userId)
+          .doc(email)
           .set(userTicketMap);
     }
   }
@@ -55,14 +55,14 @@ class DatabaseMethods {
         .update(ticketTakenMap);
   }
 
-  updateMyTicketBapenda(String myOriginName, String myUserName) {
+  updateMyTicketBapenda(String myOriginName, String myEmail) {
     Map<String, dynamic> update = {
       "lastUpdate": DateTime.now(),
       "onProcess": FieldValue.increment(1),
     };
     return FirebaseFirestore.instance
         .collection("myTicketBapenda")
-        .doc(myUserName)
+        .doc(myEmail)
         .update(update);
   }
 
@@ -86,14 +86,14 @@ class DatabaseMethods {
         .update(ticketCancelMap);
   }
 
-  updateCancelMyTicketBapenda(String myUserName) {
+  updateCancelMyTicketBapenda(String myEmail) {
     Map<String, dynamic> update = {
       "lastUpdate": DateTime.now(),
       "onProcess": FieldValue.increment(-1),
     };
     return FirebaseFirestore.instance
         .collection("myTicketBapenda")
-        .doc(myUserName)
+        .doc(myEmail)
         .update(update);
   }
 
@@ -117,7 +117,7 @@ class DatabaseMethods {
         .update(ticketSelesaiMap);
   }
 
-  updateFinishMyTicketBapenda(String myUserName) {
+  updateFinishMyTicketBapenda(String myEmail) {
     Map<String, dynamic> update = {
       "lastUpdate": DateTime.now(),
       "finish": FieldValue.increment(1),
@@ -125,7 +125,7 @@ class DatabaseMethods {
     };
     return FirebaseFirestore.instance
         .collection("myTicketBapenda")
-        .doc(myUserName)
+        .doc(myEmail)
         .update(update);
   }
 

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/database.dart';
 import 'package:eticketing/views/bottom_navigation.dart';
-import 'package:eticketing/views/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,7 +30,8 @@ class AuthMethods {
         Map<String, dynamic> userInfoMap = {
           "email": userDetail.email,
           "name": name,
-          "originName": origin
+          "originName": origin,
+          "displayName": name
         };
         if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
@@ -166,52 +166,43 @@ class AuthMethods {
   Future signOut(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text('Keluar dari akun'),
-          content: Text('Apakah anda yakin ingin keluar?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Batal',
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                // Navigator.pop(context);
-                auth.signOut().then(
-                      (value) => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return LoginPage();
-                          },
-                        ),
-                      ),
-                    );
-              },
-              child: Text(
-                'Ya',
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-    // await auth.signOut();
+
+    auth.signOut();
+    RestartWidget.restartApp(context);
+
+    //return new LoginPage();
+  }
+  // await auth.signOut();
+
+}
+
+class RestartWidget extends StatefulWidget {
+  RestartWidget({this.child});
+
+  final Widget child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>().restartApp();
   }
 
-  /* Future deleteUser(String uid) {
-    auth.
-  } */
+  @override
+  _RestartWidgetState createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
+  }
 }

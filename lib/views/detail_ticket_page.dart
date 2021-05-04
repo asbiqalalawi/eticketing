@@ -3,6 +3,8 @@ import 'package:eticketing/services/database.dart';
 import 'package:eticketing/widgets/full_photo.dart';
 import 'package:flutter/material.dart';
 
+import '../helper/sharedpref_helper.dart';
+
 class DetailPage extends StatefulWidget {
   final String nopol;
   final String deskripsi;
@@ -39,11 +41,20 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  String note;
+  String note, myUserName, myEmail, myOriginName;
   var petugas = [];
 
-  @override
+  var defImage = AssetImage("assets/kosong.png");
+
+  getMyInfoFromSharedPreferences() async {
+    myUserName = await SharedPreferenceHelper().getUserName();
+    myEmail = await SharedPreferenceHelper().getUserEmail();
+    myOriginName = await SharedPreferenceHelper().getOriginName();
+    setState(() {});
+  }
+
   void initState() {
+    getMyInfoFromSharedPreferences();
     super.initState();
   }
 
@@ -181,7 +192,9 @@ class _DetailPageState extends State<DetailPage> {
                               shape: BoxShape.rectangle,
                               border: Border.all(color: Colors.black),
                               image: DecorationImage(
-                                  image: NetworkImage(widget.gambar),
+                                  image: (widget.gambar == null)
+                                      ? defImage
+                                      : NetworkImage(widget.gambar),
                                   fit: BoxFit.cover))),
                     )
                   ],
@@ -295,8 +308,7 @@ class _DetailPageState extends State<DetailPage> {
 
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketSelesaiMap);
-                DatabaseMethods()
-                    .updateFinishMyTicketBapenda(widget.myUserName);
+                DatabaseMethods().updateFinishMyTicketBapenda(myEmail);
                 DatabaseMethods().updateFinishMyTicketSamsat(widget.pengirim);
 
                 // petugas.add(widget.myUserName);
@@ -308,7 +320,7 @@ class _DetailPageState extends State<DetailPage> {
                   "takenAt": widget.takenAt,
                   "doneAt": DateTime.now(),
                   "description": widget.deskripsi,
-                  'petugas': FieldValue.arrayUnion([widget.myUserName]),
+                  'petugas': FieldValue.arrayUnion([myEmail]),
                   "note": note
                 };
 
@@ -372,8 +384,7 @@ class _DetailPageState extends State<DetailPage> {
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketCancelMap);
                 DatabaseMethods().updateCancelMyTicketSamsat(widget.pengirim);
-                DatabaseMethods()
-                    .updateCancelMyTicketBapenda(widget.myUserName);
+                DatabaseMethods().updateCancelMyTicketBapenda(myEmail);
 
                 Map<String, dynamic> historycanceledMap = {
                   "nopol": widget.nopol,
@@ -381,7 +392,7 @@ class _DetailPageState extends State<DetailPage> {
                   "ticketIn": widget.createdAt,
                   "takenAt": widget.takenAt,
                   "description": widget.deskripsi,
-                  "petugas": [widget.myUserName]
+                  "petugas": [myEmail]
                 };
                 DatabaseMethods()
                     .createHistory(widget.nopol, historycanceledMap);
@@ -423,12 +434,12 @@ class _DetailPageState extends State<DetailPage> {
               onTap: () {
                 Map<String, dynamic> ticketTaken = {
                   "status": "Diproses",
-                  "petugas": widget.myUserName,
+                  "petugas": myEmail,
                   "takenAt": DateTime.now(),
                 };
                 DatabaseMethods().updateTicketTaken(widget.nopol, ticketTaken);
-                DatabaseMethods().updateMyTicketBapenda(
-                    widget.myOriginName, widget.myUserName);
+                DatabaseMethods()
+                    .updateMyTicketBapenda(widget.myOriginName, myEmail);
                 DatabaseMethods().updateMyTicketSamsat(widget.pengirim);
 
                 var chatRoomId = getChatRoomId(widget.nopol);

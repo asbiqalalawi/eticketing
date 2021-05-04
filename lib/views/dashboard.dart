@@ -145,8 +145,7 @@ class _DashboardState extends State<Dashboard> {
                               (myOriginName == "Bapenda" ||
                                       myOriginName == "Admin")
                                   ? StreamBuilder<DocumentSnapshot>(
-                                      stream:
-                                          bapenda.doc(myUserName).snapshots(),
+                                      stream: bapenda.doc(myEmail).snapshots(),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData)
                                           return Text(
@@ -164,8 +163,7 @@ class _DashboardState extends State<Dashboard> {
                                         }
                                       })
                                   : StreamBuilder<DocumentSnapshot>(
-                                      stream:
-                                          samsat.doc(myUserName).snapshots(),
+                                      stream: samsat.doc(myEmail).snapshots(),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           return Text(
@@ -203,7 +201,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         (myOriginName == "Bapenda" || myOriginName == "Admin")
                             ? StreamBuilder<DocumentSnapshot>(
-                                stream: bapenda.doc(myUserName).snapshots(),
+                                stream: bapenda.doc(myEmail).snapshots(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData)
                                     return Text(
@@ -221,7 +219,7 @@ class _DashboardState extends State<Dashboard> {
                                   }
                                 })
                             : StreamBuilder<DocumentSnapshot>(
-                                stream: samsat.doc(myUserName).snapshots(),
+                                stream: samsat.doc(myEmail).snapshots(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData)
                                     return Text(
@@ -266,7 +264,7 @@ class _DashboardState extends State<Dashboard> {
                               ),
                         (myOriginName == "Bapenda" || myOriginName == "Admin")
                             ? StreamBuilder<DocumentSnapshot>(
-                                stream: bapenda.doc(myUserName).snapshots(),
+                                stream: bapenda.doc(myEmail).snapshots(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData)
                                     return Text(
@@ -282,7 +280,7 @@ class _DashboardState extends State<Dashboard> {
                                   }
                                 })
                             : StreamBuilder<DocumentSnapshot>(
-                                stream: samsat.doc(myUserName).snapshots(),
+                                stream: samsat.doc(myEmail).snapshots(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData)
                                     return Text(
@@ -345,7 +343,6 @@ class _DashboardState extends State<Dashboard> {
                   stream: FirebaseFirestore.instance
                       .collection("ticket")
                       .orderBy('antrian' /* , descending: true */)
-                      .where(myUserName)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
