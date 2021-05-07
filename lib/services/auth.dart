@@ -162,12 +162,14 @@ class AuthMethods {
     }
   }
 
-  Future signOut(BuildContext context) async {
+  Future toSignOut(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.clear();
 
     auth.signOut();
-    RestartWidget.restartApp(context);
+    preferences.clear();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      RestartWidget.restartApp(context);
+    });
 
     //return new LoginPage();
   }

@@ -105,7 +105,7 @@ class _ProfilState extends State<Profil> {
                           RaisedButton(
                             elevation: 5,
                             onPressed: () {
-                              AuthMethods().signOut(context);
+                              AuthMethods().toSignOut(context);
                             },
                             child: Text("Keluar",
                                 style: TextStyle(
