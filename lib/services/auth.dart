@@ -34,12 +34,11 @@ class AuthMethods {
         };
         if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
-            "ticket": 0,
             "lastUpdate": DateTime.now(),
             "onProcess": 0,
             "finish": 0
           };
-          DatabaseMethods().addUserMyTicketToDB(name, bapenda, origin);
+          DatabaseMethods().addUserMyTicketToDB(email, bapenda, origin);
         } else {
           Map<String, dynamic> userTicketMap = {
             "ticket": 0,
@@ -47,7 +46,7 @@ class AuthMethods {
             "onProcess": 0,
             "available": 0
           };
-          DatabaseMethods().addUserMyTicketToDB(name, userTicketMap, origin);
+          DatabaseMethods().addUserMyTicketToDB(email, userTicketMap, origin);
         }
         DatabaseMethods()
             .addUserInfoToDB(userDetail.uid, userInfoMap)
