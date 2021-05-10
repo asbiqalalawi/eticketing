@@ -320,7 +320,7 @@ class _DetailPageState extends State<DetailPage> {
                   "takenAt": widget.takenAt,
                   "doneAt": DateTime.now(),
                   "description": widget.deskripsi,
-                  'petugas': FieldValue.arrayUnion([myEmail]),
+                  'petugas': myEmail,
                   "note": note
                 };
 
@@ -392,7 +392,7 @@ class _DetailPageState extends State<DetailPage> {
                   "ticketIn": widget.createdAt,
                   "takenAt": widget.takenAt,
                   "description": widget.deskripsi,
-                  "petugas": [myEmail]
+                  "petugas": myEmail
                 };
                 DatabaseMethods()
                     .createHistory(widget.nopol, historycanceledMap);
