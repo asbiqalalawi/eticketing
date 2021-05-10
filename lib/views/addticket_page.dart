@@ -71,6 +71,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
       "antrian": antrian,
       "createdAt": DateTime.now(),
       "pengirim": myEmail,
+      "petugas": null,
       "asal": myOriginName,
       "gambar": imagePath,
       "takenAt": null

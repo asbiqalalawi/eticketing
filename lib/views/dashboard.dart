@@ -353,16 +353,17 @@ class _DashboardState extends State<Dashboard> {
                               documentSnapshot["deskripsi"],
                               documentSnapshot["status"],
                               documentSnapshot["antrian"],
-                              documentSnapshot["createdAt"],
-                              documentSnapshot["pengirim"],
                               documentSnapshot["asal"],
                               documentSnapshot["gambar"],
+                              documentSnapshot["pengirim"],
+                              documentSnapshot["petugas"],
+                              documentSnapshot["createdAt"],
                               documentSnapshot["takenAt"]);
                         });
                   } else {
                     return Center(
                         child: Text(
-                      'Loading',
+                      'Belum ada Tiket',
                       style:
                           TextStyle(fontFamily: "RedHatDisplay", fontSize: 15),
                     ));

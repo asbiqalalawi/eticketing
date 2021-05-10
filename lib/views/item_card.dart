@@ -8,10 +8,11 @@ class ItemCard extends StatefulWidget {
   final String deskripsi;
   final String status;
   final int antrian;
-  final Timestamp createdAt;
-  final String pengirim;
   final String originName;
   final String gambar;
+  final String pengirim;
+  final String petugas;
+  final Timestamp createdAt;
   final Timestamp takenAt;
 
   //// Pointer to Update Function
@@ -24,10 +25,11 @@ class ItemCard extends StatefulWidget {
       this.deskripsi,
       this.status,
       this.antrian,
-      this.createdAt,
-      this.pengirim,
       this.originName,
       this.gambar,
+      this.pengirim,
+      this.petugas,
+      this.createdAt,
       this.takenAt);
 
   @override
@@ -59,13 +61,14 @@ class _ItemCardState extends State<ItemCard> {
               widget.deskripsi,
               widget.status,
               widget.antrian,
-              widget.createdAt,
-              widget.pengirim,
               widget.originName,
               widget.gambar,
+              widget.pengirim,
+              widget.petugas,
+              widget.createdAt,
+              widget.takenAt,
               myUserName,
-              myOriginName,
-              widget.takenAt);
+              myOriginName);
         }));
       },
       child: Card(

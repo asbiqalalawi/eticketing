@@ -10,13 +10,14 @@ class DetailPage extends StatefulWidget {
   final String deskripsi;
   final String status;
   final int antrian;
-  final Timestamp createdAt;
-  final String pengirim;
   final String originName;
   final String gambar;
+  final String pengirim;
+  final String petugas;
+  final Timestamp createdAt;
+  final Timestamp takenAt;
   final String myUserName;
   final String myOriginName;
-  final Timestamp takenAt;
 
   //// Pointer to Update Function
   // final Function onUpdate;
@@ -24,17 +25,19 @@ class DetailPage extends StatefulWidget {
   // final Function onDelete;
 
   DetailPage(
-      this.nopol,
-      this.deskripsi,
-      this.status,
-      this.antrian,
-      this.createdAt,
-      this.pengirim,
-      this.originName,
-      this.gambar,
-      this.myUserName,
-      this.myOriginName,
-      this.takenAt);
+    this.nopol,
+    this.deskripsi,
+    this.status,
+    this.antrian,
+    this.originName,
+    this.gambar,
+    this.pengirim,
+    this.petugas,
+    this.createdAt,
+    this.takenAt,
+    this.myUserName,
+    this.myOriginName,
+  );
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -42,7 +45,6 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   String note, myUserName, myEmail, myOriginName;
-  var petugas = [];
 
   var defImage = AssetImage("assets/kosong.png");
 
@@ -218,8 +220,12 @@ class _DetailPageState extends State<DetailPage> {
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                  buildBatalkan(context),
-                                  buildSelesai(context)
+                                  (myEmail == widget.petugas)
+                                      ? buildBatalkan(context)
+                                      : SizedBox(),
+                                  (myEmail == widget.petugas)
+                                      ? buildSelesai(context)
+                                      : SizedBox()
                                 ])
                           : Container(
                               alignment: Alignment(0, 0.9),
@@ -253,8 +259,6 @@ class _DetailPageState extends State<DetailPage> {
             child: InkWell(
               borderRadius: BorderRadius.circular(50),
               onTap: () async {
-                print('XXXXXXXXXXXX');
-                print(petugas);
                 await showDialog(
                   context: context,
                   builder: (context) {

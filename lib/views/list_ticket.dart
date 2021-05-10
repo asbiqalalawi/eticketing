@@ -77,10 +77,11 @@ class _ListTicketState extends State<ListTicket> {
                             documentSnapshot["deskripsi"],
                             documentSnapshot["status"],
                             documentSnapshot["antrian"],
-                            documentSnapshot["createdAt"],
-                            documentSnapshot["pengirim"],
                             documentSnapshot["asal"],
                             documentSnapshot["gambar"],
+                            documentSnapshot["pengirim"],
+                            documentSnapshot["petugas"],
+                            documentSnapshot["createdAt"],
                             documentSnapshot["takenAt"]);
                       });
                 } else {
