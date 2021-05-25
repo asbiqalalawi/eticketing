@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/services/auth.dart';
 
@@ -72,50 +73,74 @@ class _ProfilState extends State<Profil> {
                         ],
                       ),
                     )
-                  : Container(),
+                  : SizedBox(),
               Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: EdgeInsets.only(bottom: 60),
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 60),
-                      child: Column(
-                        children: [
-                          (myOriginName == "Admin")
-                              ? Container(
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  child: RaisedButton(
-                                    elevation: 5,
-                                    onPressed: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return ManageUserPage();
-                                      }));
-                                    },
-                                    child: Text(
-                                      "Manajemen User",
-                                      style: TextStyle(
-                                          fontFamily: "PublicSans",
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    color: Color(0xFFFFF0B2),
-                                  ),
-                                )
-                              : SizedBox(),
-                          RaisedButton(
-                            elevation: 5,
-                            onPressed: () {
-                              AuthMethods().toSignOut(context);
-                            },
-                            child: Text("Keluar",
+                    (myOriginName == "Admin")
+                        ? Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: RaisedButton(
+                              elevation: 5,
+                              onPressed: () {
+                                DocumentReference antrian = FirebaseFirestore
+                                    .instance
+                                    .collection("nomor")
+                                    .doc("antrian");
+                                DocumentReference totalTicket =
+                                    FirebaseFirestore.instance
+                                        .collection("nomor")
+                                        .doc("totalTicket");
+                                Map<String, dynamic> noAntrian = {
+                                  "noAntrian": 0
+                                };
+                                Map<String, dynamic> total = {"total": 0};
+                                antrian.update(noAntrian);
+                                totalTicket.update(total);
+                              },
+                              child: Text(
+                                "Reset Tiket",
                                 style: TextStyle(
                                     fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold)),
-                            color: Color(0xFFFFCE00),
-                          ),
-                        ],
-                      ),
-                    ), //fic
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              color: Color(0xFFFFF0B2),
+                            ),
+                          )
+                        : SizedBox(),
+                    (myOriginName == "Admin")
+                        ? Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: RaisedButton(
+                              elevation: 5,
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ManageUserPage();
+                                }));
+                              },
+                              child: Text(
+                                "Manajemen User",
+                                style: TextStyle(
+                                    fontFamily: "PublicSans",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              color: Color(0xFFFFF0B2),
+                            ),
+                          )
+                        : SizedBox(),
+                    RaisedButton(
+                      elevation: 5,
+                      onPressed: () {
+                        AuthMethods().toSignOut(context);
+                      },
+                      child: Text("Keluar",
+                          style: TextStyle(
+                              fontFamily: "PublicSans",
+                              fontWeight: FontWeight.bold)),
+                      color: Color(0xFFFFCE00),
+                    ),
                   ],
                 ),
               ),

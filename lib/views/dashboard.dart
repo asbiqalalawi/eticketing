@@ -105,7 +105,7 @@ class _DashboardState extends State<Dashboard> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Total Tiket",
+                        Text("Tiket Hari ini",
                             style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 fontFamily: "RedHatDisplay",
