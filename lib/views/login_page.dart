@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 80,
+                        height: 70,
                         child: TextFormField(
                           validator: MultiValidator([
                             RequiredValidator(

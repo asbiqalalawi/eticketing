@@ -125,7 +125,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 255, 206, 0),
         title: Text(
-          "Add ticket",
+          "Tambah Tiket",
           style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
         leading: IconButton(
@@ -174,7 +174,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                       decoration: InputDecoration(
                           fillColor: Color.fromARGB(255, 255, 249, 224),
                           filled: true,
-                          hintText: "Description",
+                          hintText: "Deskripsi",
                           hintStyle: TextStyle(
                             fontFamily: "PublicSans",
                             fontWeight: FontWeight.bold,
@@ -193,7 +193,7 @@ class _AddTicketPageState extends State<AddTicketPage> {
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Upload file",
+                                Text("Kirim Gambar",
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontFamily: "PublicSans",
@@ -235,13 +235,12 @@ class _AddTicketPageState extends State<AddTicketPage> {
                       if (imageDir != null) {
                         imagePath = await DatabaseMethods.uploadImage(imageDir);
                       }
-                      getCounter();
-                      getTotalMyTicket(myEmail, myOriginName);
-
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {
                         return BottomNavigation();
                       }));
+                      getCounter();
+                      getTotalMyTicket(myEmail, myOriginName);
                     },
                     child: Center(
                       child: Text(

@@ -40,7 +40,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Dashboard",
+          "Dasbor",
           style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
         actions: <Widget>[
@@ -76,7 +76,19 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: Color.fromRGBO(255, 206, 0, 1),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 5, bottom: 5, left: 15),
+            child: Text(
+              "Halo " + myUserName + " !",
+              style: TextStyle(
+                  fontFamily: "RedHatDisplay",
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(157, 153, 135, 1)),
+            ),
+          ),
           Center(
             child: Stack(children: <Widget>[
               GestureDetector(
@@ -93,7 +105,7 @@ class _DashboardState extends State<Dashboard> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Total Ticket",
+                        Text("Total Tiket",
                             style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 fontFamily: "RedHatDisplay",
@@ -112,7 +124,7 @@ class _DashboardState extends State<Dashboard> {
                                       fontWeight: FontWeight.bold),
                                 );
                               else {
-                                return Text("Loading");
+                                return Text("Mohon Tunggu");
                               }
                             }),
                       ]),
@@ -133,7 +145,7 @@ class _DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "My Ticket",
+                              "Tiket Saya",
                               style: TextStyle(
                                   fontFamily: "RedHatDisplay",
                                   color: Color.fromRGBO(157, 153, 135, 1),
@@ -156,7 +168,7 @@ class _DashboardState extends State<Dashboard> {
                                               fontWeight: FontWeight.bold),
                                         );
                                       else {
-                                        return Text("Loading");
+                                        return Text("Mohon Tunggu");
                                       }
                                     })
                                 : StreamBuilder<DocumentSnapshot>(
@@ -174,7 +186,7 @@ class _DashboardState extends State<Dashboard> {
                                               fontWeight: FontWeight.bold),
                                         );
                                       } else {
-                                        return Text("Loading");
+                                        return Text("Mohon Tunggu");
                                       }
                                     })
                           ]),
@@ -190,7 +202,7 @@ class _DashboardState extends State<Dashboard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "On Process",
+                        "Diproses",
                         style: TextStyle(
                             fontFamily: "RedHatDisplay",
                             color: Color.fromRGBO(157, 153, 135, 1),
@@ -212,7 +224,7 @@ class _DashboardState extends State<Dashboard> {
                                         fontWeight: FontWeight.bold),
                                   );
                                 else {
-                                  return Text("Loading");
+                                  return Text("Mohon Tunggu");
                                 }
                               })
                           : StreamBuilder<DocumentSnapshot>(
@@ -230,7 +242,7 @@ class _DashboardState extends State<Dashboard> {
                                         fontWeight: FontWeight.bold),
                                   );
                                 else {
-                                  return Text("Loading");
+                                  return Text("Mohon Tunggu");
                                 }
                               })
                     ]),
@@ -246,14 +258,14 @@ class _DashboardState extends State<Dashboard> {
                     children: <Widget>[
                       (myOriginName != "Bapenda" && myOriginName != "Admin")
                           ? Text(
-                              "Available",
+                              "Tersedia",
                               style: TextStyle(
                                   fontFamily: "RedHatDisplay",
                                   color: Color.fromRGBO(157, 153, 135, 1),
                                   fontSize: 17),
                             )
                           : Text(
-                              "Finished",
+                              "Selesai",
                               style: TextStyle(
                                   fontFamily: "RedHatDisplay",
                                   color: Color.fromRGBO(157, 153, 135, 1),
@@ -291,7 +303,7 @@ class _DashboardState extends State<Dashboard> {
                                         fontWeight: FontWeight.bold),
                                   );
                                 else {
-                                  return Text("Loading");
+                                  return Text("Mohon Tunggu");
                                 }
                               })
                     ]),
@@ -299,12 +311,12 @@ class _DashboardState extends State<Dashboard> {
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 18, top: 23, right: 200),
+                margin: EdgeInsets.only(bottom: 18, top: 20, left: 10),
                 child: Text(
-                  "Ticket",
+                  "Tiket",
                   style: TextStyle(
                       fontFamily: "RedHatDisplay",
                       fontSize: 22,
@@ -319,9 +331,9 @@ class _DashboardState extends State<Dashboard> {
                 },
                 child: Container(
                   color: Colors.white,
-                  margin: EdgeInsets.only(bottom: 18, top: 23),
+                  margin: EdgeInsets.only(bottom: 18, top: 20, right: 10),
                   child: Text(
-                    "Show All",
+                    "Tampilkan Semua",
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: "RedHatDisplay",
@@ -332,43 +344,45 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.39,
-            width: MediaQuery.of(context).size.width * 0.95,
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("ticket")
-                    .orderBy('antrian' /* , descending: true */)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot documentSnapshot =
-                              snapshot.data.docs[index];
-                          return ItemCard(
-                              documentSnapshot["nomorPolisi"],
-                              documentSnapshot["deskripsi"],
-                              documentSnapshot["status"],
-                              documentSnapshot["antrian"],
-                              documentSnapshot["asal"],
-                              documentSnapshot["gambar"],
-                              documentSnapshot["pengirim"],
-                              documentSnapshot["petugas"],
-                              documentSnapshot["createdAt"],
-                              documentSnapshot["takenAt"]);
-                        });
-                  } else {
-                    return Center(
-                        child: Text(
-                      'Belum ada Tiket',
-                      style:
-                          TextStyle(fontFamily: "RedHatDisplay", fontSize: 15),
-                    ));
-                  }
-                }),
+          Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.95,
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("ticket")
+                      .orderBy('antrian' /* , descending: true */)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot documentSnapshot =
+                                snapshot.data.docs[index];
+                            return ItemCard(
+                                documentSnapshot["nomorPolisi"],
+                                documentSnapshot["deskripsi"],
+                                documentSnapshot["status"],
+                                documentSnapshot["antrian"],
+                                documentSnapshot["asal"],
+                                documentSnapshot["gambar"],
+                                documentSnapshot["pengirim"],
+                                documentSnapshot["petugas"],
+                                documentSnapshot["createdAt"],
+                                documentSnapshot["takenAt"]);
+                          });
+                    } else {
+                      return Center(
+                          child: Text(
+                        'Belum ada Tiket',
+                        style: TextStyle(
+                            fontFamily: "RedHatDisplay", fontSize: 15),
+                      ));
+                    }
+                  }),
+            ),
           )
         ],
       ),

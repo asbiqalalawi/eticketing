@@ -72,6 +72,7 @@ class _ItemCardState extends State<ItemCard> {
         }));
       },
       child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 5,
         color: Color.fromRGBO(255, 249, 224, 1),
         child: Column(

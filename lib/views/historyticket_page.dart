@@ -21,7 +21,7 @@ class _HistoryTicketPAgeState extends State<HistoryTicketPage> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(255, 206, 0, 1),
         title: Text(
-          "Log Tiket",
+          "Riwayat Tiket",
           style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
         actions: [

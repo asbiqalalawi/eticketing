@@ -124,7 +124,7 @@ class _DetailPageState extends State<DetailPage> {
                       child: Row(
                         children: [
                           Text(
-                            "Nopol",
+                            "Nomor Polisi",
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
@@ -152,7 +152,7 @@ class _DetailPageState extends State<DetailPage> {
                       child: Row(
                         children: [
                           Text(
-                            "Description",
+                            "Deskripsi",
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
@@ -188,8 +188,8 @@ class _DetailPageState extends State<DetailPage> {
                       },
                       child: Container(
                           margin: EdgeInsets.only(top: 50),
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          height: MediaQuery.of(context).size.width * 0.6,
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          height: MediaQuery.of(context).size.height * 0.25,
                           decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               border: Border.all(color: Colors.black),

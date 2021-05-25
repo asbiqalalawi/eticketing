@@ -43,7 +43,7 @@ class _PicketSchedulesState extends State<PicketSchedules> {
           automaticallyImplyLeading: false,
           backgroundColor: Color.fromRGBO(255, 206, 0, 1),
           title: Text(
-            'Picket Schedule',
+            'Jadwal Piket',
             style: TextStyle(color: Colors.black),
           ),
           leading: IconButton(

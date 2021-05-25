@@ -34,15 +34,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            label: ('Dashboard'),
+            label: ('Dasbor'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: ('Chat'),
+            label: ('Pesan'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: ('Account'),
+            label: ('Profil'),
           ),
         ],
         currentIndex: _selectedNavbar,

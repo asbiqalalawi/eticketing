@@ -64,7 +64,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Container(
                         margin: EdgeInsets.only(top: 20, left: 5),
                         child: Text(
-                          "In : ",
+                          "Dikirim : ",
                           style: TextStyle(
                               color: Colors.grey, fontFamily: "RedHatDisplay"),
                         ),
@@ -72,7 +72,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Container(
                         margin: EdgeInsets.only(top: 5, left: 5),
                         child: Text(
-                          "Take : ",
+                          "Diambil : ",
                           style: TextStyle(
                               color: Colors.grey, fontFamily: "RedHatDisplay"),
                         ),
@@ -80,7 +80,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       Container(
                         margin: EdgeInsets.only(top: 5, left: 5),
                         child: Text(
-                          "Done : ",
+                          "Selesai : ",
                           style: TextStyle(
                               color: Colors.grey, fontFamily: "RedHatDisplay"),
                         ),

@@ -30,7 +30,7 @@ class _ListTicketState extends State<ListTicket> {
           appBar: AppBar(
             backgroundColor: Color.fromRGBO(255, 206, 0, 1),
             title: Text(
-              "All Ticket",
+              "Semua Tiket",
               style:
                   TextStyle(color: Colors.black, fontFamily: "RedHatDisplay"),
             ),

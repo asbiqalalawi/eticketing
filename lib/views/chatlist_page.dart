@@ -99,7 +99,7 @@ class _ChatListState extends State<ChatList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Chat",
+          "Pesan",
           style: TextStyle(fontFamily: "RedHatDisplay", color: Colors.black),
         ),
         backgroundColor: Color(0xFFFFCE00),
