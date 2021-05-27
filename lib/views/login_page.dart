@@ -162,21 +162,6 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () {
                             if (_formKey.currentState.validate()) {
                               print('Validated');
-                              //
-
-                              /*  print("XXXXXXX");
-
-                              print(email);
-                              print(getLoged(email));
-                              FutureBuilder(
-                                future: _users.doc(email).get(),
-                                builder: (context, snapshot) {
-                                  return snapshot.data;
-                                },
-                              ); */
-
-                              print("XXXXXXX");
-
                               AuthMethods().signIn(email, password, context);
                             } else {
                               print('Not Validated');
@@ -226,17 +211,4 @@ class _LoginPageState extends State<LoginPage> {
     } else
       return null;
   }
-}
-
-Future getLoged(String email) async {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  CollectionReference _users = _firestore.collection('users');
-  String check;
-  StreamBuilder(
-    stream: _users.where("email", isEqualTo: email).snapshots(),
-    builder: (BuildContext buildContext, snapshot) {
-      print(snapshot.data);
-      return check = snapshot.data;
-    },
-  );
 }

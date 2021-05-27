@@ -33,7 +33,7 @@ class AuthMethods {
           "email": userDetail.email,
           "name": name,
           "originName": origin,
-          "logedIn": false,
+          "logedIn": "false",
         };
         if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
@@ -104,23 +104,36 @@ class AuthMethods {
           await DatabaseMethods().getUserInfo(userDetail.email);
 
       if (userCredential != null) {
+        CollectionReference _users = _firestore.collection('users');
+        _users
+            .doc(userDetail.uid)
+            .update({
+              'logedIn': "true",
+            })
+            .then((value) => print("User Login"))
+            .catchError((error) => print("Gagal login"));
+        String myBool = "LOGEDIN";
         SharedPreferenceHelper().saveUserEmail(userDetail.email);
         SharedPreferenceHelper().saveUserId(userDetail.uid);
         SharedPreferenceHelper().saveUserName(querySnapshot.docs[0]["name"]);
         SharedPreferenceHelper()
             .saveOriginName(querySnapshot.docs[0]["originName"]);
-        // SharedPreferenceHelper().saveLogedIn(querySnapshot.docs[0]["logedIn"]);
-        CollectionReference _users = _firestore.collection('users');
-        _users
-            .doc(userDetail.uid)
-            .update({
-              'logedIn': true,
-            })
-            .then((value) => print("User Login"))
-            .catchError((error) => print("Gagal login"));
+        SharedPreferenceHelper().saveLogedIn(querySnapshot.docs[0]['logedIn']);
 
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => BottomNavigation()));
+        myBool = await SharedPreferenceHelper().getLogedIn();
+
+        /* print('XXXXXXXXXX disini');
+        print(myBool);
+        print('XXXXXXXXXX disini'); */
+
+        if (myBool == 'false') {
+          print("1 login");
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => BottomNavigation()));
+        } else {
+          print("2 login");
+          AuthMethods().toSignOut(context);
+        }
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

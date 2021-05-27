@@ -3,7 +3,6 @@ import 'package:eticketing/helper/sharedpref_helper.dart';
 import 'package:eticketing/views/addticket_page.dart';
 import 'package:eticketing/views/item_card.dart';
 import 'package:eticketing/views/list_ticket.dart';
-import 'package:eticketing/views/picket_schedules.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -14,7 +13,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   String myOriginName = "ORIGINNAME",
       myUserName = "USERNAME",
-      myEmail = "EMAIL";
+      myEmail = "EMAIL",
+      myBool = "LOGEDIN";
   String nomorPolisi = "NOPOL", deskripsi = "DESKRIPSI";
   int newValue = 0;
 
@@ -22,6 +22,7 @@ class _DashboardState extends State<Dashboard> {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
     myOriginName = await SharedPreferenceHelper().getOriginName();
+    myBool = await SharedPreferenceHelper().getLogedIn();
     setState(() {});
   }
 
@@ -49,9 +50,10 @@ class _DashboardState extends State<Dashboard> {
               color: Colors.black,
               icon: Icon(Icons.calendar_today_sharp),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                /* Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return PicketSchedules();
-                }));
+                })); */
+                print('');
               }),
           // IconButton(
           //     color: Colors.black,

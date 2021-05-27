@@ -141,7 +141,7 @@ class _ProfilState extends State<Profil> {
                         _users
                             .doc(myId)
                             .update({
-                              'logedIn': false,
+                              'logedIn': "false",
                             })
                             .then((value) => print("User logout"))
                             .catchError((error) => print("Gagal logout"));
