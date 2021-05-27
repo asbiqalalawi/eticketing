@@ -85,6 +85,8 @@ class _EditUserPageState extends State<EditUserPage> {
     super.initState();
   }
 
+  String _chosenValue;
+
   @override
   Widget build(BuildContext context) {
     // print(authMethods.getCurrentUser().toString());
@@ -92,6 +94,7 @@ class _EditUserPageState extends State<EditUserPage> {
     // print('XXXXXXXXXX');
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference _users = firestore.collection('users');
+    _chosenValue = originNameTextEditingController.text;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -144,83 +147,52 @@ class _EditUserPageState extends State<EditUserPage> {
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          child: SizedBox(
-                            height: 70,
-                            child: SimpleAutoCompleteTextField(
-                              key: key,
-                              suggestions: suggestions,
-                              controller: originNameTextEditingController,
-                              /* validator: MultiValidator([
-                                RequiredValidator(
-                                    errorText:
-                                        'Nama samsat tidak boleh kosong'),
-                              ]), */
-                              decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(255, 255, 249, 224),
-                                  filled: true,
-                                  hintText: "Nama Samsat",
-                                  hintStyle: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      fontWeight: FontWeight.bold),
-                                  border: InputBorder.none),
+                          width: MediaQuery.of(context).size.width,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 249, 224),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: _chosenValue,
+                                items: [
+                                  'Admin',
+                                  'Bapenda',
+                                  'Samsat Bandar Lampung',
+                                  'Samsat Gunung Sugih',
+                                  'Samsat Kotabumi',
+                                  'Samsat Kalianda',
+                                  'Samsat Menggala',
+                                  'Samsat Sukadana',
+                                  'Samsat Metro',
+                                  'Samsat Way kanan',
+                                  'Samsat Liwa',
+                                  'Samsat Tanggamus',
+                                  'Samsat Mesuji',
+                                  'Samsat Pringsewu',
+                                  'Samsat Pesawaran',
+                                  'Samsat Tulang Bawang Barat',
+                                  'Samsat Pesisir Barat',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem(
+                                    child: Text(value),
+                                    value: value,
+                                  );
+                                }).toList(),
+                                hint: Text("Pilih"),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _chosenValue = value;
+                                    originNameTextEditingController.text =
+                                        _chosenValue;
+                                  });
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        /* Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: SizedBox(
-                            height: 70,
-                            child: TextFormField(
-                              controller: emailTextEditingController,
-                              validator: MultiValidator([
-                                RequiredValidator(
-                                    errorText: 'Email tidak boleh kosong'),
-                                EmailValidator(errorText: 'Format email salah')
-                              ]),
-                              decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(255, 255, 249, 224),
-                                  filled: true,
-                                  hintText: "Email",
-                                  hintStyle: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      fontWeight: FontWeight.bold),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ), */
-                        /* Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: TextFormField(
-                            controller: passwordTextEditingController,
-                            validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: 'Password tidak boleh kosong'),
-                              MinLengthValidator(6,
-                                  errorText:
-                                      'Password tidak boleh kurang dari 6')
-                            ]),
-                            obscureText: _obsecureText,
-                            decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    _toggle();
-                                  },
-                                  child: Icon(
-                                    _obsecureText
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                fillColor: Color.fromARGB(255, 255, 249, 224),
-                                filled: true,
-                                hintText: "Kata Sandi",
-                                hintStyle: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold),
-                                border: InputBorder.none),
-                          ),
-                        ), */
+                        )
                       ],
                     ),
                   ),

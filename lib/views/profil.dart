@@ -11,12 +11,13 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
-  String myOriginName, myUserName, myEmail;
+  String myOriginName, myUserName, myEmail, myId;
 
   getMyInfoFromSharedPreferences() async {
     myUserName = await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
     myOriginName = await SharedPreferenceHelper().getOriginName();
+    myId = await SharedPreferenceHelper().getUserId();
     setState(() {});
   }
 
@@ -133,6 +134,17 @@ class _ProfilState extends State<Profil> {
                     RaisedButton(
                       elevation: 5,
                       onPressed: () {
+                        FirebaseFirestore _firestore =
+                            FirebaseFirestore.instance;
+                        CollectionReference _users =
+                            _firestore.collection('users');
+                        _users
+                            .doc(myId)
+                            .update({
+                              'logedIn': false,
+                            })
+                            .then((value) => print("User logout"))
+                            .catchError((error) => print("Gagal logout"));
                         AuthMethods().toSignOut(context);
                       },
                       child: Text("Keluar",

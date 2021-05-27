@@ -69,6 +69,8 @@ class _AddUserPageState extends State<AddUserPage> {
     }
   }
 
+  String _chosenValue;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,59 +124,52 @@ class _AddUserPageState extends State<AddUserPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: SizedBox(
-                            height: 70,
-                            child: SimpleAutoCompleteTextField(
-                              key: key,
-                              suggestions: suggestions,
-                              controller: originNameTextEditingController,
-                              /* validator: MultiValidator([
-                                RequiredValidator(
-                                    errorText:
-                                        'Nama samsat tidak boleh kosong'),
-                              ]), */
-                              decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(255, 255, 249, 224),
-                                  filled: true,
-                                  hintText: "Petugas (*Bapenda/Samsat...)",
-                                  hintStyle: TextStyle(
-                                      fontFamily: "PublicSans",
-                                      fontWeight: FontWeight.bold),
-                                  border: InputBorder.none),
-                            ),
+                          margin: EdgeInsets.only(bottom: 30),
+                          height: 70,
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 255, 249, 224),
+                          ),
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            validator: (value) =>
+                                value == null ? 'Kantor belum dipilih' : null,
+                            value: _chosenValue,
+                            items: [
+                              'Admin',
+                              'Bapenda',
+                              'Samsat Bandar Lampung',
+                              'Samsat Gunung Sugih',
+                              'Samsat Kotabumi',
+                              'Samsat Kalianda',
+                              'Samsat Menggala',
+                              'Samsat Sukadana',
+                              'Samsat Metro',
+                              'Samsat Way kanan',
+                              'Samsat Liwa',
+                              'Samsat Tanggamus',
+                              'Samsat Mesuji',
+                              'Samsat Pringsewu',
+                              'Samsat Pesawaran',
+                              'Samsat Tulang Bawang Barat',
+                              'Samsat Pesisir Barat',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              );
+                            }).toList(),
+                            hint: Text("Pilih Kantor"),
+                            onChanged: (value) {
+                              setState(() {
+                                _chosenValue = value;
+                                originNameTextEditingController.text =
+                                    _chosenValue;
+                              });
+                            },
                           ),
                         ),
-                        // Container(
-                        //   margin: EdgeInsets.only(bottom: 10),
-                        //   color: Color.fromARGB(255, 255, 249, 224),
-                        //   padding: EdgeInsets.symmetric(horizontal: 10),
-                        //   child: DropdownButtonFormField(
-                        //     decoration: InputDecoration(
-                        //         hintText: "Samsat/Petugas Bapenda",
-                        //         hintStyle: TextStyle(
-                        //             fontFamily: "PublicSans",
-                        //             fontWeight: FontWeight.bold),
-                        //         border: InputBorder.none),
-                        //     value: list,
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         list = value;
-                        //       });
-                        //     },
-                        //     items: droplist
-                        //         .map((droplist) => DropdownMenuItem(
-                        //               value: droplist,
-                        //               child: Text(
-                        //                 "$droplist",
-                        //                 style: TextStyle(
-                        //                     fontFamily: "PublicSans",
-                        //                     fontWeight: FontWeight.bold),
-                        //               ),
-                        //             ))
-                        //         .toList(),
-                        //   ),
-                        // ),
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: SizedBox(
@@ -230,31 +225,6 @@ class _AddUserPageState extends State<AddUserPage> {
                                 border: InputBorder.none),
                           ),
                         ),
-                        /* Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: TextField(
-                            obscureText: _obsecureText2,
-                            decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    _toggle2();
-                                  },
-                                  child: Icon(
-                                    _obsecureText2
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                fillColor: Color.fromARGB(255, 255, 249, 224),
-                                filled: true,
-                                hintText: "Konfirmasi Kata Sandi",
-                                hintStyle: TextStyle(
-                                    fontFamily: "PublicSans",
-                                    fontWeight: FontWeight.bold),
-                                border: InputBorder.none),
-                          ),
-                        ), */
                       ],
                     ),
                   ),
@@ -274,74 +244,82 @@ class _AddUserPageState extends State<AddUserPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(50),
                           onTap: () async {
-                            //TODO
-                            await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    backgroundColor: Colors.white,
-                                    title: Text('Buat akun'),
-                                    content: Container(
-                                      height: 110,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                              userNameTextEditingController
-                                                  .text,
-                                              overflow: TextOverflow.ellipsis),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                              originNameTextEditingController
-                                                  .text,
-                                              overflow: TextOverflow.ellipsis),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(emailTextEditingController.text,
-                                              overflow: TextOverflow.ellipsis),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                              passwordTextEditingController
-                                                  .text,
-                                              overflow: TextOverflow.ellipsis),
-                                        ],
-                                      ),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          //
-                                        },
-                                        child: Text(
-                                          'Batal',
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold),
+                            if (formKey.currentState.validate()) {
+                              // print('Validated');
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      title: Text('Buat akun'),
+                                      content: Container(
+                                        height: 110,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                userNameTextEditingController
+                                                    .text,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                                originNameTextEditingController
+                                                    .text,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                                emailTextEditingController.text,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                                passwordTextEditingController
+                                                    .text,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          ],
                                         ),
                                       ),
-                                      TextButton(
-                                        onPressed: () {
-                                          signMeUp();
-                                          //
-                                        },
-                                        child: Text(
-                                          'Ya',
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            //
+                                          },
+                                          child: Text(
+                                            'Batal',
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                });
-                            // signMeUp();
+                                        TextButton(
+                                          onPressed: () {
+                                            signMeUp();
+                                            //
+                                          },
+                                          child: Text(
+                                            'Ya',
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            } else {
+                              // print('Not Validated');
+                            }
                           },
                           child: Center(
                             child: Text(

@@ -27,6 +27,7 @@ class _DashboardState extends State<Dashboard> {
 
   void initState() {
     getMyInfoFromSharedPreferences();
+
     super.initState();
   }
 

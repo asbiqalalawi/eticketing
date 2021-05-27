@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   getCurrentUser() async {
     return auth.currentUser;
   }
@@ -31,6 +33,7 @@ class AuthMethods {
           "email": userDetail.email,
           "name": name,
           "originName": origin,
+          "logedIn": false,
         };
         if (origin == "Bapenda" || origin == "Admin") {
           Map<String, dynamic> bapenda = {
@@ -106,6 +109,15 @@ class AuthMethods {
         SharedPreferenceHelper().saveUserName(querySnapshot.docs[0]["name"]);
         SharedPreferenceHelper()
             .saveOriginName(querySnapshot.docs[0]["originName"]);
+        // SharedPreferenceHelper().saveLogedIn(querySnapshot.docs[0]["logedIn"]);
+        CollectionReference _users = _firestore.collection('users');
+        _users
+            .doc(userDetail.uid)
+            .update({
+              'logedIn': true,
+            })
+            .then((value) => print("User Login"))
+            .catchError((error) => print("Gagal login"));
 
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => BottomNavigation()));
