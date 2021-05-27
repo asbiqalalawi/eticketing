@@ -206,13 +206,28 @@ class DatabaseMethods {
   }
 
   /// Menghapus pesan
-  Future deleteChat(String chatRoomId) {
+  Future deleteInfoChat(String chatRoomId) {
     return FirebaseFirestore.instance
         .collection('chatrooms')
         .doc(chatRoomId)
         .delete()
         .then((value) => print("Chat Deleted"))
         .catchError((error) => print("Failed to delete chat: $error"));
+  }
+
+  Future deleteChat(String chatRoomId) {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    return FirebaseFirestore.instance
+        .collection('chatrooms')
+        .doc(chatRoomId)
+        .collection('chats')
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((document) {
+        batch.delete(document.reference);
+      });
+      return batch.commit();
+    });
   }
 
   Future createHistory(String nopol, Map historycanceledMap) async {

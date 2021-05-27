@@ -309,6 +309,7 @@ class _DetailPageState extends State<DetailPage> {
 
                 var chatRoomId = getChatRoomId(widget.nopol);
                 DatabaseMethods().deleteChat(chatRoomId);
+                DatabaseMethods().deleteInfoChat(chatRoomId);
 
                 DatabaseMethods()
                     .updateTicketTaken(widget.nopol, ticketSelesaiMap);
